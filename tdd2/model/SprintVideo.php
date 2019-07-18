@@ -4,22 +4,22 @@
 class SprintVideo
 {
     public $id;
-    //public $added;
+    public $added;
     public $mid;
     public $aid;
-    //public $tid;
-    //public $cid;
-    //public $typename;
-    //public $arctype;
+    public $tid;
+    public $cid;
+    public $typename;
+    public $arctype;
     public $title;
     public $pic;
-    //public $pages;
+    public $pages;
     public $created;
-    //public $copyright;
+    public $copyright;
     public $singer;
     public $solo;
     public $original;
-    //public $status;
+    public $status;
 }
 
 ?>

@@ -4,7 +4,7 @@
 class SprintDaily
 {
     public $id;
-    //public $added;
+    public $added;
     public $date;
     public $correct;
     public $vidnum;

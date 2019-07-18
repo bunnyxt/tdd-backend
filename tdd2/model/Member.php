@@ -4,7 +4,7 @@
 class Member
 {
     public $id;
-    //public $added;
+    public $added;
     public $mid;
     public $sex;
     public $name;
