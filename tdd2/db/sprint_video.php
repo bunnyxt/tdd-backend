@@ -1,6 +1,7 @@
 <?php
 
 require_once("conn.php");
+require_once("sql_helper.php");
 require_once("model/SprintVideo.php");
 
 function sprint_video_query($aid, $status, $limit)
@@ -8,19 +9,15 @@ function sprint_video_query($aid, $status, $limit)
     global $conn;
 
     // concat sql
-    $sql = "";
-    if ($aid == -1)
+    $sql = init_select("tdd_sprint_video");
+    $sql = add_restrict($sql, "status", $status);
+    if ($aid != -1)
     {
-        $sql .= 'select * from tdd_sprint_video where status="'.$status.'"';
+        $sql = add_restrict($sql, "aid", $aid);
     }
-    else
-    {
-        $sql .= 'select * from tdd_sprint_video where aid='.$aid.' && status="'.$status.'"';
-    }
-    if ($limit > 0)
-    {
-        $sql .= "limit ".$limit;
-    }
+    $sql = add_limit($sql, $limit);
+
+    //echo($sql);
 
     // execute
     $array = [];
