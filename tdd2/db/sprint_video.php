@@ -4,7 +4,7 @@ require_once("conn.php");
 require_once("sql_helper.php");
 require_once("model/SprintVideo.php");
 
-function sprint_video_query($aid, $status, $limit)
+function sprint_video_query($aid, $status, $limit = 0)
 {
     global $conn;
 
@@ -16,8 +16,6 @@ function sprint_video_query($aid, $status, $limit)
         $sql = add_restrict($sql, "aid", $aid);
     }
     $sql = add_limit($sql, $limit);
-
-    //echo($sql);
 
     // execute
     $array = [];
