@@ -18,7 +18,7 @@ if(isset($_GET['status'])){
 
 $limit = 0;
 if(isset($_GET['limit'])){
-    $status = intval($_GET['limit']);
+    $limit = intval($_GET['limit']);
 }
 
 // db operation
