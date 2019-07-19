@@ -14,6 +14,16 @@ function add_restrict($sql, $key, $value, $op = '=')
     return $sql.'and `'.$key.'` '.$op.' '.$value.' ';
 }
 
+function add_order_by($sql, $key, $desc = false)
+{
+    $sql .= 'order by `'.$key.'` ';
+    if ($desc)
+    {
+        $sql .= 'desc ';
+    }
+    return $sql;
+}
+
 function add_limit($sql, $limit)
 {
     if ($limit > 0)
