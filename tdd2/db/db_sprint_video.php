@@ -4,16 +4,19 @@ require_once("conn.php");
 require_once("sql_helper.php");
 require_once("model/SprintVideo.php");
 
-function sprint_video_query($aid, $status, $limit = 0)
+function sprint_video_query($aid, $status = "all", $limit = 0)
 {
     global $conn;
 
     // concat sql
     $sql = init_select("tdd_sprint_video");
-    $sql = add_restrict($sql, "status", $status);
     if ($aid != -1)
     {
         $sql = add_restrict($sql, "aid", $aid);
+    }
+    if ($status != "all")
+    {
+        $sql = add_restrict($sql, "status", $status);
     }
     $sql = add_limit($sql, $limit);
 
