@@ -1,6 +1,6 @@
 <?php
 
-require_once("db/sprint_video_record.php");
+require_once("db/db_sprint_video_record.php");
 require_once("util/Wrapper.php");
 
 header('Access-Control-Allow-Origin:*');

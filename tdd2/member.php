@@ -1,6 +1,6 @@
 <?php
 
-require_once("db/member.php");
+require_once("db/db_member.php");
 require_once("util/Wrapper.php");
 
 header('Access-Control-Allow-Origin:*');
