@@ -13,7 +13,7 @@ if(isset($_GET['aid'])){
     $aid = intval($_GET['aid']);
 }
 
-$status = 'processing';
+$status = 'all';
 if(isset($_GET['status'])){
     $status = $_GET['status'];
 }
@@ -38,7 +38,6 @@ foreach($result as $item)
     unset($item->arctype);
     unset($item->pages);
     unset($item->copyright);
-    unset($item->status);
 
     // TODO use table join to optimization
 
