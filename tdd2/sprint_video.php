@@ -5,7 +5,7 @@ require_once("db/db_member.php");
 require_once("db/db_sprint_video_record.php");
 require_once("util/Wrapper.php");
 
-header('Access-Control-Allow-Origin:*');
+require_once("util/init.php");
 
 // GET param
 $aid = -1;
