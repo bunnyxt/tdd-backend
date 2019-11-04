@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.VideoDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.Video">
+        <result column="id" property="id" />
+        <result column="added" property="added" />
+        <result column="aid" property="aid" />
+        <result column="videos" property="videos" />
+        <result column="tid" property="tid" />
+        <result column="tname" property="tname" />
+        <result column="copyright" property="copyright" />
+        <result column="pic" property="pic" />
+        <result column="title" property="title" />
+        <result column="pubdate" property="pubdate" />
+        <result column="`desc`" property="desc" />
+        <result column="tags" property="tags" />
+        <result column="mid" property="mid" />
+        <result column="code" property="code" />
+        <result column="hasstaff" property="hasstaff" />
+        <result column="singer" property="singer" />
+        <result column="solo" property="solo" />
+        <result column="original" property="original" />
+        <result column="employed" property="employed" />
+        <result column="isvc" property="isvc" />
+        <result column="engine" property="engine" />
+        <result column="freq" property="freq" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id, added, aid, videos, tid, tname, copyright, pic, title, pubdate, `desc`, tags, mid, code, hasstaff, singer, solo,original, employed, isvc, engine, freq
+    </sql>
+
+    <select id="queryVideoByAid" resultMap="BaseResultMap" parameterType="int">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_video
+        where
+        aid = #{aid}
+    </select>
+
+    <select id="queryVideosByTid" resultMap="BaseResultMap" parameterType="int">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_video
+        where
+        tid = #{tid}
+        order by
+        pubdate desc
+        limit
+        #{offset}, #{ps}
+    </select>
+
+    <select id="queryVideosVc" resultMap="BaseResultMap" parameterType="int">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_video
+        where
+        isvc = 1 || isvc = 2
+        order by
+        pubdate desc
+        limit
+        #{offset}, #{ps}
+    </select>
+
+</mapper>
