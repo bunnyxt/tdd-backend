@@ -27,7 +27,7 @@
     </resultMap>
 
     <sql id="BaseColumnList">
-        id, added, aid, videos, tid, tname, copyright, pic, title, pubdate, `desc`, tags, mid, code, hasstaff, singer, solo,original, employed, isvc, engine, freq
+        id, added, aid, videos, tid, tname, copyright, pic, title, pubdate, `desc`, tags, mid, code, hasstaff, singer, solo, original, employed, isvc, engine, freq
     </sql>
 
     <select id="queryVideoByAid" resultMap="BaseResultMap" parameterType="int">
