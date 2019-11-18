@@ -26,6 +26,10 @@ public class Video {
     private byte freq;
 
 
+    public Video() {
+
+    }
+
     public int getId() {
         return id;
     }

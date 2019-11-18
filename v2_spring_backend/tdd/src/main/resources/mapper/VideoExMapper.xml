@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.VideoExDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.VideoEx">
+        <id column="id" property="id" />
+        <result column="added" property="added" />
+        <result column="aid" property="aid" />
+        <result column="videos" property="videos" />
+        <result column="tid" property="tid" />
+        <result column="tname" property="tname" />
+        <result column="copyright" property="copyright" />
+        <result column="pic" property="pic" />
+        <result column="title" property="title" />
+        <result column="pubdate" property="pubdate" />
+        <result column="description" property="desc" />
+        <result column="tags" property="tags" />
+        <result column="mid" property="mid" />
+        <result column="code" property="code" />
+        <result column="hasstaff" property="hasstaff" />
+        <result column="singer" property="singer" />
+        <result column="solo" property="solo" />
+        <result column="original" property="original" />
+        <result column="employed" property="employed" />
+        <result column="isvc" property="isvc" />
+        <result column="engine" property="engine" />
+        <result column="freq" property="freq" />
+        <association property="member" javaType="com.bunnyxt.tdd.model.fragment.MemberFragment">
+            <result column="sex" property="sex" />
+            <result column="name" property="name" />
+            <result column="face" property="face" />
+            <result column="sign" property="sign" />
+        </association>
+<!--        <association property="laststat" javaType="com.bunnyxt.tdd.model.fragment.VideoRecordFragment">-->
+<!--            <result column="r_added" property="added" />-->
+<!--            <result column="view" property="view" />-->
+<!--            <result column="danmaku" property="danmaku" />-->
+<!--            <result column="reply" property="reply" />-->
+<!--            <result column="favorite" property="favorite" />-->
+<!--            <result column="coin" property="coin" />-->
+<!--            <result column="share" property="share" />-->
+<!--            <result column="like" property="like" />-->
+<!--        </association>-->
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        v.id, v.added, v.aid, v.videos, v.tid, v.tname, v.copyright, v.pic, v.title, v.pubdate, v.`desc` description, v.tags, v.mid,
+        v.code, v.hasstaff, v.singer, v.solo, v.original, v.employed, v.isvc, v.engine, v.freq, m.sex, m.name, m.face, m.sign
+    </sql>
+
+    <select id="queryVideoByAid" resultMap="BaseResultMap" parameterType="int">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_video as v
+        left join
+        tdd_member as m
+        on
+        v.mid = m.mid
+        where
+        v.aid = #{aid}
+    </select>
+
+    <select id="queryVideos" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_video as v
+        left join
+        tdd_member as m
+        on
+        v.mid = m.mid
+        <where>
+            <if test="vc == 1">
+                and (v.isvc = 1 or v.isvc = 2)
+            </if>
+            <if test="start_ts > 0">
+                and v.pubdate >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and v.pubdate &lt;= #{end_ts}
+            </if>
+            <if test="title != null and title.length() > 0">
+                and INSTR(v.title, #{title})
+            </if>
+            <if test="up != null and up.length() > 0">
+                and INSTR(m.name, #{up})
+            </if>
+        </where>
+        order by
+        v.pubdate desc
+        limit
+        #{offset}, #{ps}
+    </select>
+
+</mapper>
