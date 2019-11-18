@@ -14,8 +14,8 @@ public class VideoRecordRestController {
     @Autowired
     private VideoRecordService videoRecordService;
 
-    @RequestMapping(value = "/video/records/aid/{aid}", method = RequestMethod.GET)
-    public List<VideoRecord> queryVideoByAid(@PathVariable int aid) {
+    @RequestMapping(value = "/video/{aid}/record", method = RequestMethod.GET)
+    public List<VideoRecord> queryVideoRecordsByAid(@PathVariable int aid) {
         return videoRecordService.queryVideoRecordsByAid(aid);
     }
 
