@@ -27,4 +27,9 @@ public class VideoExServiceImpl implements VideoExService {
         int offset = PageNumModfier.calcOffset(ps, pn);
         return videoExDao.queryVideos(vc, start_ts, end_ts, title, up, offset, ps);
     }
+
+    @Override
+    public int queryVideosCount(int vc, int start_ts, int end_ts, String title, String up) {
+        return videoExDao.queryVideosCount(vc, start_ts, end_ts, title, up);
+    }
 }

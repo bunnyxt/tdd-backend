@@ -92,4 +92,32 @@
         #{offset}, #{ps}
     </select>
 
+    <select id="queryVideosCount" resultType="Integer">
+        select
+        count(*)
+        from
+        tdd_video as v
+        left join
+        tdd_member as m
+        on
+        v.mid = m.mid
+        <where>
+            <if test="vc == 1">
+                and (v.isvc = 1 or v.isvc = 2)
+            </if>
+            <if test="start_ts > 0">
+                and v.pubdate >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and v.pubdate &lt;= #{end_ts}
+            </if>
+            <if test="title != null and title.length() > 0">
+                and INSTR(v.title, #{title})
+            </if>
+            <if test="up != null and up.length() > 0">
+                and INSTR(m.name, #{up})
+            </if>
+        </where>
+    </select>
+
 </mapper>
