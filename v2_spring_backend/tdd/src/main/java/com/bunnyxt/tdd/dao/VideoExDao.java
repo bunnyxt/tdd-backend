@@ -8,7 +8,8 @@ public interface VideoExDao {
 
     VideoEx queryVideoByAid(int aid);
 
-    List<VideoEx> queryVideos(int vc, int start_ts, int end_ts, String title, String up, int offset, int ps);
+    List<VideoEx> queryVideos(int vc, int start_ts, int end_ts, String title, String up, String order_by, int desc,
+                              int offset, int ps);
 
     int queryVideosCount(int vc, int start_ts, int end_ts, String title, String up);
 }

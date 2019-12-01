@@ -28,9 +28,11 @@ public class VideoExRestController {
                                               @RequestParam(defaultValue = "0") int end_ts,
                                               @RequestParam(defaultValue = "") String title,
                                               @RequestParam(defaultValue = "") String up,
+                                              @RequestParam(defaultValue = "pubdate") String order_by,
+                                              @RequestParam(defaultValue = "1") int desc,
                                               @RequestParam(defaultValue = "1") int pn,
                                               @RequestParam(defaultValue = "20") int ps) {
-        List<VideoEx> list = videoExService.queryVideos(vc, start_ts, end_ts, title, up, pn, ps);
+        List<VideoEx> list = videoExService.queryVideos(vc, start_ts, end_ts, title, up, order_by, desc, pn, ps);
         int totalCount = videoExService.queryVideosCount(vc, start_ts, end_ts, title, up);
         HttpHeaders headers = new HttpHeaders();
         headers.add("x-total-count", String.valueOf(totalCount));

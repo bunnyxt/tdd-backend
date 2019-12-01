@@ -30,21 +30,22 @@
             <result column="face" property="face" />
             <result column="sign" property="sign" />
         </association>
-<!--        <association property="laststat" javaType="com.bunnyxt.tdd.model.fragment.VideoRecordFragment">-->
-<!--            <result column="r_added" property="added" />-->
-<!--            <result column="view" property="view" />-->
-<!--            <result column="danmaku" property="danmaku" />-->
-<!--            <result column="reply" property="reply" />-->
-<!--            <result column="favorite" property="favorite" />-->
-<!--            <result column="coin" property="coin" />-->
-<!--            <result column="share" property="share" />-->
-<!--            <result column="like" property="like" />-->
-<!--        </association>-->
+        <association property="laststat" javaType="com.bunnyxt.tdd.model.fragment.VideoRecordFragment">
+            <result column="r_added" property="added" />
+            <result column="view" property="view" />
+            <result column="danmaku" property="danmaku" />
+            <result column="reply" property="reply" />
+            <result column="favorite" property="favorite" />
+            <result column="coin" property="coin" />
+            <result column="share" property="share" />
+            <result column="like" property="like" />
+        </association>
     </resultMap>
 
     <sql id="BaseColumnList">
         v.id, v.added, v.aid, v.videos, v.tid, v.tname, v.copyright, v.pic, v.title, v.pubdate, v.`desc` description, v.tags, v.mid,
-        v.code, v.hasstaff, v.singer, v.solo, v.original, v.employed, v.isvc, v.engine, v.freq, m.sex, m.name, m.face, m.sign
+        v.code, v.hasstaff, v.singer, v.solo, v.original, v.employed, v.isvc, v.engine, v.freq, m.sex, m.name, m.face, m.sign,
+        r.added r_added, r.view, r.danmaku, r.reply, r.favorite, r.coin, r.share, r.like
     </sql>
 
     <select id="queryVideoByAid" resultMap="BaseResultMap" parameterType="int">
@@ -56,6 +57,10 @@
         tdd_member as m
         on
         v.mid = m.mid
+        left join
+        tdd_video_record as r
+        on
+        v.laststat = r.id
         where
         v.aid = #{aid}
     </select>
@@ -69,6 +74,10 @@
         tdd_member as m
         on
         v.mid = m.mid
+        left join
+        tdd_video_record as r
+        on
+        v.laststat = r.id
         <where>
             <if test="vc == 1">
                 and (v.isvc = 1 or v.isvc = 2)
@@ -87,7 +96,10 @@
             </if>
         </where>
         order by
-        v.pubdate desc
+        ${order_by}
+        <if test="desc == 1">
+            desc
+        </if>
         limit
         #{offset}, #{ps}
     </select>
@@ -101,6 +113,10 @@
         tdd_member as m
         on
         v.mid = m.mid
+        left join
+        tdd_video_record as r
+        on
+        v.laststat = r.id
         <where>
             <if test="vc == 1">
                 and (v.isvc = 1 or v.isvc = 2)
