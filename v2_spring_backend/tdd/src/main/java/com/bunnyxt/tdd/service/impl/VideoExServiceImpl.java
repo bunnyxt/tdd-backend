@@ -30,25 +30,8 @@ public class VideoExServiceImpl implements VideoExService {
         int offset = PageNumModfier.calcOffset(ps, pn);
 
         // modify order_by
-        List<String> allowedOrderBy = new ArrayList<>();
-        allowedOrderBy.add("pubdate");
-        allowedOrderBy.add("view");
-        allowedOrderBy.add("danmaku");
-        allowedOrderBy.add("reply");
-        allowedOrderBy.add("favorite");
-        allowedOrderBy.add("coin");
-        allowedOrderBy.add("share");
-        allowedOrderBy.add("like");
-        if (!allowedOrderBy.contains(order_by)) {
-            order_by = "pubdate";
-        }
         if (order_by.equals("like")) {
             order_by = "r.like"; // cannot be like since like is a possible keyword there
-        }
-
-        // modify desc
-        if (desc != 0 && desc != 1) {
-            desc = 1;
         }
 
         return videoExDao.queryVideos(vc, start_ts, end_ts, title, up, order_by, desc, offset, ps);
