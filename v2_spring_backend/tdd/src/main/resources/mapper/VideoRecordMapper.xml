@@ -18,15 +18,54 @@
         id, added, aid, `view`, danmaku, reply, favorite, coin, share, `like`
     </sql>
 
-    <select id="queryVideoRecordsByAid" resultMap="BaseResultMap" parameterType="int">
+    <sql id="BaseColumnListWithA">
+        a.id, a.added, a.aid, a.`view`, a.danmaku, a.reply, a.favorite, a.coin, a.share, a.`like`
+    </sql>
+
+    <select id="queryVideoRecords" resultMap="BaseResultMap" parameterType="int">
         select
-        <include refid="BaseColumnList" />
+        <include refid="BaseColumnListWithA" />
+        from
+        tdd_video_record a
+        join (
+            select
+            id
+            from
+            tdd_video_record
+            <where>
+                <if test="aid > 0">
+                    and aid = #{aid}
+                </if>
+                <if test="start_ts > 0">
+                    and added >= #{start_ts}
+                </if>
+                <if test="end_ts > 0">
+                    and added &lt;= #{end_ts}
+                </if>
+            </where>
+            limit
+            #{offset}, #{ps}
+        ) b
+        on
+        a.id = b.id
+    </select>
+
+    <select id="queryVideoRecordsCount" resultType="Integer">
+        select
+        count(*)
         from
         tdd_video_record
-        where
-        aid = #{aid}
-        order by
-        added
+        <where>
+            <if test="aid > 0">
+                and aid = #{aid}
+            </if>
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+        </where>
     </select>
 
 </mapper>

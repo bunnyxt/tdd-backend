@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface VideoRecordDao {
 
-    List<VideoRecord> queryVideoRecordsByAid(int aid);
+    List<VideoRecord> queryVideoRecords(int aid, int start_ts, int end_ts, int offset, int ps);
+
+    int queryVideoRecordsCount(int aid, int start_ts, int end_ts);
 
 }
