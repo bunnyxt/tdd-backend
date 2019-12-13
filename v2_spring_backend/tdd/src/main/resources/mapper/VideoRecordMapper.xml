@@ -52,7 +52,7 @@
 
     <select id="queryVideoRecordsCount" resultType="Integer">
         select
-        count(*)
+        count(1)
         from
         tdd_video_record
         <where>

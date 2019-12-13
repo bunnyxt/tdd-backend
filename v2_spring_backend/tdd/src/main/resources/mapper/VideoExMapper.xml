@@ -106,7 +106,7 @@
 
     <select id="queryVideosCount" resultType="Integer">
         select
-        count(*)
+        count(1)
         from
         tdd_video as v
         left join
