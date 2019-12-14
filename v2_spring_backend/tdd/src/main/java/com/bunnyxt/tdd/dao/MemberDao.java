@@ -10,4 +10,6 @@ public interface MemberDao {
 
     List<Member> queryMembers(String sex, String name, int offset, int ps);
 
+    int queryMembersCount(String sex, String name);
+
 }

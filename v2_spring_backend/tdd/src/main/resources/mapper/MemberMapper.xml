@@ -37,9 +37,22 @@
                 and INSTR(name, #{name})
             </if>
         </where>
-        order by
-        id
         limit
         #{offset}, #{ps}
+    </select>
+
+    <select id="queryMembersCount" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_member
+        <where>
+            <if test="sex != null and sex.length() > 0">
+                and sex = #{sex}
+            </if>
+            <if test="name != null and name.length() > 0">
+                and INSTR(name, #{name})
+            </if>
+        </where>
     </select>
 </mapper>

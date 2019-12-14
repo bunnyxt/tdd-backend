@@ -22,9 +22,16 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<Member> queryMembers(String sex, String name, int pn, int ps) {
-        PageNumModfier.modifyPs(ps, 20);
-        PageNumModfier.modifyPn(pn);
+        // pn, ps -> offset, ps
+        ps = PageNumModfier.modifyPs(ps, 20);
+        pn = PageNumModfier.modifyPn(pn);
         int offset = PageNumModfier.calcOffset(ps, pn);
+
         return memberDao.queryMembers(sex, name, offset, ps);
+    }
+
+    @Override
+    public int queryMembersCount(String sex, String name) {
+        return memberDao.queryMembersCount(sex, name);
     }
 }
