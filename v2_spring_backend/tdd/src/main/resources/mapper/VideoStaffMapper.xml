@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.VideoStaffDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.VideoStaff">
+        <id column="id" property="id" />
+        <result column="added" property="added" />
+        <result column="aid" property="aid" />
+        <result column="mid" property="mid" />
+        <result column="title" property="title" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id, added, aid, mid, title
+    </sql>
+
+    <select id="queryVideoStaffsByAid" resultMap="BaseResultMap" parameterType="int">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_video_staff
+        where
+        aid = #{aid}
+    </select>
+</mapper>
