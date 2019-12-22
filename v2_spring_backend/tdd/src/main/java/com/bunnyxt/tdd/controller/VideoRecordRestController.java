@@ -20,10 +20,10 @@ public class VideoRecordRestController {
 
     @RequestMapping(value = "/video/{aid}/record", method = RequestMethod.GET)
     public ResponseEntity<List<VideoRecord>> queryVideoRecordsByAid(@PathVariable int aid,
-                                                    @RequestParam(defaultValue = "0") int start_ts,
-                                                    @RequestParam(defaultValue = "0") int end_ts,
-                                                    @RequestParam(defaultValue = "1") int pn,
-                                                    @RequestParam(defaultValue = "25000") int ps)
+                                                                    @RequestParam(defaultValue = "0") int start_ts,
+                                                                    @RequestParam(defaultValue = "0") int end_ts,
+                                                                    @RequestParam(defaultValue = "1") int pn,
+                                                                    @RequestParam(defaultValue = "25000") int ps)
             throws InvalidRequestParameterException {
         return queryVideoRecords(aid, start_ts, end_ts, pn, ps);
     }
