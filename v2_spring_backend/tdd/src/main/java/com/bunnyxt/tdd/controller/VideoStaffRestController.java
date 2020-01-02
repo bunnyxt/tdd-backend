@@ -16,15 +16,15 @@ public class VideoStaffRestController {
     @Autowired
     private VideoStaffService videoStaffService;
 
-    @RequestMapping(value = "/video/{aid}/staff", method = RequestMethod.GET)
-    public List<VideoStaff> queryVideoStaffsByAid(@PathVariable int aid)
-            throws InvalidPropertiesFormatException {
-        // check params
-        if (aid < 0) {
-            throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
-        }
-
-        return videoStaffService.queryVideoStaffsByAid(aid);
-    }
+//    @RequestMapping(value = "/video/{aid}/staff", method = RequestMethod.GET)
+//    public List<VideoStaff> queryVideoStaffsByAid(@PathVariable int aid)
+//            throws InvalidPropertiesFormatException {
+//        // check params
+//        if (aid < 0) {
+//            throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
+//        }
+//
+//        return videoStaffService.queryVideoStaffsByAid(aid);
+//    }
 
 }
