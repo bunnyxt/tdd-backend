@@ -1,6 +1,7 @@
 package com.bunnyxt.tdd.service.impl;
 
 import com.bunnyxt.tdd.dao.VideoExDao;
+import com.bunnyxt.tdd.dao.VideoStaffExDao;
 import com.bunnyxt.tdd.model.VideoEx;
 import com.bunnyxt.tdd.service.VideoExService;
 import com.bunnyxt.tdd.util.PageNumModfier;
@@ -16,9 +17,19 @@ public class VideoExServiceImpl implements VideoExService {
     @Autowired
     private VideoExDao videoExDao;
 
+    @Autowired
+    private VideoStaffExDao videoStaffExDao;
+
     @Override
     public VideoEx queryVideoByAid(int aid) {
-        return videoExDao.queryVideoByAid(aid);
+        VideoEx videoEx = videoExDao.queryVideoByAid(aid);
+
+        // set staff
+        if(videoEx.getHasstaff() == 1) {
+            videoEx.setStaff(videoStaffExDao.queryVideoStaffsByAid(aid));
+        }
+
+        return videoEx;
     }
 
     @Override
@@ -34,7 +45,17 @@ public class VideoExServiceImpl implements VideoExService {
             order_by = "r.like"; // cannot be like since like is a possible keyword there
         }
 
-        return videoExDao.queryVideos(vc, start_ts, end_ts, title, up, order_by, desc, offset, ps);
+        List<VideoEx> videoExList = videoExDao.queryVideos(vc, start_ts, end_ts, title, up, order_by, desc, offset, ps);
+
+        // set staff
+        for (VideoEx videoEx : videoExList) {
+            if (videoEx.getHasstaff() == 1) {
+                int aid = videoEx.getAid();
+                videoEx.setStaff(videoStaffExDao.queryVideoStaffsByAid(aid));
+            }
+        }
+
+        return videoExList;
     }
 
     @Override
