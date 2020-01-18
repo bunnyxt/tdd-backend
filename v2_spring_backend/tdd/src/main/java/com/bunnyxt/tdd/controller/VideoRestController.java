@@ -4,6 +4,7 @@ import com.bunnyxt.tdd.error.InvalidRequestParameterException;
 import com.bunnyxt.tdd.model.Video;
 import com.bunnyxt.tdd.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -14,6 +15,7 @@ public class VideoRestController {
     @Autowired
     private VideoService videoService;
 
+    @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/video/{aid}", method = RequestMethod.PUT)
     public Video updateVideoByAid(@PathVariable int aid, @RequestBody Video video)
             throws InvalidRequestParameterException {
