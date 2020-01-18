@@ -30,4 +30,44 @@
         id, added, aid, videos, tid, tname, copyright, pic, title, pubdate, `desc` description, tags, mid, code, hasstaff, singer, solo, original, employed, isvc, engine, freq
     </sql>
 
+    <select id="queryVideoByAid" resultType="com.bunnyxt.tdd.model.Video">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_video
+        where
+        aid = #{aid}
+    </select>
+    
+    <update id="updateVideoByAid" parameterType="com.bunnyxt.tdd.model.Video">
+        update
+        tdd_video
+        set
+        <!--
+            # these params should be changed only by spiders
+            added = #{video.added},
+            videos = #{video.videos},
+            tid = #{video.tid},
+            tname = #{video.tname},
+            copyright = #{video.copyright},
+            pic = #{video.pic},
+            title = #{video.title},
+            pubdate = #{video.pubdate},
+            desc = #{video.desc},
+            tags = #{video.tags},
+            mid = #{video.mid},
+            code = #{video.code},
+            hasstaff = #{video.hasstaff},
+        -->
+        singer = #{video.singer},
+        solo = #{video.solo},
+        original = #{video.original},
+        employed = #{video.employed},
+        isvc = #{video.isvc},
+        engine = #{video.engine},
+        freq = #{video.freq}
+        where
+        aid = #{aid}
+    </update>
+
 </mapper>
