@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.RoleDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.Role">
+        <result column="r.id" property="id" />
+        <result column="r.name" property="name" />
+        <result column="r.title" property="title" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        r.id, r.name, r.title
+    </sql>
+
+    <select id="queryRolesByUserId" resultType="com.bunnyxt.tdd.model.Role">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_role r
+        join
+        tdd_user_role ur
+        on
+        r.id = ur.roleid
+        where
+        ur.userid = #{userId}
+    </select>
+</mapper>

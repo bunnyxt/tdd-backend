@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.UserDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.User">
+        <result column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="enabled" property="enabled" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id, username, password, enabled
+    </sql>
+
+    <select id="queryUserByUsername" resultType="com.bunnyxt.tdd.model.User">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user
+        where
+        username = #{username}
+    </select>
+</mapper>
