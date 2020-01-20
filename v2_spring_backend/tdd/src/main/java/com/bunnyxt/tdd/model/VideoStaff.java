@@ -2,42 +2,42 @@ package com.bunnyxt.tdd.model;
 
 public class VideoStaff {
 
-    private int id;
-    private int added;
-    private int aid;
-    private int mid;
+    private Long id;
+    private Integer added;
+    private Integer aid;
+    private Integer mid;
     private String title;
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getAdded() {
+    public Integer getAdded() {
         return added;
     }
 
-    public void setAdded(int added) {
+    public void setAdded(Integer added) {
         this.added = added;
     }
 
-    public int getAid() {
+    public Integer getAid() {
         return aid;
     }
 
-    public void setAid(int aid) {
+    public void setAid(Integer aid) {
         this.aid = aid;
     }
 
-    public int getMid() {
+    public Integer getMid() {
         return mid;
     }
 
-    public void setMid(int mid) {
+    public void setMid(Integer mid) {
         this.mid = mid;
     }
 

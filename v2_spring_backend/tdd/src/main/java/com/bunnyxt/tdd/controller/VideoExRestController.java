@@ -20,20 +20,20 @@ public class VideoExRestController {
     private VideoExService videoExService;
 
     @RequestMapping(value = "/video/{aid}", method = RequestMethod.GET)
-    public VideoEx queryVideoByAid(@PathVariable int aid) {
+    public VideoEx queryVideoByAid(@PathVariable Integer aid) {
         return videoExService.queryVideoByAid(aid);
     }
 
     @RequestMapping(value = "/video", method = RequestMethod.GET)
-    public ResponseEntity<List<VideoEx>> queryVideos(@RequestParam(defaultValue = "0") int vc,
-                                                     @RequestParam(defaultValue = "0") int start_ts,
-                                                     @RequestParam(defaultValue = "0") int end_ts,
+    public ResponseEntity<List<VideoEx>> queryVideos(@RequestParam(defaultValue = "0") Integer vc,
+                                                     @RequestParam(defaultValue = "0") Integer start_ts,
+                                                     @RequestParam(defaultValue = "0") Integer end_ts,
                                                      @RequestParam(defaultValue = "") String title,
                                                      @RequestParam(defaultValue = "") String up,
                                                      @RequestParam(defaultValue = "pubdate") String order_by,
-                                                     @RequestParam(defaultValue = "1") int desc,
-                                                     @RequestParam(defaultValue = "1") int pn,
-                                                     @RequestParam(defaultValue = "20") int ps)
+                                                     @RequestParam(defaultValue = "1") Integer desc,
+                                                     @RequestParam(defaultValue = "1") Integer pn,
+                                                     @RequestParam(defaultValue = "20") Integer ps)
             throws InvalidRequestParameterException {
         // check params
         if (vc != 0 && vc != 1) {
@@ -66,7 +66,7 @@ public class VideoExRestController {
         List<VideoEx> list = videoExService.queryVideos(vc, start_ts, end_ts, title, up, order_by, desc, pn, ps);
 
         // get total count
-        int totalCount = videoExService.queryVideosCount(vc, start_ts, end_ts, title, up);
+        Integer totalCount = videoExService.queryVideosCount(vc, start_ts, end_ts, title, up);
 
         // add headers
         HttpHeaders headers = new HttpHeaders();

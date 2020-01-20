@@ -2,7 +2,7 @@ package com.bunnyxt.tdd.util;
 
 public class PageNumModfier {
 
-    public static int modifyPs(int ps, int limit) {
+    public static Integer modifyPs(Integer ps, Integer limit) {
         // modify ps to [0, limit]
         if (ps > limit) {
             ps = limit;
@@ -12,7 +12,7 @@ public class PageNumModfier {
         return ps;
     }
 
-    public static int modifyPn(int pn) {
+    public static Integer modifyPn(Integer pn) {
         // modify pn
         if (pn <= 0) {
             pn = 1;
@@ -20,7 +20,7 @@ public class PageNumModfier {
         return pn;
     }
 
-    public static int calcOffset(int ps, int pn) {
+    public static Integer calcOffset(Integer ps, Integer pn) {
         // calc offset
         return ps * (pn - 1);
     }

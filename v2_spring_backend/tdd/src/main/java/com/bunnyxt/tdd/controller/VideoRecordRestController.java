@@ -19,21 +19,21 @@ public class VideoRecordRestController {
     private VideoRecordService videoRecordService;
 
     @RequestMapping(value = "/video/{aid}/record", method = RequestMethod.GET)
-    public ResponseEntity<List<VideoRecord>> queryVideoRecordsByAid(@PathVariable int aid,
-                                                                    @RequestParam(defaultValue = "0") int start_ts,
-                                                                    @RequestParam(defaultValue = "0") int end_ts,
-                                                                    @RequestParam(defaultValue = "1") int pn,
-                                                                    @RequestParam(defaultValue = "25000") int ps)
+    public ResponseEntity<List<VideoRecord>> queryVideoRecordsByAid(@PathVariable Integer aid,
+                                                                    @RequestParam(defaultValue = "0") Integer start_ts,
+                                                                    @RequestParam(defaultValue = "0") Integer end_ts,
+                                                                    @RequestParam(defaultValue = "1") Integer pn,
+                                                                    @RequestParam(defaultValue = "25000") Integer ps)
             throws InvalidRequestParameterException {
         return queryVideoRecords(aid, start_ts, end_ts, pn, ps);
     }
 
     @RequestMapping(value = "/record", method = RequestMethod.GET)
-    public ResponseEntity<List<VideoRecord>> queryVideoRecords(@RequestParam(defaultValue = "0") int aid,
-                                                               @RequestParam(defaultValue = "0") int start_ts,
-                                                               @RequestParam(defaultValue = "0") int end_ts,
-                                                               @RequestParam(defaultValue = "1") int pn,
-                                                               @RequestParam(defaultValue = "25000") int ps)
+    public ResponseEntity<List<VideoRecord>> queryVideoRecords(@RequestParam(defaultValue = "0") Integer aid,
+                                                               @RequestParam(defaultValue = "0") Integer start_ts,
+                                                               @RequestParam(defaultValue = "0") Integer end_ts,
+                                                               @RequestParam(defaultValue = "1") Integer pn,
+                                                               @RequestParam(defaultValue = "25000") Integer ps)
             throws InvalidRequestParameterException {
         // check params
         if (aid < 0) {
@@ -50,7 +50,7 @@ public class VideoRecordRestController {
         List<VideoRecord> list = videoRecordService.queryVideoRecords(aid, start_ts, end_ts, pn, ps);
 
         // get total count
-        int totalCount = videoRecordService.queryVideoRecordsCount(aid, start_ts, end_ts);
+        Integer totalCount = videoRecordService.queryVideoRecordsCount(aid, start_ts, end_ts);
 
         // add headers
         HttpHeaders headers = new HttpHeaders();

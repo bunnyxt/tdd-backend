@@ -2,71 +2,71 @@ package com.bunnyxt.tdd.model;
 
 public class Video {
 
-    private int id;
-    private int added;
-    private int aid;
-    private int videos;
-    private int tid;
+    private Long id;
+    private Integer added;
+    private Integer aid;
+    private Integer videos;
+    private Integer tid;
     private String tname;
-    private int copyright;
+    private Integer copyright;
     private String pic;
     private String title;
-    private int pubdate;
+    private Integer pubdate;
     private String desc;
     private String tags;
-    private int mid;
-    private int code;
-    private byte hasstaff;
+    private Integer mid;
+    private Integer code;
+    private Byte hasstaff;
     private String singer;
-    private byte solo;
-    private byte original;
-    private int employed;
-    private byte isvc;
-    private byte engine;
-    private byte freq;
+    private Byte solo;
+    private Byte original;
+    private Integer employed;
+    private Byte isvc;
+    private Byte engine;
+    private Byte freq;
 
 
     public Video() {
 
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getAdded() {
+    public Integer getAdded() {
         return added;
     }
 
-    public void setAdded(int added) {
+    public void setAdded(Integer added) {
         this.added = added;
     }
 
-    public int getAid() {
+    public Integer getAid() {
         return aid;
     }
 
-    public void setAid(int aid) {
+    public void setAid(Integer aid) {
         this.aid = aid;
     }
 
-    public int getVideos() {
+    public Integer getVideos() {
         return videos;
     }
 
-    public void setVideos(int videos) {
+    public void setVideos(Integer videos) {
         this.videos = videos;
     }
 
-    public int getTid() {
+    public Integer getTid() {
         return tid;
     }
 
-    public void setTid(int tid) {
+    public void setTid(Integer tid) {
         this.tid = tid;
     }
 
@@ -78,11 +78,11 @@ public class Video {
         this.tname = tname;
     }
 
-    public int getCopyright() {
+    public Integer getCopyright() {
         return copyright;
     }
 
-    public void setCopyright(int copyright) {
+    public void setCopyright(Integer copyright) {
         this.copyright = copyright;
     }
 
@@ -102,11 +102,11 @@ public class Video {
         this.title = title;
     }
 
-    public int getPubdate() {
+    public Integer getPubdate() {
         return pubdate;
     }
 
-    public void setPubdate(int pubdate) {
+    public void setPubdate(Integer pubdate) {
         this.pubdate = pubdate;
     }
 
@@ -126,27 +126,27 @@ public class Video {
         this.tags = tags;
     }
 
-    public int getMid() {
+    public Integer getMid() {
         return mid;
     }
 
-    public void setMid(int mid) {
+    public void setMid(Integer mid) {
         this.mid = mid;
     }
 
-    public int getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 
-    public byte getHasstaff() {
+    public Byte getHasstaff() {
         return hasstaff;
     }
 
-    public void setHasstaff(byte hasstaff) {
+    public void setHasstaff(Byte hasstaff) {
         this.hasstaff = hasstaff;
     }
 
@@ -158,51 +158,51 @@ public class Video {
         this.singer = singer;
     }
 
-    public byte getSolo() {
+    public Byte getSolo() {
         return solo;
     }
 
-    public void setSolo(byte solo) {
+    public void setSolo(Byte solo) {
         this.solo = solo;
     }
 
-    public byte getOriginal() {
+    public Byte getOriginal() {
         return original;
     }
 
-    public void setOriginal(byte original) {
+    public void setOriginal(Byte original) {
         this.original = original;
     }
 
-    public int getEmployed() {
+    public Integer getEmployed() {
         return employed;
     }
 
-    public void setEmployed(int employed) {
+    public void setEmployed(Integer employed) {
         this.employed = employed;
     }
 
-    public byte getIsvc() {
+    public Byte getIsvc() {
         return isvc;
     }
 
-    public void setIsvc(byte isvc) {
+    public void setIsvc(Byte isvc) {
         this.isvc = isvc;
     }
 
-    public byte getEngine() {
+    public Byte getEngine() {
         return engine;
     }
 
-    public void setEngine(byte engine) {
+    public void setEngine(Byte engine) {
         this.engine = engine;
     }
 
-    public byte getFreq() {
+    public Byte getFreq() {
         return freq;
     }
 
-    public void setFreq(byte freq) {
+    public void setFreq(Byte freq) {
         this.freq = freq;
     }
 }

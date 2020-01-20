@@ -3,9 +3,14 @@ package com.bunnyxt.tdd.controller;
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
 import com.bunnyxt.tdd.model.Video;
 import com.bunnyxt.tdd.service.VideoService;
+import com.bunnyxt.tdd.util.ObjUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @CrossOrigin
@@ -17,16 +22,18 @@ public class VideoRestController {
 
     @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/video/{aid}", method = RequestMethod.PUT)
-    public Video updateVideoByAid(@PathVariable int aid, @RequestBody Video video)
-            throws InvalidRequestParameterException {
-        // when use PUT method, you must provide all parameters of video, since all params will be updated
-        // if you only want to change one param, use PATCH method instead
+    public Video updateVideoByAid(@PathVariable Integer aid, @RequestBody Video video)
+            throws InvalidRequestParameterException, IllegalAccessException {
+        // when use PUT method, you could provide multiple parameters of video,
+        // then all provided params will be updated, if they are allowed to be updated
 
-        // check params
-        if (aid != video.getAid()) {
-            throw new InvalidRequestParameterException("aid", aid,
-                    "aid should be same as video.aid provided in request body, which is " + video.getAid());
-        }
+//        // check params
+//        if (!aid.equals(video.getAid())) {
+//            throw new InvalidRequestParameterException("aid", aid,
+//                    "aid should be same as video.aid provided in request body, which is " + video.getAid());
+//        }
+
+//        System.out.println(ObjUtil.objToMap(video));
 
         videoService.updateVideoByAid(aid, video);
 

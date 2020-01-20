@@ -22,7 +22,7 @@
         a.id, a.added, a.aid, a.`view`, a.danmaku, a.reply, a.favorite, a.coin, a.share, a.`like`
     </sql>
 
-    <select id="queryVideoRecords" resultMap="BaseResultMap" parameterType="int">
+    <select id="queryVideoRecords" resultMap="BaseResultMap" parameterType="Integer">
         select
         <include refid="BaseColumnListWithA" />
         from

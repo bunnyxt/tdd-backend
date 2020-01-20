@@ -21,7 +21,7 @@ public class VideoExServiceImpl implements VideoExService {
     private VideoStaffExDao videoStaffExDao;
 
     @Override
-    public VideoEx queryVideoByAid(int aid) {
+    public VideoEx queryVideoByAid(Integer aid) {
         VideoEx videoEx = videoExDao.queryVideoByAid(aid);
 
         // set staff
@@ -33,12 +33,12 @@ public class VideoExServiceImpl implements VideoExService {
     }
 
     @Override
-    public List<VideoEx> queryVideos(int vc, int start_ts, int end_ts, String title, String up,
-                                     String order_by, int desc, int pn, int ps) {
+    public List<VideoEx> queryVideos(Integer vc, Integer start_ts, Integer end_ts, String title, String up,
+                                     String order_by, Integer desc, Integer pn, Integer ps) {
         // pn, ps -> offset, ps
         ps = PageNumModfier.modifyPs(ps, 20);
         pn = PageNumModfier.modifyPn(pn);
-        int offset = PageNumModfier.calcOffset(ps, pn);
+        Integer offset = PageNumModfier.calcOffset(ps, pn);
 
         // modify order_by
         if (order_by.equals("like")) {
@@ -50,7 +50,7 @@ public class VideoExServiceImpl implements VideoExService {
         // set staff
         for (VideoEx videoEx : videoExList) {
             if (videoEx.getHasstaff() == 1) {
-                int aid = videoEx.getAid();
+                Integer aid = videoEx.getAid();
                 videoEx.setStaff(videoStaffExDao.queryVideoStaffsByAid(aid));
             }
         }
@@ -59,7 +59,7 @@ public class VideoExServiceImpl implements VideoExService {
     }
 
     @Override
-    public int queryVideosCount(int vc, int start_ts, int end_ts, String title, String up) {
+    public Integer queryVideosCount(Integer vc, Integer start_ts, Integer end_ts, String title, String up) {
         return videoExDao.queryVideosCount(vc, start_ts, end_ts, title, up);
     }
 }

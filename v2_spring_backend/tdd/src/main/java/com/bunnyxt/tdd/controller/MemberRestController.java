@@ -20,15 +20,15 @@ public class MemberRestController {
     private MemberService memberService;
 
     @RequestMapping(value = "/member/{mid}", method = RequestMethod.GET)
-    public Member queryMemberByMid(@PathVariable int mid) {
+    public Member queryMemberByMid(@PathVariable Integer mid) {
         return memberService.queryMemberByMid(mid);
     }
 
     @RequestMapping(value = "/member", method = RequestMethod.GET)
     public ResponseEntity<List<Member>> queryMembers(@RequestParam(defaultValue = "") String sex,
                                                      @RequestParam(defaultValue = "") String name,
-                                                     @RequestParam(defaultValue = "1") int pn,
-                                                     @RequestParam(defaultValue = "20") int ps)
+                                                     @RequestParam(defaultValue = "1") Integer pn,
+                                                     @RequestParam(defaultValue = "20") Integer ps)
             throws InvalidRequestParameterException {
         // check params
         List<String> allowedSex = new ArrayList<>();
@@ -51,7 +51,7 @@ public class MemberRestController {
         List<Member> list = memberService.queryMembers(sex, name, pn, ps);
 
         // get total count
-        int totalCount = memberService.queryMembersCount(sex, name);
+        Integer totalCount = memberService.queryMembersCount(sex, name);
 
         // add headers
         HttpHeaders headers = new HttpHeaders();

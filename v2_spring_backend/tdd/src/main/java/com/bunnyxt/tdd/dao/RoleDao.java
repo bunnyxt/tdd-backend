@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface RoleDao {
 
-    List<Role> queryRolesByUserId(int userId);
+    List<Role> queryRolesByUserId(Long userId);
 
 }

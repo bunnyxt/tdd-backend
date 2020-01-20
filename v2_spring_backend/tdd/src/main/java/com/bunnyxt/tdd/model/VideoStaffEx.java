@@ -2,17 +2,17 @@ package com.bunnyxt.tdd.model;
 
 public class VideoStaffEx {
 
-    private int mid;
+    private Integer mid;
     private String name;
     private String face;
     private String title;
 
 
-    public int getMid() {
+    public Integer getMid() {
         return mid;
     }
 
-    public void setMid(int mid) {
+    public void setMid(Integer mid) {
         this.mid = mid;
     }
 

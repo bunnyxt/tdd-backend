@@ -15,7 +15,7 @@
         id, added, mid, sex, name, face, sign
     </sql>
 
-    <select id="queryMemberByMid" resultMap="BaseResultMap" parameterType="int">
+    <select id="queryMemberByMid" resultMap="BaseResultMap" parameterType="Integer">
         select
         <include refid="BaseColumnList" />
         from

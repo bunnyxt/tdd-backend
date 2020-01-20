@@ -27,10 +27,11 @@
     </resultMap>
 
     <sql id="BaseColumnList">
-        id, added, aid, videos, tid, tname, copyright, pic, title, pubdate, `desc` description, tags, mid, code, hasstaff, singer, solo, original, employed, isvc, engine, freq
+        id, added, aid, videos, tid, tname, copyright, pic, title, pubdate, `desc` description, tags, mid, code,
+        hasstaff, singer, solo, original, employed, isvc, engine, freq
     </sql>
 
-    <select id="queryVideoByAid" resultType="com.bunnyxt.tdd.model.Video">
+    <select id="queryVideoByAid" resultMap="BaseResultMap">
         select
         <include refid="BaseColumnList" />
         from
@@ -42,7 +43,29 @@
     <update id="updateVideoByAid" parameterType="com.bunnyxt.tdd.model.Video">
         update
         tdd_video
-        set
+        <trim prefix="set" suffixOverrides=",">
+            <if test="video.singer != null">
+                singer = #{video.singer},
+            </if>
+            <if test="video.solo != null">
+                solo = #{video.solo},
+            </if>
+            <if test="video.original != null">
+                original = #{video.original},
+            </if>
+            <if test="video.employed != null">
+                employed = #{video.employed},
+            </if>
+            <if test="video.isvc != null">
+                isvc = #{video.isvc},
+            </if>
+            <if test="video.engine != null">
+                engine = #{video.engine},
+            </if>
+            <if test="video.freq != null">
+                freq = #{video.freq},
+            </if>
+        </trim>
         <!--
             # these params should be changed only by spiders
             added = #{video.added},
@@ -59,13 +82,6 @@
             code = #{video.code},
             hasstaff = #{video.hasstaff},
         -->
-        singer = #{video.singer},
-        solo = #{video.solo},
-        original = #{video.original},
-        employed = #{video.employed},
-        isvc = #{video.isvc},
-        engine = #{video.engine},
-        freq = #{video.freq}
         where
         aid = #{aid}
     </update>

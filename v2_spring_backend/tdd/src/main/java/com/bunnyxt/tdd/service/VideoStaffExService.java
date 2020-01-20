@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface VideoStaffExService {
 
-    List<VideoStaffEx> queryVideoStaffsByAid(int aid);
+    List<VideoStaffEx> queryVideoStaffsByAid(Integer aid);
 }

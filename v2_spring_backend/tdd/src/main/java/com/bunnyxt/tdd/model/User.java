@@ -10,10 +10,10 @@ import java.util.List;
 
 public class User implements UserDetails {
 
-    private int id;
+    private Long id;
     private String username;
     private String password;
-    private boolean enabled;
+    private Boolean enabled;
     private List<Role> roles;
 
     @Override
@@ -55,11 +55,11 @@ public class User implements UserDetails {
         return enabled;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -71,7 +71,7 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 

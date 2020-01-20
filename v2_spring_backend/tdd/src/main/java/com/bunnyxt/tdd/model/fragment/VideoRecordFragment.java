@@ -2,77 +2,77 @@ package com.bunnyxt.tdd.model.fragment;
 
 public class VideoRecordFragment {
 
-    private int added;
-    private int view;
-    private int danmaku;
-    private int reply;
-    private int favorite;
-    private int coin;
-    private int share;
-    private int like;
+    private Integer added;
+    private Integer view;
+    private Integer danmaku;
+    private Integer reply;
+    private Integer favorite;
+    private Integer coin;
+    private Integer share;
+    private Integer like;
 
 
-    public int getAdded() {
+    public Integer getAdded() {
         return added;
     }
 
-    public void setAdded(int added) {
+    public void setAdded(Integer added) {
         this.added = added;
     }
 
-    public int getView() {
+    public Integer getView() {
         return view;
     }
 
-    public void setView(int view) {
+    public void setView(Integer view) {
         this.view = view;
     }
 
-    public int getDanmaku() {
+    public Integer getDanmaku() {
         return danmaku;
     }
 
-    public void setDanmaku(int danmaku) {
+    public void setDanmaku(Integer danmaku) {
         this.danmaku = danmaku;
     }
 
-    public int getReply() {
+    public Integer getReply() {
         return reply;
     }
 
-    public void setReply(int reply) {
+    public void setReply(Integer reply) {
         this.reply = reply;
     }
 
-    public int getFavorite() {
+    public Integer getFavorite() {
         return favorite;
     }
 
-    public void setFavorite(int favorite) {
+    public void setFavorite(Integer favorite) {
         this.favorite = favorite;
     }
 
-    public int getCoin() {
+    public Integer getCoin() {
         return coin;
     }
 
-    public void setCoin(int coin) {
+    public void setCoin(Integer coin) {
         this.coin = coin;
     }
 
-    public int getShare() {
+    public Integer getShare() {
         return share;
     }
 
-    public void setShare(int share) {
+    public void setShare(Integer share) {
         this.share = share;
     }
 
-    public int getLike() {
+    public Integer getLike() {
         return like;
     }
 
-    public void setLike(int like) {
+    public void setLike(Integer like) {
         this.like = like;
     }
 

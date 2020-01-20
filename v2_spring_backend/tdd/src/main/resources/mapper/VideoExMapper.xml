@@ -48,7 +48,7 @@
         r.added r_added, r.view, r.danmaku, r.reply, r.favorite, r.coin, r.share, r.like
     </sql>
 
-    <select id="queryVideoByAid" resultMap="BaseResultMap" parameterType="int">
+    <select id="queryVideoByAid" resultMap="BaseResultMap" parameterType="Integer">
         select
         <include refid="BaseColumnList" />
         from

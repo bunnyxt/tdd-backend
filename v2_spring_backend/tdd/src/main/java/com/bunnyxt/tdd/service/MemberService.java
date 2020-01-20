@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface MemberService {
 
-    Member queryMemberByMid(int mid);
+    Member queryMemberByMid(Integer mid);
 
-    List<Member> queryMembers(String sex, String name, int pn, int ps);
+    List<Member> queryMembers(String sex, String name, Integer pn, Integer ps);
 
-    int queryMembersCount(String sex, String name);
+    Integer queryMembersCount(String sex, String name);
 
 }

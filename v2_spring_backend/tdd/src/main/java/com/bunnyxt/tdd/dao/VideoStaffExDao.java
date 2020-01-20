@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface VideoStaffExDao {
 
-    List<VideoStaffEx> queryVideoStaffsByAid(int aid);
+    List<VideoStaffEx> queryVideoStaffsByAid(Integer aid);
 
 }

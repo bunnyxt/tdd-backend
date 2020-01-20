@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface VideoExService {
 
-    VideoEx queryVideoByAid(int aid);
+    VideoEx queryVideoByAid(Integer aid);
 
-    List<VideoEx> queryVideos(int vc, int start_ts, int end_ts, String title, String up, String order_by, int desc,
-                              int pn, int ps);
+    List<VideoEx> queryVideos(Integer vc, Integer start_ts, Integer end_ts, String title, String up, String order_by, Integer desc,
+                              Integer pn, Integer ps);
 
-    int queryVideosCount(int vc, int start_ts, int end_ts, String title, String up);
+    Integer queryVideosCount(Integer vc, Integer start_ts, Integer end_ts, String title, String up);
 }

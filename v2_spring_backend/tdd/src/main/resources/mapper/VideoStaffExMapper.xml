@@ -12,7 +12,7 @@
         a.mid, b.name, b.face, a.title
     </sql>
 
-    <select id="queryVideoStaffsByAid" resultMap="BaseResultMap" parameterType="int">
+    <select id="queryVideoStaffsByAid" resultMap="BaseResultMap" parameterType="Integer">
         select
         <include refid="BaseColumnList" />
         from

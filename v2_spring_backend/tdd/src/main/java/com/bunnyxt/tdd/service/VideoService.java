@@ -4,8 +4,8 @@ import com.bunnyxt.tdd.model.Video;
 
 public interface VideoService {
 
-    void updateVideoByAid(int aid, Video video);
+    void updateVideoByAid(Integer aid, Video video);
 
-    Video queryVideoByAid(int aid);
+    Video queryVideoByAid(Integer aid);
 
 }

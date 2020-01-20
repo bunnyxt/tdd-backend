@@ -17,7 +17,7 @@ public class VideoStaffExRestController {
     private VideoStaffExService videoStaffExService;
 
     @RequestMapping(value = "/video/{aid}/staff", method = RequestMethod.GET)
-    public List<VideoStaffEx> queryVideoStaffsByAid(@PathVariable int aid)
+    public List<VideoStaffEx> queryVideoStaffsByAid(@PathVariable Integer aid)
             throws InvalidPropertiesFormatException {
         // check params
         if (aid < 0) {

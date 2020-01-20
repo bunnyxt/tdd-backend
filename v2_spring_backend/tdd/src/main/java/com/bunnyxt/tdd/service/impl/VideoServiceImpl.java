@@ -13,12 +13,12 @@ public class VideoServiceImpl implements VideoService {
     private VideoDao videoDao;
 
     @Override
-    public void updateVideoByAid(int aid, Video video) {
+    public void updateVideoByAid(Integer aid, Video video) {
         videoDao.updateVideoByAid(aid, video);
     }
 
     @Override
-    public Video queryVideoByAid(int aid) {
+    public Video queryVideoByAid(Integer aid) {
         return videoDao.queryVideoByAid(aid);
     }
 }

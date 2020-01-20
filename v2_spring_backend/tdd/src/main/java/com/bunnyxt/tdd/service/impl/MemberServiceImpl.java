@@ -16,22 +16,22 @@ public class MemberServiceImpl implements MemberService {
     private MemberDao memberDao;
 
     @Override
-    public Member queryMemberByMid(int mid) {
+    public Member queryMemberByMid(Integer mid) {
         return memberDao.queryMemberByMid(mid);
     }
 
     @Override
-    public List<Member> queryMembers(String sex, String name, int pn, int ps) {
+    public List<Member> queryMembers(String sex, String name, Integer pn, Integer ps) {
         // pn, ps -> offset, ps
         ps = PageNumModfier.modifyPs(ps, 20);
         pn = PageNumModfier.modifyPn(pn);
-        int offset = PageNumModfier.calcOffset(ps, pn);
+        Integer offset = PageNumModfier.calcOffset(ps, pn);
 
         return memberDao.queryMembers(sex, name, offset, ps);
     }
 
     @Override
-    public int queryMembersCount(String sex, String name) {
+    public Integer queryMembersCount(String sex, String name) {
         return memberDao.queryMembersCount(sex, name);
     }
 }
