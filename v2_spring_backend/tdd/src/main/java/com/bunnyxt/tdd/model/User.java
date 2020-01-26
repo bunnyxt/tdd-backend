@@ -11,9 +11,14 @@ import java.util.List;
 public class User implements UserDetails {
 
     private Long id;
+    private Integer added;
     private String username;
     private String password;
     private Boolean enabled;
+    private String nickname;
+    private String avatar;
+    private String email;
+    private String phone;
     private List<Role> roles;
 
     @Override
@@ -77,5 +82,45 @@ public class User implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public Integer getAdded() {
+        return added;
+    }
+
+    public void setAdded(Integer added) {
+        this.added = added;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
