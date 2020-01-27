@@ -16,7 +16,6 @@ public class User implements UserDetails {
     private String password;
     private Boolean enabled;
     private String nickname;
-    private String avatar;
     private String email;
     private String phone;
     private List<Role> roles;
@@ -98,14 +97,6 @@ public class User implements UserDetails {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
     }
 
     public String getEmail() {

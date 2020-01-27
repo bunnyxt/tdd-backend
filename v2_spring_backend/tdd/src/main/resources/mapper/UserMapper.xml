@@ -8,7 +8,6 @@
         <result column="password" property="password" />
         <result column="enabled" property="enabled" />
         <result column="nickname" property="nickname" />
-        <result column="avatar" property="avatar" />
         <result column="email" property="email" />
         <result column="phone" property="phone" />
     </resultMap>
