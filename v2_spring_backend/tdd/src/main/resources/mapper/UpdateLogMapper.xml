@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.UpdateLogDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.UpdateLog">
+        <result column="added" property="added" />
+        <result column="`type`" property="type" />
+        <result column="content" property="content" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        added, `type`, content
+    </sql>
+
+    <select id="queryUpdateLogs" resultType="com.bunnyxt.tdd.model.UpdateLog">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_update_log
+        order by
+        added
+        desc
+        <if test="last_count > 0">
+            limit
+            #{last_count}
+        </if>
+    </select>
+</mapper>

@@ -19,10 +19,10 @@ public class StatDailyRestController {
     StatDailyService statDailyService;
 
     @RequestMapping(value = "/statdaily", method = RequestMethod.GET)
-    public ResponseEntity<List<StatDaily>> queryVideos(@RequestParam(defaultValue = "0") Integer start_ts,
-                                                       @RequestParam(defaultValue = "0") Integer end_ts,
-                                                       @RequestParam(defaultValue = "1") Integer pn,
-                                                       @RequestParam(defaultValue = "25000") Integer ps)
+    public ResponseEntity<List<StatDaily>> queryStatDailys(@RequestParam(defaultValue = "0") Integer start_ts,
+                                                           @RequestParam(defaultValue = "0") Integer end_ts,
+                                                           @RequestParam(defaultValue = "1") Integer pn,
+                                                           @RequestParam(defaultValue = "25000") Integer ps)
             throws InvalidRequestParameterException {
         // check params
         if (pn <= 0) {
