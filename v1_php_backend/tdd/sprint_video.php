@@ -59,6 +59,11 @@ foreach($result as $item)
     unset($last_record->like);
     $item->last_record = $last_record;
 
+    // get 1 day before record
+    $one_day_before_record = sprint_video_record_query($item->aid, 0, $last_record->added - 24 * 60 * 60, 1);
+    $one_day_view = $last_record->view - $one_day_before_record->view;
+    $item->one_day_view = $one_day_view;
+
     $count++;
 }
 
