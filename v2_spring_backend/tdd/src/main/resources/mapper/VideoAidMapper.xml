@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.VideoAidDao">
+
+    <select id="queryVideoAidMaxId" resultType="Integer">
+        select
+        id
+        from
+        tdd_video_aid
+        order by
+        id desc
+        limit 1
+    </select>
+
+    <select id="queryVideoAidById" resultType="Integer" parameterType="Integer">
+        select
+        aid
+        from
+        tdd_video_aid
+        where
+        id = #{id}
+    </select>
+
+    <select id="queryVideoAidsByIds" resultType="Integer">
+        select
+        aid
+        from tdd_video_aid
+        where id in
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

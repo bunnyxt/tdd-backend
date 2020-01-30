@@ -1,5 +1,6 @@
 package com.bunnyxt.tdd.controller;
 
+import com.bunnyxt.tdd.dao.VideoAidDao;
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
 import com.bunnyxt.tdd.model.VideoEx;
 import com.bunnyxt.tdd.service.VideoExService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @CrossOrigin
 @RestController
@@ -18,6 +20,9 @@ public class VideoExRestController {
 
     @Autowired
     private VideoExService videoExService;
+
+    @Autowired
+    private VideoAidDao videoAidDao;
 
     @RequestMapping(value = "/video/{aid}", method = RequestMethod.GET)
     public VideoEx queryVideoByAid(@PathVariable Integer aid) {
@@ -74,5 +79,43 @@ public class VideoExRestController {
         headers.add("Access-Control-Allow-Headers", "x-total-count");
         headers.add("Access-Control-Expose-Headers", "x-total-count");
         return new ResponseEntity<>(list, headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/video/random", method = RequestMethod.GET)
+    public List<VideoEx> queryVideosRandom(@RequestParam(defaultValue = "1") Integer count)
+            throws InvalidRequestParameterException {
+        // check params
+        if (count <= 0 || count > 20) {
+            throw new InvalidRequestParameterException("count", count, "count should between 1 and 20");
+        }
+
+        // get max id
+        Integer maxId = videoAidDao.queryVideoAidMaxId();
+
+        // generate random ids
+        if (count > maxId) {
+            count = maxId;
+        }
+        List<Integer> randomIds = new ArrayList<>();
+        Random random = new Random();
+        for (int i = 0; i < count; i++) {
+            Integer randomId = random.nextInt(maxId);
+            if (!randomIds.contains(randomId)) {
+                randomIds.add(randomId);
+            } else {
+                i--;
+            }
+        }
+
+        // get random aids
+        List<Integer> randomAids = videoAidDao.queryVideoAidsByIds(randomIds);
+
+        // get video ex list
+        List<VideoEx> videoExList = new ArrayList<>();
+        for (Integer aid : randomAids) {
+            videoExList.add(videoExService.queryVideoByAid(aid));
+        }
+
+        return videoExList;
     }
 }
