@@ -25,7 +25,7 @@ public class VideoExServiceImpl implements VideoExService {
         VideoEx videoEx = videoExDao.queryVideoByAid(aid);
 
         // set staff
-        if(videoEx.getHasstaff() == 1) {
+        if(videoEx != null && videoEx.getHasstaff() == 1) {
             videoEx.setStaff(videoStaffExDao.queryVideoStaffsByAid(aid));
         }
 
