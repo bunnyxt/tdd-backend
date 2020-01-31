@@ -13,7 +13,7 @@
     </resultMap>
 
     <sql id="BaseColumnList">
-        id, added, username, password, enabled, nickname, avatar, email, phone
+        id, added, username, password, enabled, nickname, email, phone
     </sql>
 
     <select id="queryUserByUsername" resultType="com.bunnyxt.tdd.model.User">
