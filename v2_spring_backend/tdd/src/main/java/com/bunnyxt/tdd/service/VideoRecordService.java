@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface VideoRecordService {
 
-    List<VideoRecord> queryVideoRecords(Integer aid, Integer start_ts, Integer end_ts, Integer pn, Integer ps);
+    List<VideoRecord> queryVideoRecords(Integer aid, Integer start_ts, Integer end_ts,
+                                        Boolean limit, Integer pn, Integer ps);
 
     Integer queryVideoRecordsCount(Integer aid, Integer start_ts, Integer end_ts);
 

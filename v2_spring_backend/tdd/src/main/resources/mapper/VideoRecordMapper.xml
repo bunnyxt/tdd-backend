@@ -43,8 +43,10 @@
                     and added &lt;= #{end_ts}
                 </if>
             </where>
-            limit
-            #{offset}, #{ps}
+            <if test="limit == true">
+                limit
+                #{offset}, #{ps}
+            </if>
         ) b
         on
         a.id = b.id

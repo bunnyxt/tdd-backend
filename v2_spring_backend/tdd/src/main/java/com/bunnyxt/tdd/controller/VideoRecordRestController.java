@@ -47,7 +47,7 @@ public class VideoRecordRestController {
         }
 
         // get list
-        List<VideoRecord> list = videoRecordService.queryVideoRecords(aid, start_ts, end_ts, pn, ps);
+        List<VideoRecord> list = videoRecordService.queryVideoRecords(aid, start_ts, end_ts, true, pn, ps);
 
         // get total count
         Integer totalCount = videoRecordService.queryVideoRecordsCount(aid, start_ts, end_ts);
