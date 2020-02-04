@@ -24,11 +24,13 @@
         <result column="isvc" property="isvc" />
         <result column="engine" property="engine" />
         <result column="freq" property="freq" />
+        <result column="activity" property="activity" />
+        <result column="recent" property="recent" />
     </resultMap>
 
     <sql id="BaseColumnList">
         id, added, aid, videos, tid, tname, copyright, pic, title, pubdate, `desc` description, tags, mid, code,
-        hasstaff, singer, solo, original, employed, isvc, engine, freq
+        hasstaff, singer, solo, original, employed, isvc, engine, freq, activity, recent
     </sql>
 
     <select id="queryVideoByAid" resultMap="BaseResultMap">
@@ -81,6 +83,8 @@
             mid = #{video.mid},
             code = #{video.code},
             hasstaff = #{video.hasstaff},
+            activity = #{video.activity},
+            recent = #{video.recent},
         -->
         where
         aid = #{aid}

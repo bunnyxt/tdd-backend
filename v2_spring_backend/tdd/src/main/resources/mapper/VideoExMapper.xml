@@ -24,6 +24,8 @@
         <result column="isvc" property="isvc" />
         <result column="engine" property="engine" />
         <result column="freq" property="freq" />
+        <result column="activity" property="activity" />
+        <result column="recent" property="recent" />
         <association property="member" javaType="com.bunnyxt.tdd.model.fragment.MemberFragment">
             <result column="sex" property="sex" />
             <result column="name" property="name" />
@@ -44,7 +46,8 @@
 
     <sql id="BaseColumnList">
         v.id, v.added, v.aid, v.videos, v.tid, v.tname, v.copyright, v.pic, v.title, v.pubdate, v.`desc` description, v.tags, v.mid,
-        v.code, v.hasstaff, v.singer, v.solo, v.original, v.employed, v.isvc, v.engine, v.freq, m.sex, m.name, m.face, m.sign,
+        v.code, v.hasstaff, v.singer, v.solo, v.original, v.employed, v.isvc, v.engine, v.freq, v.activity, v.recent,
+        m.sex, m.name, m.face, m.sign,
         r.added r_added, r.view, r.danmaku, r.reply, r.favorite, r.coin, r.share, r.like
     </sql>
 

@@ -24,6 +24,8 @@ public class Video {
     private Byte isvc;
     private Byte engine;
     private Byte freq;
+    private Byte activity;
+    private Byte recent;
 
 
     public Video() {
@@ -204,5 +206,21 @@ public class Video {
 
     public void setFreq(Byte freq) {
         this.freq = freq;
+    }
+
+    public Byte getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Byte activity) {
+        this.activity = activity;
+    }
+
+    public Byte getRecent() {
+        return recent;
+    }
+
+    public void setRecent(Byte recent) {
+        this.recent = recent;
     }
 }
