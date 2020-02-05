@@ -91,6 +91,12 @@
             <if test="end_ts > 0">
                 and v.pubdate &lt;= #{end_ts}
             </if>
+            <if test="activity >= 0 and activity &lt;= 2">
+                and v.activity = #{activity}
+            </if>
+            <if test="recent >= 0 and recent &lt;= 2">
+                and v.recent = #{recent}
+            </if>
             <if test="title != null and title.length() > 0">
                 and INSTR(v.title, #{title})
             </if>
@@ -129,6 +135,12 @@
             </if>
             <if test="end_ts > 0">
                 and v.pubdate &lt;= #{end_ts}
+            </if>
+            <if test="activity >= 0 and activity &lt;= 2">
+                and v.activity = #{activity}
+            </if>
+            <if test="recent >= 0 and recent &lt;= 2">
+                and v.recent = #{recent}
             </if>
             <if test="title != null and title.length() > 0">
                 and INSTR(v.title, #{title})

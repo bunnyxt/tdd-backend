@@ -33,6 +33,8 @@ public class VideoExRestController {
     public ResponseEntity<List<VideoEx>> queryVideos(@RequestParam(defaultValue = "0") Integer vc,
                                                      @RequestParam(defaultValue = "0") Integer start_ts,
                                                      @RequestParam(defaultValue = "0") Integer end_ts,
+                                                     @RequestParam(defaultValue = "-1") Integer activity,
+                                                     @RequestParam(defaultValue = "-1") Integer recent,
                                                      @RequestParam(defaultValue = "") String title,
                                                      @RequestParam(defaultValue = "") String up,
                                                      @RequestParam(defaultValue = "pubdate") String order_by,
@@ -44,18 +46,25 @@ public class VideoExRestController {
         if (vc != 0 && vc != 1) {
             throw new InvalidRequestParameterException("vc", vc, "vc should be 0 or 1");
         }
+        if (activity < -1 || activity > 2) {
+            throw new InvalidRequestParameterException("activity", activity, "activity should be 0 or 1 or 2");
+        }
+        if (recent < -1 || recent > 2) {
+            throw new InvalidRequestParameterException("recent", recent, "recent should be 0 or 1 or 2");
+        }
         if (desc != 0 && desc != 1) {
             throw new InvalidRequestParameterException("desc", desc, "desc should be 0 or 1");
         }
-        List<String> allowedOrderBy = new ArrayList<>();
-        allowedOrderBy.add("pubdate");
-        allowedOrderBy.add("view");
-        allowedOrderBy.add("danmaku");
-        allowedOrderBy.add("reply");
-        allowedOrderBy.add("favorite");
-        allowedOrderBy.add("coin");
-        allowedOrderBy.add("share");
-        allowedOrderBy.add("like");
+        List<String> allowedOrderBy = new ArrayList<String>(){{
+            add("pubdate");
+            add("view");
+            add("danmaku");
+            add("reply");
+            add("favorite");
+            add("coin");
+            add("share");
+            add("like");
+        }};
         if (!allowedOrderBy.contains(order_by)) {
             throw new InvalidRequestParameterException("order_by", order_by,
                     "only support order by " + allowedOrderBy.toString());
@@ -68,10 +77,10 @@ public class VideoExRestController {
         }
 
         // get list
-        List<VideoEx> list = videoExService.queryVideos(vc, start_ts, end_ts, title, up, order_by, desc, pn, ps);
+        List<VideoEx> list = videoExService.queryVideos(vc, start_ts, end_ts, activity, recent, title, up, order_by, desc, pn, ps);
 
         // get total count
-        Integer totalCount = videoExService.queryVideosCount(vc, start_ts, end_ts, title, up);
+        Integer totalCount = videoExService.queryVideosCount(vc, start_ts, end_ts, activity, recent, title, up);
 
         // add headers
         HttpHeaders headers = new HttpHeaders();

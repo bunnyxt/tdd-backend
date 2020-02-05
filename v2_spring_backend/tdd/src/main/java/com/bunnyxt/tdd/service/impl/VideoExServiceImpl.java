@@ -33,8 +33,8 @@ public class VideoExServiceImpl implements VideoExService {
     }
 
     @Override
-    public List<VideoEx> queryVideos(Integer vc, Integer start_ts, Integer end_ts, String title, String up,
-                                     String order_by, Integer desc, Integer pn, Integer ps) {
+    public List<VideoEx> queryVideos(Integer vc, Integer start_ts, Integer end_ts, Integer activity, Integer recent,
+                                     String title, String up, String order_by, Integer desc, Integer pn, Integer ps) {
         // pn, ps -> offset, ps
         ps = PageNumModfier.modifyPs(ps, 20);
         pn = PageNumModfier.modifyPn(pn);
@@ -45,7 +45,7 @@ public class VideoExServiceImpl implements VideoExService {
             order_by = "r.like"; // cannot be like since like is a possible keyword there
         }
 
-        List<VideoEx> videoExList = videoExDao.queryVideos(vc, start_ts, end_ts, title, up, order_by, desc, offset, ps);
+        List<VideoEx> videoExList = videoExDao.queryVideos(vc, start_ts, end_ts, activity, recent, title, up, order_by, desc, offset, ps);
 
         // set staff
         for (VideoEx videoEx : videoExList) {
@@ -59,7 +59,7 @@ public class VideoExServiceImpl implements VideoExService {
     }
 
     @Override
-    public Integer queryVideosCount(Integer vc, Integer start_ts, Integer end_ts, String title, String up) {
-        return videoExDao.queryVideosCount(vc, start_ts, end_ts, title, up);
+    public Integer queryVideosCount(Integer vc, Integer start_ts, Integer end_ts, Integer activity, Integer recent, String title, String up) {
+        return videoExDao.queryVideosCount(vc, start_ts, end_ts, activity, recent, title, up);
     }
 }
