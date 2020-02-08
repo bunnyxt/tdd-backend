@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.VideoAidTitleDao">
+
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.VideoAidTitle">
+        <result column="aid" property="aid" />
+        <result column="title" property="title" />
+    </resultMap>
+
+    <select id="queryVideoAidTitle" resultMap="BaseResultMap" parameterType="Integer">
+        select
+        aid, title
+        from
+        tdd_video
+        where
+        aid like CONCAT(#{aid}, '%')
+        order by
+        aid
+        limit 20
+    </select>
+
+</mapper>
