@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.VideoLogDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.VideoLog">
+        <id column="id" property="id" />
+        <result column="added" property="added" />
+        <result column="aid" property="aid" />
+        <result column="attr" property="attr" />
+        <result column="oldval" property="oldval" />
+        <result column="newval" property="newval" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id, added, aid, attr, oldval, newval
+    </sql>
+
+    <select id="queryVideoLogs" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_video_log
+        <where>
+            <if test="aid > 0">
+                and aid = #{aid}
+            </if>
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+            <if test="attr != null and attr.length() > 0">
+                and attr = #{attr}
+            </if>
+            <if test="oldval != null and oldval.length() > 0">
+                and INSTR(oldval, #{oldval})
+            </if>
+            <if test="newval != null and newval.length() > 0">
+                and INSTR(newval, #{newval})
+            </if>
+        </where>
+        limit
+        #{offset}, #{ps}
+    </select>
+
+    <select id="queryVideoLogsCount" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_video_log
+        <where>
+            <if test="aid > 0">
+                and aid = #{aid}
+            </if>
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+            <if test="attr != null and attr.length() > 0">
+                and attr = #{attr}
+            </if>
+            <if test="oldval != null and oldval.length() > 0">
+                and INSTR(oldval, #{oldval})
+            </if>
+            <if test="newval != null and newval.length() > 0">
+                and INSTR(newval, #{newval})
+            </if>
+        </where>
+    </select>
+
+</mapper>
