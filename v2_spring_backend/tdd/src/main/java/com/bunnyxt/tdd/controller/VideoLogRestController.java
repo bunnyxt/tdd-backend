@@ -30,7 +30,7 @@ public class VideoLogRestController {
             throws InvalidRequestParameterException {
         // check params
         if (aid < 0) {
-            throw new InvalidRequestParameterException("aid", aid, "vc should be greater than 0");
+            throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
         }
         if (pn <= 0) {
             throw new InvalidRequestParameterException("pn", pn, "pn should be greater than 0");
