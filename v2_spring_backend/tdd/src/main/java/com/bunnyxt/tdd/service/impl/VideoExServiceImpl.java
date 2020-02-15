@@ -62,4 +62,34 @@ public class VideoExServiceImpl implements VideoExService {
     public Integer queryVideosCount(Integer vc, Integer start_ts, Integer end_ts, Integer activity, Integer recent, String title, String up) {
         return videoExDao.queryVideosCount(vc, start_ts, end_ts, activity, recent, title, up);
     }
+
+    @Override
+    public List<VideoEx> queryVideosByMid(Integer mid, String order_by, Integer desc, Integer pn, Integer ps) {
+        // pn, ps -> offset, ps
+        ps = PageNumModfier.modifyPs(ps, 20);
+        pn = PageNumModfier.modifyPn(pn);
+        Integer offset = PageNumModfier.calcOffset(ps, pn);
+
+        // modify order_by
+        if (order_by.equals("like")) {
+            order_by = "r.like"; // cannot be like since like is a possible keyword there
+        }
+
+        List<VideoEx> videoExList = videoExDao.queryVideosByMid(mid, order_by, desc, offset, ps, false);
+
+        // set staff
+        for (VideoEx videoEx : videoExList) {
+            if (videoEx.getHasstaff() == 1) {
+                Integer aid = videoEx.getAid();
+                videoEx.setStaff(videoStaffExDao.queryVideoStaffsByAid(aid));
+            }
+        }
+
+        return videoExList;
+    }
+
+    @Override
+    public Integer queryVideosByMidCount(Integer mid) {
+        return videoExDao.queryVideosByMidCount(mid);
+    }
 }

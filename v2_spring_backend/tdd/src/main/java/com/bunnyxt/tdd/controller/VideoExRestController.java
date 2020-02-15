@@ -127,4 +127,54 @@ public class VideoExRestController {
 
         return videoExList;
     }
+
+    @RequestMapping(value = "/member/{mid}/video", method = RequestMethod.GET)
+    public ResponseEntity<List<VideoEx>> queryVideosByMid(@PathVariable Integer mid,
+                                          @RequestParam(defaultValue = "pubdate") String order_by,
+                                          @RequestParam(defaultValue = "1") Integer desc,
+                                          @RequestParam(defaultValue = "1") Integer pn,
+                                          @RequestParam(defaultValue = "20") Integer ps)
+            throws InvalidRequestParameterException {
+        // check params
+        if (mid <= 0) {
+            throw new InvalidRequestParameterException("mid", mid, "mid should be greater than 0");
+        }
+        if (desc != 0 && desc != 1) {
+            throw new InvalidRequestParameterException("desc", desc, "desc should be 0 or 1");
+        }
+        List<String> allowedOrderBy = new ArrayList<String>() {{
+            add("pubdate");
+            add("view");
+            add("danmaku");
+            add("reply");
+            add("favorite");
+            add("coin");
+            add("share");
+            add("like");
+        }};
+        if (!allowedOrderBy.contains(order_by)) {
+            throw new InvalidRequestParameterException("order_by", order_by,
+                    "only support order by " + allowedOrderBy.toString());
+        }
+        if (pn <= 0) {
+            throw new InvalidRequestParameterException("pn", pn, "pn should be greater than 0");
+        }
+        if (ps <= 0 || ps > 20) {
+            throw new InvalidRequestParameterException("ps", ps, "ps should between 1 and 20");
+        }
+
+        // get list
+        List<VideoEx> list = videoExService.queryVideosByMid(mid, order_by, desc, pn, ps);
+
+        // get total count
+        Integer totalCount = videoExService.queryVideosByMidCount(mid);
+
+        // add headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("x-total-count", String.valueOf(totalCount));
+        headers.add("Access-Control-Allow-Headers", "x-total-count");
+        headers.add("Access-Control-Expose-Headers", "x-total-count");
+        return new ResponseEntity<>(list, headers, HttpStatus.OK);
+    }
+
 }
