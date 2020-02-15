@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.MemberExDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.MemberEx">
+        <id column="id" property="id" />
+        <result column="added" property="added" />
+        <result column="mid" property="mid" />
+        <result column="sex" property="sex" />
+        <result column="name" property="name" />
+        <result column="face" property="face" />
+        <result column="sign" property="sign" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id, added, mid, sex, name, face, sign
+    </sql>
+
+    <select id="queryMemberByMid" resultMap="BaseResultMap" parameterType="Integer">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_member
+        where
+        mid = #{mid}
+    </select>
+
+    <select id="queryMembers" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_member
+        <where>
+            <if test="sex != null and sex.length() > 0">
+                and sex = #{sex}
+            </if>
+            <if test="name != null and name.length() > 0">
+                and INSTR(name, #{name})
+            </if>
+        </where>
+        limit
+        #{offset}, #{ps}
+    </select>
+
+    <select id="queryMembersCount" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_member
+        <where>
+            <if test="sex != null and sex.length() > 0">
+                and sex = #{sex}
+            </if>
+            <if test="name != null and name.length() > 0">
+                and INSTR(name, #{name})
+            </if>
+        </where>
+    </select>
+</mapper>
