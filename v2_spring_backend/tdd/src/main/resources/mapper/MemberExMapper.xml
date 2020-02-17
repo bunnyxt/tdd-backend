@@ -34,7 +34,7 @@
                 and sex = #{sex}
             </if>
             <if test="name != null and name.length() > 0">
-                and INSTR(name, #{name})
+                and INSTR(lower(name), lower(#{name}))
             </if>
         </where>
         limit
@@ -51,7 +51,7 @@
                 and sex = #{sex}
             </if>
             <if test="name != null and name.length() > 0">
-                and INSTR(name, #{name})
+                and INSTR(lower(name), lower(#{name}))
             </if>
         </where>
     </select>

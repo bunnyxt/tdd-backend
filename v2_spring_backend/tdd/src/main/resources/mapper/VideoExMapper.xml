@@ -121,10 +121,10 @@
                 and v.recent = #{recent}
             </if>
             <if test="title != null and title.length() > 0">
-                and INSTR(v.title, #{title})
+                and INSTR(lower(v.title), lower(#{title}))
             </if>
             <if test="up != null and up.length() > 0">
-                and INSTR(m.name, #{up})
+                and INSTR(lower(m.name), lower(#{up}))
             </if>
         </where>
         order by
@@ -166,10 +166,10 @@
                 and v.recent = #{recent}
             </if>
             <if test="title != null and title.length() > 0">
-                and INSTR(v.title, #{title})
+                and INSTR(lower(v.title), lower(#{title}))
             </if>
             <if test="up != null and up.length() > 0">
-                and INSTR(m.name, #{up})
+                and INSTR(lower(m.name), lower(#{up}))
             </if>
         </where>
     </select>
