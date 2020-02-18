@@ -75,7 +75,7 @@ public class VideoExServiceImpl implements VideoExService {
             order_by = "r.like"; // cannot be like since like is a possible keyword there
         }
 
-        List<VideoEx> videoExList = videoExDao.queryVideosByMid(mid, order_by, desc, offset, ps, false);
+        List<VideoEx> videoExList = videoExDao.queryVideosByMid(mid, order_by, desc, offset, ps);
 
         // set staff
         for (VideoEx videoEx : videoExList) {
