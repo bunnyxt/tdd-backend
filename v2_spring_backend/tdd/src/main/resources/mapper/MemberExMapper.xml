@@ -27,10 +27,8 @@
                 <result column="r_like" property="like" />
             </association>
         </association>
-        <association property="last_total_stat" javaType="com.bunnyxt.tdd.model.MemberTotalStatRecord">
-            <result column="sr_id" property="id" />
+        <association property="last_total_stat" javaType="com.bunnyxt.tdd.model.fragment.MemberTotalStatRecordFragment">
             <result column="sr_added" property="added" />
-            <result column="sr_mid" property="mid" />
             <result column="sr_video_count" property="video_count" />
             <result column="sr_view" property="view" />
             <result column="sr_danmaku" property="danmaku" />
@@ -40,10 +38,8 @@
             <result column="sr_share" property="share" />
             <result column="sr_like" property="like" />
         </association>
-        <association property="last_follower" javaType="com.bunnyxt.tdd.model.MemberFollowerRecord">
-            <result column="fr_id" property="id" />
+        <association property="last_follower" javaType="com.bunnyxt.tdd.model.fragment.MemberFollowerRecordFragment">
             <result column="fr_added" property="added" />
-            <result column="fr_mid" property="mid" />
             <result column="fr_follower" property="follower" />
         </association>
     </resultMap>
@@ -52,9 +48,9 @@
         m.id, m.added, m.mid, m.sex, m.name, m.face, m.sign, m.video_count,
         v.aid v_aid, v.pic v_pic, v.title v_title, v.pubdate v_pubdate, v.mid v_mid,
         r.added r_added, r.view r_view, r.danmaku r_danmaku, r.reply r_reply, r.favorite r_favorite, r.coin r_coin, r.share r_share, r.like r_like,
-        sr.id sr_id, sr.added sr_added, sr.mid sr_mid, sr.video_count sr_video_count, sr.view sr_view, sr.danmaku sr_danmaku,
-        sr.reply sr_reply, sr.favorite sr_favorite, sr.coin sr_coin, sr.share sr_share, sr.like sr_like,
-        fr.id fr_id, fr.added fr_added, fr.mid fr_mid, fr.follower fr_follower
+        sr.added sr_added, sr.video_count sr_video_count, sr.view sr_view, sr.danmaku sr_danmaku,
+            sr.reply sr_reply, sr.favorite sr_favorite, sr.coin sr_coin, sr.share sr_share, sr.like sr_like,
+        fr.added fr_added, fr.follower fr_follower
     </sql>
 
     <select id="queryMemberByMid" resultMap="BaseResultMap" parameterType="Integer">
