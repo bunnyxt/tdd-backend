@@ -69,11 +69,6 @@
         r.added r_added, r.view, r.danmaku, r.reply, r.favorite, r.coin, r.share, r.like
     </sql>
 
-    <sql id="VideoFragmentColumnList">
-        v.aid, v.pic, v.title, v.pubdate, v.mid,
-        r.added r_added, r.view, r.danmaku, r.reply, r.favorite, r.coin, r.share, r.like
-    </sql>
-
     <select id="queryVideoByAid" resultMap="BaseResultMap" parameterType="Integer">
         select
         <include refid="BaseColumnList" />
@@ -199,39 +194,6 @@
         v.aid = s.aid
         where
         v.mid = #{mid} || s.mid = #{mid}
-        )
-        order by
-        ${order_by}
-        <if test="desc == 1">
-            desc
-        </if>
-        <if test="showAll == false">
-            limit
-            #{offset}, #{ps}
-        </if>
-    </select>
-
-    <select id="queryVideosByMidSimplified" resultMap="VideoFragmentResultMap">
-        select
-        <include refid="VideoFragmentColumnList" />
-        from
-        tdd_video as v
-        left join
-        tdd_video_record as r
-        on
-        v.laststat = r.id
-        where
-        v.aid in (
-            select
-            distinct(v.aid)
-            from
-            tdd_video v
-            left join
-            tdd_video_staff s
-            on
-            v.aid = s.aid
-            where
-            v.mid = #{mid} || s.mid = #{mid}
         )
         order by
         ${order_by}

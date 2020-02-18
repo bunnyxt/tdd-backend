@@ -19,9 +19,6 @@ public interface VideoExDao {
     List<VideoEx> queryVideosByMid(Integer mid,
                                    String order_by, Integer desc, Integer offset, Integer ps, Boolean showAll);
 
-    List<VideoFragment> queryVideosByMidSimplified(Integer mid,
-                                                   String order_by, Integer desc, Integer offset, Integer ps, Boolean showAll);
-
     Integer queryVideosByMidCount(Integer mid);
 
 }
