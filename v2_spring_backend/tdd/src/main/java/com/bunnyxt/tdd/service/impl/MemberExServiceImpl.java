@@ -25,47 +25,9 @@ public class MemberExServiceImpl implements MemberExService {
     @Autowired
     VideoStaffExDao videoStaffExDao;
 
-    private void extendMember(MemberEx memberEx) {
-        // get videoExList
-        List<VideoFragment> videoFragmentList = videoExDao.queryVideosByMidSimplified(
-                memberEx.getMid(), "pubdate", 1, -1, -1, true);
-
-
-        // videoCount
-        memberEx.setVideoCount(videoFragmentList.size());
-
-        // videoViewCount mostViewedVideo
-        Integer videoViewCount = 0;
-        Integer mostViewedVideoView = 0;
-        VideoFragment mostViewedVideo = null;
-        for (VideoFragment videoFragment: videoFragmentList) {
-            VideoRecordFragment laststat = videoFragment.getLaststat();
-            if (laststat != null) {
-                Integer view = laststat.getView();
-                if (view > mostViewedVideoView) {
-                    mostViewedVideo = videoFragment;
-                    mostViewedVideoView = view;
-                }
-                videoViewCount += view;
-            }
-        }
-        memberEx.setVideoViewCount(videoViewCount);
-        memberEx.setMostViewedVideo(mostViewedVideo);
-
-        // latestIssuedVideo
-        if (videoFragmentList.size() > 0) {
-            memberEx.setLatestIssuedVideo(videoFragmentList.get(0));
-        }
-    }
-
     @Override
     public MemberEx queryMemberByMid(Integer mid) {
-
-        MemberEx memberEx = memberExDao.queryMemberByMid(mid);
-
-        extendMember(memberEx);
-
-        return memberEx;
+        return memberExDao.queryMemberByMid(mid);
     }
 
     @Override
@@ -75,14 +37,7 @@ public class MemberExServiceImpl implements MemberExService {
         pn = PageNumModfier.modifyPn(pn);
         Integer offset = PageNumModfier.calcOffset(ps, pn);
 
-        List<MemberEx> memberExList = memberExDao.queryMembers(sex, name, offset, ps);
-
-        for (MemberEx memberEx: memberExList) {
-            extendMember(memberEx);
-//            System.out.println(memberEx.getMid() + " extended!");
-        }
-
-        return memberExList;
+        return memberExDao.queryMembers(sex, name, offset, ps);
     }
 
     @Override
