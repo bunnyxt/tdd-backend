@@ -87,6 +87,11 @@
                 and INSTR(lower(m.name), lower(#{name}))
             </if>
         </where>
+        order by
+        ${order_by}
+        <if test="desc == 1">
+            desc
+        </if>
         limit
         #{offset}, #{ps}
     </select>

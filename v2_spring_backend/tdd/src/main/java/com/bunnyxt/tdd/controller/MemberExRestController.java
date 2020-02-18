@@ -27,6 +27,8 @@ public class MemberExRestController {
     @RequestMapping(value = "/member", method = RequestMethod.GET)
     public ResponseEntity<List<MemberEx>> queryMembers(@RequestParam(defaultValue = "") String sex,
                                                        @RequestParam(defaultValue = "") String name,
+                                                       @RequestParam(defaultValue = "sr_view") String order_by,
+                                                       @RequestParam(defaultValue = "1") Integer desc,
                                                        @RequestParam(defaultValue = "1") Integer pn,
                                                        @RequestParam(defaultValue = "20") Integer ps)
             throws InvalidRequestParameterException {
@@ -41,6 +43,33 @@ public class MemberExRestController {
                 throw new InvalidRequestParameterException("sex", sex, "sex should in " + allowedSex.toString());
             }
         }
+        List<String> allowedOrderBy = new ArrayList<String>(){{
+            add("mid");
+            add("video_count");
+            add("v_pubdate");
+            add("r_view");
+            add("r_danmaku");
+            add("r_reply");
+            add("r_favorite");
+            add("r_coin");
+            add("r_share");
+            add("r_like");
+            add("sr_view");
+            add("sr_danmaku");
+            add("sr_reply");
+            add("sr_favorite");
+            add("sr_coin");
+            add("sr_share");
+            add("sr_like");
+            add("fr_follower");
+        }};
+        if (!allowedOrderBy.contains(order_by)) {
+            throw new InvalidRequestParameterException("order_by", order_by,
+                    "only support order by " + allowedOrderBy.toString());
+        }
+        if (desc != 0 && desc != 1) {
+            throw new InvalidRequestParameterException("desc", desc, "desc should be 0 or 1");
+        }
         if (pn <= 0) {
             throw new InvalidRequestParameterException("pn", pn, "pn should be greater than 0");
         }
@@ -49,7 +78,7 @@ public class MemberExRestController {
         }
 
         // get list
-        List<MemberEx> list = memberExService.queryMembers(sex, name, pn, ps);
+        List<MemberEx> list = memberExService.queryMembers(sex, name, order_by, desc, pn, ps);
 
         // get total count
         Integer totalCount = memberExService.queryMembersCount(sex, name);

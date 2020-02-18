@@ -19,25 +19,19 @@ public class MemberExServiceImpl implements MemberExService {
     @Autowired
     MemberExDao memberExDao;
 
-    @Autowired
-    VideoExDao videoExDao;
-
-    @Autowired
-    VideoStaffExDao videoStaffExDao;
-
     @Override
     public MemberEx queryMemberByMid(Integer mid) {
         return memberExDao.queryMemberByMid(mid);
     }
 
     @Override
-    public List<MemberEx> queryMembers(String sex, String name, Integer pn, Integer ps) {
+    public List<MemberEx> queryMembers(String sex, String name, String order_by, Integer desc, Integer pn, Integer ps) {
         // pn, ps -> offset, ps
         ps = PageNumModfier.modifyPs(ps, 20);
         pn = PageNumModfier.modifyPn(pn);
         Integer offset = PageNumModfier.calcOffset(ps, pn);
 
-        return memberExDao.queryMembers(sex, name, offset, ps);
+        return memberExDao.queryMembers(sex, name, order_by, desc, offset, ps);
     }
 
     @Override

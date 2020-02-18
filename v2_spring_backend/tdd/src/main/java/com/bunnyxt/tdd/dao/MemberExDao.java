@@ -8,7 +8,8 @@ public interface MemberExDao {
 
     MemberEx queryMemberByMid(Integer mid);
 
-    List<MemberEx> queryMembers(String sex, String name, Integer offset, Integer ps);
+    List<MemberEx> queryMembers(String sex, String name,
+                                String order_by, Integer desc, Integer offset, Integer ps);
 
     Integer queryMembersCount(String sex, String name);
 }

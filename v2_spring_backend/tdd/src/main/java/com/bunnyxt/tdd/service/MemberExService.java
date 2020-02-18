@@ -8,7 +8,7 @@ public interface MemberExService {
 
     MemberEx queryMemberByMid(Integer mid);
 
-    List<MemberEx> queryMembers(String sex, String name, Integer pn, Integer ps);
+    List<MemberEx> queryMembers(String sex, String name, String order_by, Integer desc, Integer pn, Integer ps);
 
     Integer queryMembersCount(String sex, String name);
 }
