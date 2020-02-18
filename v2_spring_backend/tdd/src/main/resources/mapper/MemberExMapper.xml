@@ -9,32 +9,82 @@
         <result column="name" property="name" />
         <result column="face" property="face" />
         <result column="sign" property="sign" />
+        <result column="video_count" property="video_count" />
+        <association property="last_video" javaType="com.bunnyxt.tdd.model.fragment.VideoFragment">
+            <result column="v_aid" property="aid" />
+            <result column="v_pic" property="pic" />
+            <result column="v_title" property="title" />
+            <result column="v_pubdate" property="pubdate" />
+            <result column="v_mid" property="mid" />
+            <association property="laststat" javaType="com.bunnyxt.tdd.model.fragment.VideoRecordFragment">
+                <result column="r_added" property="added" />
+                <result column="r_view" property="view" />
+                <result column="r_danmaku" property="danmaku" />
+                <result column="r_reply" property="reply" />
+                <result column="r_favorite" property="favorite" />
+                <result column="r_coin" property="coin" />
+                <result column="r_share" property="share" />
+                <result column="r_like" property="like" />
+            </association>
+        </association>
+        <association property="last_total_stat" javaType="com.bunnyxt.tdd.model.MemberTotalStatRecord">
+            <result column="sr_id" property="id" />
+            <result column="sr_added" property="added" />
+            <result column="sr_mid" property="mid" />
+            <result column="sr_video_count" property="video_count" />
+            <result column="sr_view" property="view" />
+            <result column="sr_danmaku" property="danmaku" />
+            <result column="sr_reply" property="reply" />
+            <result column="sr_favorite" property="favorite" />
+            <result column="sr_coin" property="coin" />
+            <result column="sr_share" property="share" />
+            <result column="sr_like" property="like" />
+        </association>
+        <association property="last_follower" javaType="com.bunnyxt.tdd.model.MemberFollowerRecord">
+            <result column="fr_id" property="id" />
+            <result column="fr_added" property="added" />
+            <result column="fr_mid" property="mid" />
+            <result column="fr_follower" property="follower" />
+        </association>
     </resultMap>
 
     <sql id="BaseColumnList">
-        id, added, mid, sex, name, face, sign
+        m.id, m.added, m.mid, m.sex, m.name, m.face, m.sign, m.video_count,
+        v.aid v_aid, v.pic v_pic, v.title v_title, v.pubdate v_pubdate, v.mid v_mid,
+        r.added r_added, r.view r_view, r.danmaku r_danmaku, r.reply r_reply, r.favorite r_favorite, r.coin r_coin, r.share r_share, r.like r_like,
+        sr.id sr_id, sr.added sr_added, sr.mid sr_mid, sr.video_count sr_video_count, sr.view sr_view, sr.danmaku sr_danmaku,
+        sr.reply sr_reply, sr.favorite sr_favorite, sr.coin sr_coin, sr.share sr_share, sr.like sr_like,
+        fr.id fr_id, fr.added fr_added, fr.mid fr_mid, fr.follower fr_follower
     </sql>
 
     <select id="queryMemberByMid" resultMap="BaseResultMap" parameterType="Integer">
         select
         <include refid="BaseColumnList" />
         from
-        tdd_member
+        tdd_member m
+        left join tdd_video v on m.last_video = v.id
+        left join tdd_video_record r on v.laststat = r.id
+        left join tdd_member_total_stat_record sr on m.last_total_stat = sr.id
+        left join tdd_member_follower_record fr on m.last_follower = fr.id
         where
-        mid = #{mid}
+        m.mid = #{mid}
     </select>
 
     <select id="queryMembers" resultMap="BaseResultMap">
         select
         <include refid="BaseColumnList" />
         from
-        tdd_member
+        tdd_member m
+        left join tdd_video v on m.last_video = v.id
+        left join tdd_video_record r on v.laststat = r.id
+        left join tdd_member_total_stat_record sr on m.last_total_stat = sr.id
+        left join tdd_member_follower_record fr on m.last_follower = fr.id
         <where>
             <if test="sex != null and sex.length() > 0">
-                and sex = #{sex}
+                and m.sex = #{sex}
             </if>
             <if test="name != null and name.length() > 0">
-                and INSTR(lower(name), lower(#{name}))
+                and INSTR(lower(m.name), lower(#{name}))
             </if>
         </where>
         limit
@@ -45,13 +95,17 @@
         select
         count(1)
         from
-        tdd_member
+        tdd_member m
+        left join tdd_video v on m.last_video = v.id
+        left join tdd_video_record r on v.laststat = r.id
+        left join tdd_member_total_stat_record sr on m.last_total_stat = sr.id
+        left join tdd_member_follower_record fr on m.last_follower = fr.id
         <where>
             <if test="sex != null and sex.length() > 0">
-                and sex = #{sex}
+                and m.sex = #{sex}
             </if>
             <if test="name != null and name.length() > 0">
-                and INSTR(lower(name), lower(#{name}))
+                and INSTR(lower(m.name), lower(#{name}))
             </if>
         </where>
     </select>
