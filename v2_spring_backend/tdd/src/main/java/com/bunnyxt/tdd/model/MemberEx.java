@@ -4,40 +4,40 @@ import com.bunnyxt.tdd.model.fragment.VideoFragment;
 
 public class MemberEx extends Member {
 
-    private Integer videoCount;
-    private Integer videoViewCount;
-    private VideoFragment latestIssuedVideo;
-    private VideoFragment mostViewedVideo;
+    private Integer video_count;
+    private VideoFragment last_video;
+    private MemberTotalStatRecord last_total_stat;
+    private MemberFollowerRecord last_follower;
 
-    public Integer getVideoCount() {
-        return videoCount;
+    public Integer getVideo_count() {
+        return video_count;
     }
 
-    public void setVideoCount(Integer videoCount) {
-        this.videoCount = videoCount;
+    public void setVideo_count(Integer video_count) {
+        this.video_count = video_count;
     }
 
-    public Integer getVideoViewCount() {
-        return videoViewCount;
+    public VideoFragment getLast_video() {
+        return last_video;
     }
 
-    public void setVideoViewCount(Integer videoViewCount) {
-        this.videoViewCount = videoViewCount;
+    public void setLast_video(VideoFragment last_video) {
+        this.last_video = last_video;
     }
 
-    public VideoFragment getLatestIssuedVideo() {
-        return latestIssuedVideo;
+    public MemberTotalStatRecord getLast_total_stat() {
+        return last_total_stat;
     }
 
-    public void setLatestIssuedVideo(VideoFragment latestIssuedVideo) {
-        this.latestIssuedVideo = latestIssuedVideo;
+    public void setLast_total_stat(MemberTotalStatRecord last_total_stat) {
+        this.last_total_stat = last_total_stat;
     }
 
-    public VideoFragment getMostViewedVideo() {
-        return mostViewedVideo;
+    public MemberFollowerRecord getLast_follower() {
+        return last_follower;
     }
 
-    public void setMostViewedVideo(VideoFragment mostViewedVideo) {
-        this.mostViewedVideo = mostViewedVideo;
+    public void setLast_follower(MemberFollowerRecord last_follower) {
+        this.last_follower = last_follower;
     }
 }
