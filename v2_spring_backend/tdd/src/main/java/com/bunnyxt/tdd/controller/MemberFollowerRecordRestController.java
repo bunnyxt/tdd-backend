@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-public class MemberFollowerRecordController {
+public class MemberFollowerRecordRestController {
 
     @Autowired
     MemberFollowerRecordService memberFollowerRecordService;
