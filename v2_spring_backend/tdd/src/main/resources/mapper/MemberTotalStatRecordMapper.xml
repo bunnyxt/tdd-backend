@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.MemberTotalStatRecordDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.MemberTotalStatRecord">
+        <result column="id" property="id" />
+        <result column="added" property="added" />
+        <result column="mid" property="mid" />
+        <result column="video_count" property="video_count" />
+        <result column="view" property="view" />
+        <result column="danmaku" property="danmaku" />
+        <result column="reply" property="reply" />
+        <result column="favorite" property="favorite" />
+        <result column="coin" property="coin" />
+        <result column="share" property="share" />
+        <result column="`like`" property="like" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id, added, mid, video_count, view, danmaku, reply, favorite, coin, share, `like`
+    </sql>
+
+    <sql id="BaseColumnListWithA">
+        a.id, a.added, a.mid, a.video_count, a.view, a.danmaku, a.reply, a.favorite, a.coin, a.share, a.`like`
+    </sql>
+
+    <select id="queryMemberTotalStatRecords" resultMap="BaseResultMap" parameterType="Integer">
+        select
+        <include refid="BaseColumnListWithA" />
+        from
+        tdd_member_total_stat_record a
+        join (
+        select
+        id
+        from
+        tdd_member_total_stat_record
+        <where>
+            <if test="mid > 0">
+                and mid = #{mid}
+            </if>
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+        </where>
+        limit
+        #{offset}, #{ps}
+        ) b
+        on
+        a.id = b.id
+    </select>
+
+    <select id="queryMemberTotalStatRecordsCount" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_member_total_stat_record
+        <where>
+            <if test="mid > 0">
+                and mid = #{mid}
+            </if>
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+        </where>
+    </select>
+
+</mapper>
