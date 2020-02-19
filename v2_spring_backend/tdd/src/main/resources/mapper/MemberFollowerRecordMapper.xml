@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.MemberFollowerRecordDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.MemberFollowerRecord">
+        <result column="id" property="id" />
+        <result column="added" property="added" />
+        <result column="mid" property="mid" />
+        <result column="follower" property="follower" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id, added, mid, follower
+    </sql>
+
+    <sql id="BaseColumnListWithA">
+        a.id, a.added, a.mid, a.follower
+    </sql>
+
+    <select id="queryMemberFollowerRecords" resultMap="BaseResultMap" parameterType="Integer">
+        select
+        <include refid="BaseColumnListWithA" />
+        from
+        tdd_member_follower_record a
+        join (
+        select
+        id
+        from
+        tdd_member_follower_record
+        <where>
+            <if test="mid > 0">
+                and mid = #{mid}
+            </if>
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+        </where>
+        limit
+        #{offset}, #{ps}
+        ) b
+        on
+        a.id = b.id
+    </select>
+
+    <select id="queryMemberFollowerRecordsCount" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_member_follower_record
+        <where>
+            <if test="mid > 0">
+                and mid = #{mid}
+            </if>
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+        </where>
+    </select>
+
+</mapper>
