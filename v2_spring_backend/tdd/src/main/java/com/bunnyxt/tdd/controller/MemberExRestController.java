@@ -1,5 +1,6 @@
 package com.bunnyxt.tdd.controller;
 
+import com.bunnyxt.tdd.dao.MemberMidDao;
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
 import com.bunnyxt.tdd.model.MemberEx;
 import com.bunnyxt.tdd.service.MemberExService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @CrossOrigin
 @RestController
@@ -18,6 +20,9 @@ public class MemberExRestController {
 
     @Autowired
     private MemberExService memberExService;
+
+    @Autowired
+    private MemberMidDao memberMidDao;
 
     @RequestMapping(value = "/member/{mid}", method = RequestMethod.GET)
     public MemberEx queryMemberByMid(@PathVariable Integer mid) {
@@ -89,6 +94,44 @@ public class MemberExRestController {
         headers.add("Access-Control-Allow-Headers", "x-total-count");
         headers.add("Access-Control-Expose-Headers", "x-total-count");
         return new ResponseEntity<>(list, headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/member/random", method = RequestMethod.GET)
+    public List<MemberEx> queryVideosRandom(@RequestParam(defaultValue = "1") Integer count)
+            throws InvalidRequestParameterException {
+        // check params
+        if (count <= 0 || count > 20) {
+            throw new InvalidRequestParameterException("count", count, "count should between 1 and 20");
+        }
+
+        // get max id
+        Integer maxId = memberMidDao.queryMemberMidMaxId();
+
+        // generate random ids
+        if (count > maxId) {
+            count = maxId;
+        }
+        List<Integer> randomIds = new ArrayList<>();
+        Random random = new Random();
+        for (int i = 0; i < count; i++) {
+            Integer randomId = random.nextInt(maxId);
+            if (!randomIds.contains(randomId)) {
+                randomIds.add(randomId);
+            } else {
+                i--;
+            }
+        }
+
+        // get random aids
+        List<Integer> randomMids = memberMidDao.queryMemberMidsByIds(randomIds);
+
+        // get video ex list
+        List<MemberEx> memberExList = new ArrayList<>();
+        for (Integer mid : randomMids) {
+            memberExList.add(memberExService.queryMemberByMid(mid));
+        }
+
+        return memberExList;
     }
 
 }
