@@ -20,16 +20,23 @@ public class MemberFollowerRecordRestController {
 
     @RequestMapping(value = "/member/{mid}/follower", method = RequestMethod.GET)
     public ResponseEntity<List<MemberFollowerRecord>> queryMemberFollowerRecordsByAid(@PathVariable Integer mid,
+                                                                                      @RequestParam(defaultValue = "0") Integer last_count,
                                                                                       @RequestParam(defaultValue = "0") Integer start_ts,
                                                                                       @RequestParam(defaultValue = "0") Integer end_ts,
                                                                                       @RequestParam(defaultValue = "1") Integer pn,
                                                                                       @RequestParam(defaultValue = "25000") Integer ps)
             throws InvalidRequestParameterException {
-        return queryMemberFollowerRecords(mid, start_ts, end_ts, pn, ps);
+        // check params
+        if (last_count < 0 || last_count > 5000) {
+            // 0 -> no limit
+            throw new InvalidRequestParameterException("last_count", last_count, "last_count should between 0 and 5000");
+        }
+        return queryMemberFollowerRecords(mid, last_count, start_ts, end_ts, pn, ps);
     }
 
     @RequestMapping(value = "/follower", method = RequestMethod.GET)
     public ResponseEntity<List<MemberFollowerRecord>> queryMemberFollowerRecords(@RequestParam(defaultValue = "0") Integer mid,
+                                                                                 Integer last_count,
                                                                                  @RequestParam(defaultValue = "0") Integer start_ts,
                                                                                  @RequestParam(defaultValue = "0") Integer end_ts,
                                                                                  @RequestParam(defaultValue = "1") Integer pn,
@@ -47,7 +54,7 @@ public class MemberFollowerRecordRestController {
         }
 
         // get list
-        List<MemberFollowerRecord> list = memberFollowerRecordService.queryMemberFollowerRecords(mid, start_ts, end_ts, pn, ps);
+        List<MemberFollowerRecord> list = memberFollowerRecordService.queryMemberFollowerRecords(mid, last_count, start_ts, end_ts, pn, ps);
 
         // get total count
         Integer totalCount = memberFollowerRecordService.queryMemberFollowerRecordsCount(mid, start_ts, end_ts);
