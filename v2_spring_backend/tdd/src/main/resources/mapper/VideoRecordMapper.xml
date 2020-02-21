@@ -44,8 +44,15 @@
                 </if>
             </where>
             <if test="limit == true">
-                limit
-                #{offset}, #{ps}
+                <choose>
+                    <when test="aid > 0 and last_count > 0">
+                        order by id desc limit #{last_count}
+                    </when>
+                    <otherwise>
+                        limit
+                        #{offset}, #{ps}
+                    </otherwise>
+                </choose>
             </if>
         ) b
         on

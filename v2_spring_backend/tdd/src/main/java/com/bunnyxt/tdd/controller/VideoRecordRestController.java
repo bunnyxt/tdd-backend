@@ -20,16 +20,23 @@ public class VideoRecordRestController {
 
     @RequestMapping(value = "/video/{aid}/record", method = RequestMethod.GET)
     public ResponseEntity<List<VideoRecord>> queryVideoRecordsByAid(@PathVariable Integer aid,
+                                                                    @RequestParam(defaultValue = "0") Integer last_count,
                                                                     @RequestParam(defaultValue = "0") Integer start_ts,
                                                                     @RequestParam(defaultValue = "0") Integer end_ts,
                                                                     @RequestParam(defaultValue = "1") Integer pn,
                                                                     @RequestParam(defaultValue = "25000") Integer ps)
             throws InvalidRequestParameterException {
-        return queryVideoRecords(aid, start_ts, end_ts, pn, ps);
+        // check params
+        if (last_count < 0 || last_count > 5000) {
+            // 0 -> no limit
+            throw new InvalidRequestParameterException("last_count", last_count, "last_count should between 0 and 5000");
+        }
+        return queryVideoRecords(aid, last_count, start_ts, end_ts, pn, ps);
     }
 
     @RequestMapping(value = "/record", method = RequestMethod.GET)
     public ResponseEntity<List<VideoRecord>> queryVideoRecords(@RequestParam(defaultValue = "0") Integer aid,
+                                                               Integer last_count,
                                                                @RequestParam(defaultValue = "0") Integer start_ts,
                                                                @RequestParam(defaultValue = "0") Integer end_ts,
                                                                @RequestParam(defaultValue = "1") Integer pn,
@@ -37,6 +44,7 @@ public class VideoRecordRestController {
             throws InvalidRequestParameterException {
         // check params
         if (aid < 0) {
+            // 0 -> not set
             throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
         }
         if (pn <= 0) {
@@ -47,7 +55,7 @@ public class VideoRecordRestController {
         }
 
         // get list
-        List<VideoRecord> list = videoRecordService.queryVideoRecords(aid, start_ts, end_ts, true, pn, ps);
+        List<VideoRecord> list = videoRecordService.queryVideoRecords(aid, last_count, start_ts, end_ts, true, pn, ps);
 
         // get total count
         Integer totalCount = videoRecordService.queryVideoRecordsCount(aid, start_ts, end_ts);

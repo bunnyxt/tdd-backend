@@ -38,7 +38,7 @@ public class DownloadVideoRecordController {
         }
 
         // get list
-        List<VideoRecord> list = videoRecordService.queryVideoRecords(aid, start_ts, end_ts, false, 0, 0);
+        List<VideoRecord> list = videoRecordService.queryVideoRecords(aid, 0, start_ts, end_ts, false, 0, 0);
 
         try {
             // 构造导出数据结构

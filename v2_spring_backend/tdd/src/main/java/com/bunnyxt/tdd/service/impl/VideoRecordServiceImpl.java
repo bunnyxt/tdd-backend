@@ -16,7 +16,8 @@ public class VideoRecordServiceImpl implements VideoRecordService {
     private VideoRecordDao videoRecordDao;
 
     @Override
-    public List<VideoRecord> queryVideoRecords(Integer aid, Integer start_ts, Integer end_ts, Boolean limit, Integer pn, Integer ps) {
+    public List<VideoRecord> queryVideoRecords(Integer aid, Integer last_count, Integer start_ts, Integer end_ts,
+                                               Boolean limit, Integer pn, Integer ps) {
         Integer offset = null;
         if (limit) {
             // pn, ps -> offset, ps
@@ -28,7 +29,7 @@ public class VideoRecordServiceImpl implements VideoRecordService {
             ps = 0;
         }
 
-        return videoRecordDao.queryVideoRecords(aid, start_ts, end_ts, limit, offset, ps);
+        return videoRecordDao.queryVideoRecords(aid, last_count, start_ts, end_ts, limit, offset, ps);
     }
 
     @Override

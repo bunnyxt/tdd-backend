@@ -20,7 +20,7 @@ public class UpdateLogRestController {
             throws InvalidRequestParameterException {
         // check params
         if (last_count < 0) {
-            throw new InvalidRequestParameterException("last_count", last_count, "ps should not be negative");
+            throw new InvalidRequestParameterException("last_count", last_count, "last_count should not be negative");
         }
 
         return updateLogService.queryUpdateLogs(last_count);
