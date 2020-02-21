@@ -20,16 +20,18 @@ public class MemberTotalStatRecordRestController {
 
     @RequestMapping(value = "/member/{mid}/totalstat", method = RequestMethod.GET)
     public ResponseEntity<List<MemberTotalStatRecord>> queryMemberTotalStatRecordsByAid(@PathVariable Integer mid,
+                                                                                        @RequestParam(defaultValue = "0") Integer last_count,
                                                                                         @RequestParam(defaultValue = "0") Integer start_ts,
                                                                                         @RequestParam(defaultValue = "0") Integer end_ts,
                                                                                         @RequestParam(defaultValue = "1") Integer pn,
                                                                                         @RequestParam(defaultValue = "25000") Integer ps)
             throws InvalidRequestParameterException {
-        return queryMemberTotalStatRecords(mid, start_ts, end_ts, pn, ps);
+        return queryMemberTotalStatRecords(mid, last_count, start_ts, end_ts, pn, ps);
     }
 
     @RequestMapping(value = "/totalstat", method = RequestMethod.GET)
     public ResponseEntity<List<MemberTotalStatRecord>> queryMemberTotalStatRecords(@RequestParam(defaultValue = "0") Integer mid,
+                                                                                   Integer last_count,
                                                                                    @RequestParam(defaultValue = "0") Integer start_ts,
                                                                                    @RequestParam(defaultValue = "0") Integer end_ts,
                                                                                    @RequestParam(defaultValue = "1") Integer pn,
@@ -47,7 +49,7 @@ public class MemberTotalStatRecordRestController {
         }
 
         // get list
-        List<MemberTotalStatRecord> list = memberTotalStatRecordService.queryMemberTotalStatRecords(mid, start_ts, end_ts, pn, ps);
+        List<MemberTotalStatRecord> list = memberTotalStatRecordService.queryMemberTotalStatRecords(mid, last_count, start_ts, end_ts, pn, ps);
 
         // get total count
         Integer totalCount = memberTotalStatRecordService.queryMemberTotalStatRecordsCount(mid, start_ts, end_ts);

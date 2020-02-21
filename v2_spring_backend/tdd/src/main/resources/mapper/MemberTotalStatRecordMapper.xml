@@ -44,8 +44,15 @@
                 and added &lt;= #{end_ts}
             </if>
         </where>
-        limit
-        #{offset}, #{ps}
+        <choose>
+            <when test="mid > 0 and last_count > 0">
+                order by id desc limit #{last_count}
+            </when>
+            <otherwise>
+                limit
+                #{offset}, #{ps}
+            </otherwise>
+        </choose>
         ) b
         on
         a.id = b.id
