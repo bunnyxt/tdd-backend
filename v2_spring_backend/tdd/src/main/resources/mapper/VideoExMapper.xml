@@ -42,6 +42,7 @@
             <result column="share" property="share" />
             <result column="like" property="like" />
         </association>
+        <collection column="aid" property="staff" ofType="com.bunnyxt.tdd.model.VideoStaffEx" select="queryVideoStaffsByAid" />
     </resultMap>
 
     <resultMap id="VideoFragmentResultMap" type="com.bunnyxt.tdd.model.fragment.VideoFragment">
@@ -68,6 +69,26 @@
         m.sex, m.name, m.face, m.sign,
         r.added r_added, r.view, r.danmaku, r.reply, r.favorite, r.coin, r.share, r.like
     </sql>
+
+    <resultMap id="VideoStaffExResultMap" type="com.bunnyxt.tdd.model.VideoStaffEx">
+        <result column="mid" property="mid" />
+        <result column="name" property="name" />
+        <result column="face" property="face" />
+        <result column="title" property="title" />
+    </resultMap>
+
+    <select id="queryVideoStaffsByAid" resultMap="VideoStaffExResultMap" parameterType="Integer">
+        select
+        a.mid, b.name, b.face, a.title
+        from
+        tdd_video_staff a
+        join
+        tdd_member b
+        on
+        a.mid = b.mid
+        where
+        aid = #{aid}
+    </select>
 
     <select id="queryVideoByAid" resultMap="BaseResultMap" parameterType="Integer">
         select
