@@ -1,5 +1,6 @@
 package com.bunnyxt.tdd.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +14,7 @@ public class User implements UserDetails {
     private Long id;
     private Integer added;
     private String username;
+    @JsonIgnore
     private String password;
     private Boolean enabled;
     private String nickname;
@@ -21,6 +23,7 @@ public class User implements UserDetails {
     private List<Role> roles;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role role : roles) {
@@ -81,6 +84,10 @@ public class User implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
     }
 
     public Integer getAdded() {

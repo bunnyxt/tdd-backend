@@ -1,20 +1,15 @@
-package com.bunnyxt.tdd.dao;
+package com.bunnyxt.tdd.service;
 
 import com.bunnyxt.tdd.model.User;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserService {
 
-    // for UserDetailService in Spring Security
-    User queryUserByUsername(String username);
-
-    // for UserService, tdd usage
     User queryUserById(Long id);
 
     List<User> queryUsers(String username, String email, String phone, Integer enabled, String role,
-                          String order_by, Integer desc, Integer offset, Integer ps);
+                          String order_by, Integer desc, Integer pn, Integer ps);
 
     Integer queryUsersCount(String username, String email, String phone, Integer enabled, String role);
-
 }
