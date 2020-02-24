@@ -1,5 +1,6 @@
 package com.bunnyxt.tdd.auth;
 
+import com.bunnyxt.tdd.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,14 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
             throws IOException {
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(200);
-        response.getWriter().write("{\"code\":20001,\"message\":\"login success\",\"detail\":{}}");
+        response.getWriter().write("{\"code\":20001,\"message\":\"login success\",\"detail\":{" +
+                "\"id\":" + ((User)authentication.getPrincipal()).getId() + "," +
+                "\"added\":" + ((User)authentication.getPrincipal()).getAdded() + "," +
+                "\"username\":\"" + authentication.getName() + "\"," +
+                "\"enabled\":" + ((User)authentication.getPrincipal()).isEnabled() + "," +
+                "\"nickname\":\"" + ((User)authentication.getPrincipal()).getNickname() + "\"," +
+                "\"email\":\"" + ((User)authentication.getPrincipal()).getEmail() + "\"," +
+                "\"phone\":\"" + ((User)authentication.getPrincipal()).getPhone() + "\"" +
+                "}}");
     }
 }
