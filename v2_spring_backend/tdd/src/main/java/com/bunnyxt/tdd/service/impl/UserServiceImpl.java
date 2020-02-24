@@ -21,11 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User queryUserById(Long id) {
-        User user = userDao.queryUserById(id);
-        if (user != null) {
-            user.setRoles(roleDao.queryRolesByUserId(user.getId()));
-        }
-        return user;
+        return userDao.queryUserById(id);
     }
 
     @Override

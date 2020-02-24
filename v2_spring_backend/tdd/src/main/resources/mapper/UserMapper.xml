@@ -37,22 +37,38 @@
         u.nickname u_nickname, u.email u_email, u.phone u_phone, r.id r_id, r.name r_name, r.title r_title
     </sql>
 
-    <select id="queryUserByUsername" resultType="com.bunnyxt.tdd.model.User">
+    <select id="queryUserByUsername" resultMap="BaseResultMapWithRole">
         select
-        <include refid="BaseColumnList" />
+        <include refid="BaseColumnListWithRole" />
         from
-        tdd_user
+        tdd_user u
+        left join
+        tdd_user_role ur
+        on
+        u.id = ur.userid
+        left join
+        tdd_role r
+        on
+        r.id = ur.roleid
         where
-        username = #{username}
+        u.username = #{username}
     </select>
 
-    <select id="queryUserById" resultMap="BaseResultMap">
+    <select id="queryUserById" resultMap="BaseResultMapWithRole">
         select
-        <include refid="BaseColumnList" />
+        <include refid="BaseColumnListWithRole" />
         from
-        tdd_user
+        tdd_user u
+        left join
+        tdd_user_role ur
+        on
+        u.id = ur.userid
+        left join
+        tdd_role r
+        on
+        r.id = ur.roleid
         where
-        id = #{id}
+        u.id = #{id}
     </select>
 
     <select id="queryUsers" resultMap="BaseResultMapWithRole">
