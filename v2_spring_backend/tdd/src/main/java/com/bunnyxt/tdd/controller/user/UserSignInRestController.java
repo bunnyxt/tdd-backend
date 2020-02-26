@@ -30,6 +30,13 @@ public class UserSignInRestController {
 
     // user sign in
     // TODO
+    @PreAuthorize("hasRole('user')")
+    @RequestMapping(value = "/user/signin", method = RequestMethod.POST)
+    public void postUserSignIn() {
+        // get userid
+        Long userid = TddAuthUtil.GetCurrentUser().getId();
+        userSignInService.postUserSignIn(userid);
+    }
 
     // check user's sign in history
     @PreAuthorize("hasRole('user')")

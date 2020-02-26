@@ -55,4 +55,50 @@
             </if>
         </where>
     </select>
+
+    <select id="queryUserSignInOneDay" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user_sign_in
+        where
+        userid = #{userid}
+        and
+        added >= #{start_ts}
+        and
+        added &lt;= #{end_ts}
+        limit
+        1
+    </select>
+
+    <insert id="addUserSignIn">
+        insert into
+        tdd_user_sign_in(added, userid)
+        values
+        (#{added}, #{userid})
+    </insert>
+
+    <select id="queryUserSignInRankInOneDay" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_user_sign_in
+        where
+        added >= #{start_ts}
+        and
+        added &lt;= #{end_ts}
+        and
+        id &lt;= (
+            select
+            id
+            from
+            tdd_user_sign_in
+            where
+            userid = #{userid}
+            and
+            added >= #{start_ts}
+            and
+            added &lt;= #{end_ts}
+        )
+    </select>
 </mapper>

@@ -10,4 +10,10 @@ public interface UserSignInDao {
                                       Integer offset, Integer ps);
 
     Integer queryUserSignInsCount(Long userid, Integer start_ts, Integer end_ts);
+
+    UserSignIn queryUserSignInOneDay(Long userid, Integer start_ts, Integer end_ts);
+
+    void addUserSignIn(Integer added, Long userid);
+
+    Integer queryUserSignInRankInOneDay(Long userid, Integer start_ts, Integer end_ts);
 }
