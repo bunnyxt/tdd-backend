@@ -1,6 +1,6 @@
 package com.bunnyxt.tdd.auth;
 
-import com.bunnyxt.tdd.service.impl.UserDetailServiceImpl;
+import com.bunnyxt.tdd.service.impl.user.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -68,6 +68,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(customLoginUrlAuthenticationEntryPoint())
+                .and()
+                .cors()
                 .and()
                 .csrf()
                 .disable();
