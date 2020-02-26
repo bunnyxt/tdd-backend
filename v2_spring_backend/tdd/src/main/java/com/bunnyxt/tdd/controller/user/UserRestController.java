@@ -9,6 +9,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,6 +22,21 @@ public class UserRestController {
 
     @Autowired
     UserService userService;
+
+    // user ============================================================================================================
+
+    @PreAuthorize("hasRole('user')")
+    @RequestMapping(value = "/user/me", method = RequestMethod.GET)
+    public User queryUserByIdMe() {
+        // get userid
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User)authentication.getPrincipal();
+        Long userid = user.getId();
+
+        return userService.queryUserById(userid);
+    }
+
+    // admin ===========================================================================================================
 
     @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
@@ -35,7 +52,7 @@ public class UserRestController {
                                                  @RequestParam(defaultValue = "-1") Integer enabled,
                                                  @RequestParam(defaultValue = "") String role,
                                                  @RequestParam(defaultValue = "added") String order_by,
-                                                 @RequestParam(defaultValue = "1") Integer desc,
+                                                 @RequestParam(defaultValue = "0") Integer desc,
                                                  @RequestParam(defaultValue = "1") Integer pn,
                                                  @RequestParam(defaultValue = "20") Integer ps)
             throws InvalidRequestParameterException {
