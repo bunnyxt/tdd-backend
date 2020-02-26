@@ -10,6 +10,8 @@
         <result column="nickname" property="nickname" />
         <result column="email" property="email" />
         <result column="phone" property="phone" />
+        <result column="point" property="point" />
+        <result column="exp" property="exp" />
     </resultMap>
 
     <resultMap id="BaseResultMapWithRole" type="com.bunnyxt.tdd.model.user.User">
@@ -21,6 +23,8 @@
         <result column="u_nickname" property="nickname" />
         <result column="u_email" property="email" />
         <result column="u_phone" property="phone" />
+        <result column="u_point" property="point" />
+        <result column="u_exp" property="exp" />
         <collection property="roles" ofType="com.bunnyxt.tdd.model.Role">
             <id column="r_id" property="id"/>
             <result column="r_name" property="name"/>
@@ -29,12 +33,12 @@
     </resultMap>
 
     <sql id="BaseColumnList">
-        id, added, username, password, enabled, nickname, email, phone
+        id, added, username, password, enabled, nickname, email, phone, point, exp
     </sql>
 
     <sql id="BaseColumnListWithRole">
-        u.id u_id, u.added u_added, u.username u_username, u.password u_password, u.enabled u_enabled,
-        u.nickname u_nickname, u.email u_email, u.phone u_phone, r.id r_id, r.name r_name, r.title r_title
+        u.id u_id, u.added u_added, u.username u_username, u.password u_password, u.enabled u_enabled, u.nickname u_nickname,
+        u.email u_email, u.phone u_phone, u.point u_point, u.exp u_exp, r.id r_id, r.name r_name, r.title r_title
     </sql>
 
     <select id="queryUserByUsername" resultMap="BaseResultMapWithRole">

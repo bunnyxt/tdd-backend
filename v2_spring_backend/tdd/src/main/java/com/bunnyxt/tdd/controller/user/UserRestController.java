@@ -59,6 +59,8 @@ public class UserRestController {
         // order_by
         List<String> allowedOrderBy = new ArrayList<String>(){{
             add("added");
+            add("point");
+            add("exp");
         }};
         if (!allowedOrderBy.contains(order_by)) {
             throw new InvalidRequestParameterException("order_by", order_by,

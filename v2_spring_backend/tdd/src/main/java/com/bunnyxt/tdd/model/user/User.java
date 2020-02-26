@@ -21,6 +21,8 @@ public class User implements UserDetails {
     private String nickname;
     private String email;
     private String phone;
+    private Double point;
+    private Double exp;
     private List<Role> roles;
 
     @Override
@@ -121,5 +123,21 @@ public class User implements UserDetails {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Double getPoint() {
+        return point;
+    }
+
+    public void setPoint(Double point) {
+        this.point = point;
+    }
+
+    public Double getExp() {
+        return exp;
+    }
+
+    public void setExp(Double exp) {
+        this.exp = exp;
     }
 }
