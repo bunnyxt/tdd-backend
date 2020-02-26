@@ -145,4 +145,22 @@
             </if>
         </where>
     </select>
+
+    <update id="updateUserPointById">
+        update
+        tdd_user
+        set
+        point = point + #{point}
+        where
+        id = #{id}
+    </update>
+
+    <update id="updateUserExpById">
+        update
+        tdd_user
+        set
+        exp = exp + #{exp}
+        where
+        id = #{id}
+    </update>
 </mapper>

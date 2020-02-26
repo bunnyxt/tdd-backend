@@ -17,4 +17,8 @@ public interface UserDao {
 
     Integer queryUsersCount(String username, String email, String phone, Integer enabled, String role);
 
+    void updateUserPointById(Double point, Long id);
+
+    void updateUserExpById(Double exp, Long id);
+
 }
