@@ -19,9 +19,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
-        //attempt Authentication when Content-Type is json
-        if (request.getContentType().equals(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                || request.getContentType().equals(MediaType.APPLICATION_JSON_VALUE)) {
+        // attempt Authentication when Content-Type is json, POST method only
+        if (request.getMethod().equals("POST") &&
+                (request.getContentType().equals(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                || request.getContentType().equals(MediaType.APPLICATION_JSON_VALUE))) {
 
             //use jackson to deserialize json
             ObjectMapper mapper = new ObjectMapper();
@@ -39,7 +40,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             return this.getAuthenticationManager().authenticate(authRequest);
         }
 
-        //transmit it to UsernamePasswordAuthenticationFilter
+        // transmit it to UsernamePasswordAuthenticationFilter
         else {
             return super.attemptAuthentication(request, response);
         }
