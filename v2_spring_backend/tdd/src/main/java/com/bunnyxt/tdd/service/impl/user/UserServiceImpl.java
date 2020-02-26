@@ -1,9 +1,9 @@
-package com.bunnyxt.tdd.service.impl;
+package com.bunnyxt.tdd.service.impl.user;
 
 import com.bunnyxt.tdd.dao.RoleDao;
-import com.bunnyxt.tdd.dao.UserDao;
-import com.bunnyxt.tdd.model.User;
-import com.bunnyxt.tdd.service.UserService;
+import com.bunnyxt.tdd.dao.user.UserDao;
+import com.bunnyxt.tdd.model.user.User;
+import com.bunnyxt.tdd.service.user.UserService;
 import com.bunnyxt.tdd.util.PageNumModfier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

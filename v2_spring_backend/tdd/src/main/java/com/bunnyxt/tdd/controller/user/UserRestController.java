@@ -1,9 +1,8 @@
-package com.bunnyxt.tdd.controller;
+package com.bunnyxt.tdd.controller.user;
 
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
-import com.bunnyxt.tdd.model.User;
-import com.bunnyxt.tdd.service.UserService;
-import com.bunnyxt.tdd.util.ObjUtil;
+import com.bunnyxt.tdd.model.user.User;
+import com.bunnyxt.tdd.service.user.UserService;
 import com.bunnyxt.tdd.util.TddParamCheckUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

@@ -1,6 +1,6 @@
-package com.bunnyxt.tdd.service;
+package com.bunnyxt.tdd.service.user;
 
-import com.bunnyxt.tdd.model.User;
+import com.bunnyxt.tdd.model.user.User;
 
 import java.util.List;
 

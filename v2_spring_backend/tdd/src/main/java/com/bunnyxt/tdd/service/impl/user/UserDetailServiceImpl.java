@@ -1,6 +1,6 @@
-package com.bunnyxt.tdd.service.impl;
+package com.bunnyxt.tdd.service.impl.user;
 
-import com.bunnyxt.tdd.dao.UserDao;
+import com.bunnyxt.tdd.dao.user.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

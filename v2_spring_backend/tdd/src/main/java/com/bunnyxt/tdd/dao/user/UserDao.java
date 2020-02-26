@@ -1,6 +1,6 @@
-package com.bunnyxt.tdd.dao;
+package com.bunnyxt.tdd.dao.user;
 
-import com.bunnyxt.tdd.model.User;
+import com.bunnyxt.tdd.model.user.User;
 
 import java.util.List;
 

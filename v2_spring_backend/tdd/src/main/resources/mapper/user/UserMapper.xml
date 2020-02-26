@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bunnyxt.tdd.dao.UserDao">
-    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.User">
+<mapper namespace="com.bunnyxt.tdd.dao.user.UserDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.user.User">
         <id column="id" property="id" />
         <result column="added" property="added" />
         <result column="username" property="username" />
@@ -12,7 +12,7 @@
         <result column="phone" property="phone" />
     </resultMap>
 
-    <resultMap id="BaseResultMapWithRole" type="com.bunnyxt.tdd.model.User">
+    <resultMap id="BaseResultMapWithRole" type="com.bunnyxt.tdd.model.user.User">
         <id column="u_id" property="id" />
         <result column="u_added" property="added" />
         <result column="u_username" property="username" />

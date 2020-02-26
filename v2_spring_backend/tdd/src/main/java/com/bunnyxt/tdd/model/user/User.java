@@ -1,5 +1,6 @@
-package com.bunnyxt.tdd.model;
+package com.bunnyxt.tdd.model.user;
 
+import com.bunnyxt.tdd.model.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
