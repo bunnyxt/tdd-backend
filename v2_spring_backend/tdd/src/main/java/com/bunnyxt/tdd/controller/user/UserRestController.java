@@ -1,9 +1,11 @@
 package com.bunnyxt.tdd.controller.user;
 
+import com.bunnyxt.tdd.auth.TddAuthUtil;
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
 import com.bunnyxt.tdd.model.user.User;
 import com.bunnyxt.tdd.service.user.UserService;
 import com.bunnyxt.tdd.util.TddParamCheckUtil;
+import com.bunnyxt.tdd.util.TddResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,16 +27,18 @@ public class UserRestController {
 
     // user ============================================================================================================
 
+    // check user's profile
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/me", method = RequestMethod.GET)
     public User queryUserByIdMe() {
         // get userid
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User)authentication.getPrincipal();
-        Long userid = user.getId();
+        Long userid = TddAuthUtil.GetCurrentUser().getId();
 
         return userService.queryUserById(userid);
     }
+
+    // user change personal profile
+    // TODO
 
     // admin ===========================================================================================================
 
@@ -93,11 +97,6 @@ public class UserRestController {
         // get total count
         Integer totalCount = userService.queryUsersCount(username, email, phone, enabled, role);
 
-        // add headers
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("x-total-count", String.valueOf(totalCount));
-        headers.add("Access-Control-Allow-Headers", "x-total-count");
-        headers.add("Access-Control-Expose-Headers", "x-total-count");
-        return new ResponseEntity<>(list, headers, HttpStatus.OK);
+        return TddResponseUtil.AssembleList(list, totalCount);
     }
 }
