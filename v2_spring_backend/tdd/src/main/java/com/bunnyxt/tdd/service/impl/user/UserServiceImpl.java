@@ -16,9 +16,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDao;
 
-    @Autowired
-    RoleDao roleDao;
-
     @Override
     public User queryUserById(Long id) {
         return userDao.queryUserById(id);
