@@ -1,17 +1,15 @@
-package com.bunnyxt.tdd.dao.user;
+package com.bunnyxt.tdd.service.user;
 
 import com.bunnyxt.tdd.model.user.UserSignInOverview;
 
 import java.util.List;
 
-public interface UserSignInOverviewDao {
+public interface UserSignInOverviewService {
 
     UserSignInOverview queryUserSignInOverviewByUserid(Long userid);
 
     List<UserSignInOverview> queryUserSignInOverviews(Integer start_ts, Integer end_ts,
-                                                      String order_by, Integer desc, Integer offset, Integer ps);
+                                                      String order_by, Integer desc, Integer pn, Integer ps);
 
     Integer queryUserSignInOverviewsCount(Integer start_ts, Integer end_ts);
-
-    void updateUserSignInOverviewByUseridWhenSignIn(Long userid, Integer last_added, Integer last_added_days);
 }

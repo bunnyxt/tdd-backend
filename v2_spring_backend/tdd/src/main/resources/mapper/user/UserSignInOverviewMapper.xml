@@ -22,6 +22,43 @@
         userid = #{userid}
     </select>
 
+    <select id="queryUserSignInOverviews" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user_sign_in_overview
+        <where>
+            <if test="start_ts > 0">
+                and last_added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and last_added &lt;= #{end_ts}
+            </if>
+        </where>
+        order by
+        ${order_by}
+        <if test="desc == 1">
+            desc
+        </if>
+        limit
+        #{offset}, #{ps}
+    </select>
+
+    <select id="queryUserSignInOverviewsCount" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_user_sign_in_overview
+        <where>
+            <if test="start_ts > 0">
+                and last_added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and last_added &lt;= #{end_ts}
+            </if>
+        </where>
+    </select>
+
     <update id="updateUserSignInOverviewByUseridWhenSignIn">
         update
         tdd_user_sign_in_overview
