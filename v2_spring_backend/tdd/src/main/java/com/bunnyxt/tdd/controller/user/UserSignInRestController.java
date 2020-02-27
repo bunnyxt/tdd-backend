@@ -2,6 +2,7 @@ package com.bunnyxt.tdd.controller.user;
 
 import com.bunnyxt.tdd.auth.TddAuthUtil;
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
+import com.bunnyxt.tdd.model.TddCommonResponse;
 import com.bunnyxt.tdd.model.user.User;
 import com.bunnyxt.tdd.model.user.UserSignIn;
 import com.bunnyxt.tdd.service.user.UserSignInService;
@@ -29,14 +30,17 @@ public class UserSignInRestController {
     // user ============================================================================================================
 
     // user sign in
-    // TODO
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/signin", method = RequestMethod.POST)
-    public void postUserSignIn() {
+    public TddCommonResponse postUserSignIn() {
         // get userid
         Long userid = TddAuthUtil.GetCurrentUser().getId();
-        userSignInService.postUserSignIn(userid);
+
+        return userSignInService.postUserSignIn(userid);
     }
+
+    // check user's sign in overview
+
 
     // check user's sign in history
     @PreAuthorize("hasRole('user')")
