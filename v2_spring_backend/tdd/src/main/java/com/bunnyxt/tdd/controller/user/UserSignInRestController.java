@@ -39,9 +39,6 @@ public class UserSignInRestController {
         return userSignInService.postUserSignIn(userid);
     }
 
-    // check user's sign in overview
-
-
     // check user's sign in history
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/signin/me", method = RequestMethod.GET)
@@ -59,6 +56,20 @@ public class UserSignInRestController {
 
     // admin ===========================================================================================================
 
+    // check one user's sign in history
+    @PreAuthorize("hasRole('admin')")
+    @RequestMapping(value = "/user/signin/{userid}", method = RequestMethod.GET)
+    public ResponseEntity<List<UserSignIn>> queryUserSignInsByUserid(@PathVariable Long userid,
+                                                                     @RequestParam(defaultValue = "0") Integer last_count,
+                                                                     @RequestParam(defaultValue = "0") Integer start_ts,
+                                                                     @RequestParam(defaultValue = "0") Integer end_ts,
+                                                                     @RequestParam(defaultValue = "1") Integer pn,
+                                                                     @RequestParam(defaultValue = "100") Integer ps)
+            throws InvalidRequestParameterException {
+        return queryUserSignIns(userid, last_count, start_ts, end_ts, pn, ps);
+    }
+
+    // overall query
     @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/user/signin", method = RequestMethod.GET)
     public ResponseEntity<List<UserSignIn>> queryUserSignIns(@RequestParam(defaultValue = "0") Long userid,
