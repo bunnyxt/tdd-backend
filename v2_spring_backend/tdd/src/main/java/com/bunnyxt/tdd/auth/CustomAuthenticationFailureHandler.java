@@ -17,6 +17,10 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
             throws IOException {
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
+        response.setHeader("Access-Control-Allow-Methods", "*");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Headers", "*");
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(401);
         response.getWriter().write("{\"code\":40101,\"message\":\"login failure\",\"detail\":{}}");
