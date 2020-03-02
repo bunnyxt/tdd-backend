@@ -58,6 +58,12 @@ public class UserSignInServiceImpl implements UserSignInService {
         Integer added = CalendarUtil.getNowTs();
         userSignInDao.addUserSignIn(added, userid);
 
+        // calc today sign in rank
+        Integer rank = userSignInDao.queryUserSignInRankInOneDay(userid, start_ts, end_ts);
+
+        // set rank
+        userSignInDao.updateUserSignInRank(added, userid, rank);
+
         // get overview and check, then update overview
         UserSignInOverview userSignInOverview = userSignInOverviewDao.queryUserSignInOverviewByUserid(userid);
         Integer last_added = userSignInOverview.getLast_added();
@@ -79,9 +85,6 @@ public class UserSignInServiceImpl implements UserSignInService {
         double addExp = addExpArr[new_last_added_days > 5 ? 5 : new_last_added_days];
         userDao.updateUserExpById(addExp, userid);
         userHistoryExpDao.addUserHistoryExp(added, userid, addExp, "每日登录奖励");
-
-        // calc today sign in rank
-        int rank = userSignInDao.queryUserSignInRankInOneDay(userid, start_ts, end_ts);
 
         // return
         Map<String, Object> detail = new LinkedHashMap<>();

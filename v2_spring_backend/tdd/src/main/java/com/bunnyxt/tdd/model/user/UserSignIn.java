@@ -5,6 +5,7 @@ public class UserSignIn {
     private Long id;
     private Integer added;
     private Long userid;
+    private Integer rank;
 
     public Long getId() {
         return id;
@@ -28,5 +29,13 @@ public class UserSignIn {
 
     public void setUserid(Long userid) {
         this.userid = userid;
+    }
+
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
     }
 }

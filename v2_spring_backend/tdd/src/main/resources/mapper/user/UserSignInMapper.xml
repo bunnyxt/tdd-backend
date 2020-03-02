@@ -5,10 +5,11 @@
         <id column="id" property="id" />
         <result column="added" property="added" />
         <result column="userid" property="userid" />
+        <result column="rank" property="rank" />
     </resultMap>
 
     <sql id="BaseColumnList">
-        id, added, userid
+        id, added, userid, rank
     </sql>
 
     <select id="queryUserSignIns" resultMap="BaseResultMap">
@@ -101,4 +102,15 @@
             added &lt;= #{end_ts}
         )
     </select>
+
+    <update id="updateUserSignInRank">
+        update
+        tdd_user_sign_in
+        set
+        rank = #{rank}
+        where
+        userid = #{userid}
+        and
+        added = #{added}
+    </update>
 </mapper>

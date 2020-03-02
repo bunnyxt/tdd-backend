@@ -16,4 +16,6 @@ public interface UserSignInDao {
     void addUserSignIn(Integer added, Long userid);
 
     Integer queryUserSignInRankInOneDay(Long userid, Integer start_ts, Integer end_ts);
+
+    void updateUserSignInRank(Integer added, Long userid, Integer rank);
 }
