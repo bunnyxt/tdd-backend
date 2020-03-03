@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.user.UserFavoriteVideoDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.user.UserFavoriteVideo">
+        <id column="id" property="id" />
+        <result column="added" property="added" />
+        <result column="userid" property="userid" />
+        <result column="aid" property="aid" />
+
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id, added, userid, aid
+    </sql>
+
+    <insert id="addUserFavoriteVideo">
+        insert into
+        tdd_user_favorite_video(added, userid, aid)
+        values
+        (#{added}, #{userid}, #{aid})
+    </insert>
+
+    <delete id="deleteUserFavoriteVideo">
+        delete from
+        tdd_user_favorite_video
+        where
+        userid = #{userid}
+        and
+        aid = #{aid}
+    </delete>
+
+    <select id="queryUserFavoriteVideo" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user_favorite_video
+        where
+        userid = #{userid}
+        and
+        aid = #{aid}
+    </select>
+
+</mapper>
