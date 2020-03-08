@@ -40,4 +40,13 @@
         aid = #{aid}
     </select>
 
+    <select id="queryUserFavoriteVideoCount" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_user_favorite_video
+        where
+        aid = #{aid}
+    </select>
+
 </mapper>

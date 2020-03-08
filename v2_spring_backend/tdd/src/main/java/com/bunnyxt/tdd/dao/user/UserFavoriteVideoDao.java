@@ -9,4 +9,6 @@ public interface UserFavoriteVideoDao {
     Integer deleteUserFavoriteVideo(Long userid, Integer aid);
 
     UserFavoriteVideo queryUserFavoriteVideo(Long userid, Integer aid);
+
+    Integer queryUserFavoriteVideoCount(Integer aid);
 }

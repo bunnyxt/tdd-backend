@@ -75,5 +75,17 @@ public class UserFavoriteVideoRestController {
         return userFavoriteVideoService.queryUserFavoriteVideo(userid, aid);
     }
 
+    // video favorite count
+    @RequestMapping(value = "/video/{aid}/favorite", method = RequestMethod.GET)
+    public Integer queryUserFavoriteVideoCount(@PathVariable Integer aid)
+            throws InvalidRequestParameterException {
+        // check params
+        if (aid <= 0) {
+            throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
+        }
+
+        return userFavoriteVideoService.queryUserFavoriteVideoCount(aid);
+    }
+
     // admin ===========================================================================================================
 }

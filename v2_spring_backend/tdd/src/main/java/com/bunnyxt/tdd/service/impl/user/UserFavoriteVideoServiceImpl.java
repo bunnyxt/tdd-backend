@@ -57,4 +57,9 @@ public class UserFavoriteVideoServiceImpl implements UserFavoriteVideoService {
     public UserFavoriteVideo queryUserFavoriteVideo(Long userid, Integer aid) {
         return userFavoriteVideoDao.queryUserFavoriteVideo(userid, aid);
     }
+
+    @Override
+    public Integer queryUserFavoriteVideoCount(Integer aid) {
+        return userFavoriteVideoDao.queryUserFavoriteVideoCount(aid);
+    }
 }
