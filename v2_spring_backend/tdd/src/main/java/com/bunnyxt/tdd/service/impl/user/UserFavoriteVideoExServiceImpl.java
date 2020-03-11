@@ -24,7 +24,10 @@ public class UserFavoriteVideoExServiceImpl implements UserFavoriteVideoExServic
 
         // modify order_by
         if (order_by.equals("added")) {
-            order_by = "u.added"; // cannot be like since like is a possible keyword there
+            order_by = "u.added"; // here order by added of user favorite time
+        }
+        if (order_by.equals("like")) {
+            order_by = "r.like"; // cannot be like since like is a possible keyword there
         }
 
         return userFavoriteVideoExDao.queryUserFavoriteVideoExs(userid, title, order_by, desc, offset, ps);
