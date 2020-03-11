@@ -10,4 +10,9 @@ public interface UserFavoriteVideoExDao {
                                                           String order_by, Integer desc, Integer offset, Integer ps);
 
     Integer queryUserFavoriteVideoExsMeCount(Long userid, String title);
+
+    List<UserFavoriteVideoEx> queryUserFavoriteVideoExs(Long userid, Integer start_ts, Integer end_ts,
+                                                        String order_by, Integer desc, Integer offset, Integer ps);
+
+    Integer queryUserFavoriteVideoExsCount(Long userid, Integer start_ts, Integer end_ts);
 }

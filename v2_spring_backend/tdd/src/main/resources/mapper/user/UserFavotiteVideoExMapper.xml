@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bunnyxt.tdd.dao.user.UserFavoriteVideoExDao">
-<resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.user.UserFavoriteVideoEx">
-    <id column="u_id" property="id" />
-    <result column="u_added" property="added" />
-    <result column="userid" property="userid" />
-    <result column="u_aid" property="aid" />
-    <association property="video" javaType="com.bunnyxt.tdd.model.VideoEx">
-        <result column="v_id" property="id" />
-        <result column="v_added" property="added" />
-        <result column="v_aid" property="aid" />
-        <result column="videos" property="videos" />
-        <result column="tid" property="tid" />
-        <result column="tname" property="tname" />
-        <result column="copyright" property="copyright" />
-        <result column="pic" property="pic" />
-        <result column="title" property="title" />
-        <result column="pubdate" property="pubdate" />
-        <result column="description" property="desc" />
-        <result column="tags" property="tags" />
-        <result column="mid" property="mid" />
-        <result column="code" property="code" />
-        <result column="hasstaff" property="hasstaff" />
-        <result column="singer" property="singer" />
-        <result column="solo" property="solo" />
-        <result column="original" property="original" />
-        <result column="employed" property="employed" />
-        <result column="isvc" property="isvc" />
-        <result column="engine" property="engine" />
-        <result column="freq" property="freq" />
-        <result column="activity" property="activity" />
-        <result column="recent" property="recent" />
-        <association property="member" javaType="com.bunnyxt.tdd.model.fragment.MemberFragment">
-            <result column="sex" property="sex" />
-            <result column="name" property="name" />
-            <result column="face" property="face" />
-            <result column="sign" property="sign" />
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.user.UserFavoriteVideoEx">
+        <id column="u_id" property="id" />
+        <result column="u_added" property="added" />
+        <result column="userid" property="userid" />
+        <result column="u_aid" property="aid" />
+        <association property="video" javaType="com.bunnyxt.tdd.model.VideoEx">
+            <result column="v_id" property="id" />
+            <result column="v_added" property="added" />
+            <result column="v_aid" property="aid" />
+            <result column="videos" property="videos" />
+            <result column="tid" property="tid" />
+            <result column="tname" property="tname" />
+            <result column="copyright" property="copyright" />
+            <result column="pic" property="pic" />
+            <result column="title" property="title" />
+            <result column="pubdate" property="pubdate" />
+            <result column="description" property="desc" />
+            <result column="tags" property="tags" />
+            <result column="mid" property="mid" />
+            <result column="code" property="code" />
+            <result column="hasstaff" property="hasstaff" />
+            <result column="singer" property="singer" />
+            <result column="solo" property="solo" />
+            <result column="original" property="original" />
+            <result column="employed" property="employed" />
+            <result column="isvc" property="isvc" />
+            <result column="engine" property="engine" />
+            <result column="freq" property="freq" />
+            <result column="activity" property="activity" />
+            <result column="recent" property="recent" />
+            <association property="member" javaType="com.bunnyxt.tdd.model.fragment.MemberFragment">
+                <result column="sex" property="sex" />
+                <result column="name" property="name" />
+                <result column="face" property="face" />
+                <result column="sign" property="sign" />
+            </association>
+            <association property="laststat" javaType="com.bunnyxt.tdd.model.fragment.VideoRecordFragment">
+                <result column="r_added" property="added" />
+                <result column="view" property="view" />
+                <result column="danmaku" property="danmaku" />
+                <result column="reply" property="reply" />
+                <result column="favorite" property="favorite" />
+                <result column="coin" property="coin" />
+                <result column="share" property="share" />
+                <result column="like" property="like" />
+            </association>
+            <collection column="v_aid" property="staff" ofType="com.bunnyxt.tdd.model.VideoStaffEx" select="queryVideoStaffsByAid" />
         </association>
-        <association property="laststat" javaType="com.bunnyxt.tdd.model.fragment.VideoRecordFragment">
-            <result column="r_added" property="added" />
-            <result column="view" property="view" />
-            <result column="danmaku" property="danmaku" />
-            <result column="reply" property="reply" />
-            <result column="favorite" property="favorite" />
-            <result column="coin" property="coin" />
-            <result column="share" property="share" />
-            <result column="like" property="like" />
-        </association>
-        <collection column="v_aid" property="staff" ofType="com.bunnyxt.tdd.model.VideoStaffEx" select="queryVideoStaffsByAid" />
-    </association>
-</resultMap>
+    </resultMap>
 
-<sql id="BaseColumnList">
+    <sql id="BaseColumnList">
         u.id u_id, u.added u_added, userid, u.aid u_aid,
         v.id v_id, v.added v_added, v.aid v_aid, v.videos, v.tid, v.tname, v.copyright, v.pic, v.title, v.pubdate, v.`desc` description, v.tags, v.mid,
         v.code, v.hasstaff, v.singer, v.solo, v.original, v.employed, v.isvc, v.engine, v.freq, v.activity, v.recent,
@@ -59,73 +59,128 @@
         r.added r_added, r.view, r.danmaku, r.reply, r.favorite, r.coin, r.share, r.like
     </sql>
 
-<resultMap id="VideoStaffExResultMap" type="com.bunnyxt.tdd.model.VideoStaffEx">
-    <result column="mid" property="mid" />
-    <result column="name" property="name" />
-    <result column="face" property="face" />
-    <result column="title" property="title" />
-</resultMap>
+    <resultMap id="VideoStaffExResultMap" type="com.bunnyxt.tdd.model.VideoStaffEx">
+        <result column="mid" property="mid" />
+        <result column="name" property="name" />
+        <result column="face" property="face" />
+        <result column="title" property="title" />
+    </resultMap>
 
-<select id="queryVideoStaffsByAid" resultMap="VideoStaffExResultMap" parameterType="Integer">
-    select
-    a.mid, b.name, b.face, a.title
-    from
-    tdd_video_staff a
-    join
-    tdd_member b
-    on
-    a.mid = b.mid
-    where
-    aid = #{aid}
-</select>
+    <select id="queryVideoStaffsByAid" resultMap="VideoStaffExResultMap" parameterType="Integer">
+        select
+        a.mid, b.name, b.face, a.title
+        from
+        tdd_video_staff a
+        join
+        tdd_member b
+        on
+        a.mid = b.mid
+        where
+        aid = #{aid}
+    </select>
 
-<select id="queryUserFavoriteVideoExsMe" resultMap="BaseResultMap">
-    select
-    <include refid="BaseColumnList" />
-    from
-    tdd_user_favorite_video as u
-    left join
-    tdd_video as v
-    on
-    u.aid = v.aid
-    left join
-    tdd_member as m
-    on
-    v.mid = m.mid
-    left join
-    tdd_video_record as r
-    on
-    v.laststat = r.id
-    <where>
-        and u.userid = #{userid}
-        <if test="title != null and title.length() > 0">
-            and INSTR(lower(v.title), lower(#{title}))
+    <select id="queryUserFavoriteVideoExsMe" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user_favorite_video as u
+        left join
+        tdd_video as v
+        on
+        u.aid = v.aid
+        left join
+        tdd_member as m
+        on
+        v.mid = m.mid
+        left join
+        tdd_video_record as r
+        on
+        v.laststat = r.id
+        <where>
+            and u.userid = #{userid}
+            <if test="title != null and title.length() > 0">
+                and INSTR(lower(v.title), lower(#{title}))
+            </if>
+        </where>
+        order by
+        ${order_by}
+        <if test="desc == 1">
+            desc
         </if>
-    </where>
-    order by
-    ${order_by}
-    <if test="desc == 1">
-        desc
-    </if>
-    limit
-    #{offset}, #{ps}
-</select>
+        limit
+        #{offset}, #{ps}
+    </select>
 
-<select id="queryUserFavoriteVideoExsMeCount" resultType="Integer">
-    select
-    count(1)
-    from
-    tdd_user_favorite_video as u
-    left join
-    tdd_video as v
-    on
-    u.aid = v.aid
-    <where>
-        and u.userid = #{userid}
-        <if test="title != null and title.length() > 0">
-            and INSTR(lower(v.title), lower(#{title}))
+    <select id="queryUserFavoriteVideoExsMeCount" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_user_favorite_video as u
+        left join
+        tdd_video as v
+        on
+        u.aid = v.aid
+        <where>
+            and u.userid = #{userid}
+            <if test="title != null and title.length() > 0">
+                and INSTR(lower(v.title), lower(#{title}))
+            </if>
+        </where>
+    </select>
+
+    <select id="queryUserFavoriteVideoExs" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user_favorite_video as u
+        left join
+        tdd_video as v
+        on
+        u.aid = v.aid
+        left join
+        tdd_member as m
+        on
+        v.mid = m.mid
+        left join
+        tdd_video_record as r
+        on
+        v.laststat = r.id
+        <where>
+            and u.userid = #{userid}
+            <if test="start_ts > 0">
+                and u.added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and u.added &lt;= #{end_ts}
+            </if>
+        </where>
+        order by
+        ${order_by}
+        <if test="desc == 1">
+            desc
         </if>
-    </where>
-</select>
+        limit
+        #{offset}, #{ps}
+    </select>
+
+    <select id="queryUserFavoriteVideoExsCount" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_user_favorite_video as u
+        left join
+        tdd_video as v
+        on
+        u.aid = v.aid
+        <where>
+            and u.userid = #{userid}
+            <if test="start_ts > 0">
+                and u.added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and u.added &lt;= #{end_ts}
+            </if>
+        </where>
+    </select>
 
 </mapper>
