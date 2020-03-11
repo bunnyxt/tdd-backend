@@ -88,4 +88,40 @@ public class UserFavoriteVideoRestController {
     }
 
     // admin ===========================================================================================================
+
+    // video favorite count
+    @RequestMapping(value = "/video/{aid}/favorite/user", method = RequestMethod.GET)
+    public ResponseEntity<List<UserFavoriteVideo>> queryUserFavoriteVideoUsers(@PathVariable Integer aid,
+                                                                               @RequestParam(defaultValue = "0") Integer start_ts,
+                                                                               @RequestParam(defaultValue = "0") Integer end_ts,
+                                                                               @RequestParam(defaultValue = "added") String order_by,
+                                                                               @RequestParam(defaultValue = "1") Integer desc,
+                                                                               @RequestParam(defaultValue = "1") Integer pn,
+                                                                               @RequestParam(defaultValue = "100") Integer ps)
+            throws InvalidRequestParameterException {
+        // check params
+        if (aid <= 0) {
+            throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
+        }
+        TddParamCheckUtil.start_ts(start_ts);
+        TddParamCheckUtil.end_ts(end_ts);
+        List<String> allowedOrderBy = new ArrayList<String>(){{
+            add("added");
+        }};
+        if (!allowedOrderBy.contains(order_by)) {
+            throw new InvalidRequestParameterException("order_by", order_by,
+                    "only support order by " + allowedOrderBy.toString());
+        }
+        TddParamCheckUtil.desc(desc);
+        TddParamCheckUtil.pn(pn);
+        TddParamCheckUtil.ps(ps, 100);
+
+        // get list
+        List<UserFavoriteVideo> list = userFavoriteVideoService.queryUserFavoriteVideoUsers(aid, start_ts, end_ts, order_by, desc, pn, ps);
+
+        // get total count
+        Integer totalCount = userFavoriteVideoService.queryUserFavoriteVideoUsersCount(aid, start_ts, end_ts);
+
+        return TddResponseUtil.AssembleList(list, totalCount);
+    }
 }

@@ -62,4 +62,19 @@ public class UserFavoriteVideoServiceImpl implements UserFavoriteVideoService {
     public Integer queryUserFavoriteVideoCount(Integer aid) {
         return userFavoriteVideoDao.queryUserFavoriteVideoCount(aid);
     }
+
+    @Override
+    public List<UserFavoriteVideo> queryUserFavoriteVideoUsers(Integer aid, Integer start_ts, Integer end_ts, String order_by, Integer desc, Integer pn, Integer ps) {
+        // pn, ps -> offset, ps
+        ps = PageNumModfier.modifyPs(ps, 100);
+        pn = PageNumModfier.modifyPn(pn);
+        Integer offset = PageNumModfier.calcOffset(ps, pn);
+
+        return userFavoriteVideoDao.queryUserFavoriteVideoUsers(aid, start_ts, end_ts, order_by, desc, offset, ps);
+    }
+
+    @Override
+    public Integer queryUserFavoriteVideoUsersCount(Integer aid, Integer start_ts, Integer end_ts) {
+        return userFavoriteVideoDao.queryUserFavoriteVideoUsersCount(aid, start_ts, end_ts);
+    }
 }

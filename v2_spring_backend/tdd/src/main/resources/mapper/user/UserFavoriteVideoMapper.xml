@@ -6,7 +6,6 @@
         <result column="added" property="added" />
         <result column="userid" property="userid" />
         <result column="aid" property="aid" />
-
     </resultMap>
 
     <sql id="BaseColumnList">
@@ -47,6 +46,45 @@
         tdd_user_favorite_video
         where
         aid = #{aid}
+    </select>
+
+    <select id="queryUserFavoriteVideoUsers" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user_favorite_video
+        <where>
+            and aid = #{aid}
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+        </where>
+        order by
+        ${order_by}
+        <if test="desc == 1">
+            desc
+        </if>
+        limit
+        #{offset}, #{ps}
+    </select>
+
+    <select id="queryUserFavoriteVideoUsersCount" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_user_favorite_video
+        <where>
+            and aid = #{aid}
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+        </where>
     </select>
 
 </mapper>
