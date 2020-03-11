@@ -30,11 +30,11 @@ public class UserFavoriteVideoExServiceImpl implements UserFavoriteVideoExServic
             order_by = "r.like"; // cannot be like since like is a possible keyword there
         }
 
-        return userFavoriteVideoExDao.queryUserFavoriteVideoExs(userid, title, order_by, desc, offset, ps);
+        return userFavoriteVideoExDao.queryUserFavoriteVideoExsMe(userid, title, order_by, desc, offset, ps);
     }
 
     @Override
     public Integer queryUserFavoriteVideoExsMeCount(Long userid, String title) {
-        return userFavoriteVideoExDao.queryUserFavoriteVideoExsCount(userid, title);
+        return userFavoriteVideoExDao.queryUserFavoriteVideoExsMeCount(userid, title);
     }
 }
