@@ -47,7 +47,7 @@
             <result column="share" property="share" />
             <result column="like" property="like" />
         </association>
-        <collection column="aid" property="staff" ofType="com.bunnyxt.tdd.model.VideoStaffEx" select="queryVideoStaffsByAid" />
+        <collection column="v_aid" property="staff" ofType="com.bunnyxt.tdd.model.VideoStaffEx" select="queryVideoStaffsByAid" />
     </association>
 </resultMap>
 
