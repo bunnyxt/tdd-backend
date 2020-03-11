@@ -39,7 +39,7 @@ public class UserSignInOverviewRestController {
 
     // check one user's sign in overview
     @PreAuthorize("hasRole('admin')")
-    @RequestMapping(value = "/user/signin/overview/{userid}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/signin/overview/tdduser{userid}", method = RequestMethod.GET)
     public UserSignInOverview queryUserSignInsMe(@PathVariable Long userid)
             throws InvalidRequestParameterException {
         // check params

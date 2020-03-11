@@ -58,7 +58,7 @@ public class UserSignInRestController {
 
     // check one user's sign in history
     @PreAuthorize("hasRole('admin')")
-    @RequestMapping(value = "/user/signin/{userid}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/signin/tdduser{userid}", method = RequestMethod.GET)
     public ResponseEntity<List<UserSignIn>> queryUserSignInsByUserid(@PathVariable Long userid,
                                                                      @RequestParam(defaultValue = "0") Integer last_count,
                                                                      @RequestParam(defaultValue = "0") Integer start_ts,
