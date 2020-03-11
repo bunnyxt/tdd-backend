@@ -16,7 +16,7 @@ public class UserFavoriteVideoExServiceImpl implements UserFavoriteVideoExServic
     UserFavoriteVideoExDao userFavoriteVideoExDao;
 
     @Override
-    public List<UserFavoriteVideoEx> queryUserFavoriteVideoExs(Long userid, String title, String order_by, Integer desc, Integer pn, Integer ps) {
+    public List<UserFavoriteVideoEx> queryUserFavoriteVideoExsMe(Long userid, String title, String order_by, Integer desc, Integer pn, Integer ps) {
         // pn, ps -> offset, ps
         ps = PageNumModfier.modifyPs(ps, 20);
         pn = PageNumModfier.modifyPn(pn);
@@ -34,7 +34,7 @@ public class UserFavoriteVideoExServiceImpl implements UserFavoriteVideoExServic
     }
 
     @Override
-    public Integer queryUserFavoriteVideoExsCount(Long userid, String title) {
+    public Integer queryUserFavoriteVideoExsMeCount(Long userid, String title) {
         return userFavoriteVideoExDao.queryUserFavoriteVideoExsCount(userid, title);
     }
 }

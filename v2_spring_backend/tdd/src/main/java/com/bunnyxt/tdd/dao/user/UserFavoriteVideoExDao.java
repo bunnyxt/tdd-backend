@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface UserFavoriteVideoExDao {
 
-    List<UserFavoriteVideoEx> queryUserFavoriteVideoExs(Long userid, String title,
-                                                        String order_by, Integer desc, Integer offset, Integer ps);
+    List<UserFavoriteVideoEx> queryUserFavoriteVideoExsMe(Long userid, String title,
+                                                          String order_by, Integer desc, Integer offset, Integer ps);
 
-    Integer queryUserFavoriteVideoExsCount(Long userid, String title);
+    Integer queryUserFavoriteVideoExsMeCount(Long userid, String title);
 }

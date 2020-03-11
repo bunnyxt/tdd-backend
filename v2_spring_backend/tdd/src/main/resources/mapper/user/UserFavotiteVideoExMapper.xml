@@ -79,7 +79,7 @@
     aid = #{aid}
 </select>
 
-<select id="queryUserFavoriteVideoExs" resultMap="BaseResultMap">
+<select id="queryUserFavoriteVideoExsMe" resultMap="BaseResultMap">
     select
     <include refid="BaseColumnList" />
     from
@@ -111,7 +111,7 @@
     #{offset}, #{ps}
 </select>
 
-<select id="queryUserFavoriteVideoExsCount" resultType="Integer">
+<select id="queryUserFavoriteVideoExsMeCount" resultType="Integer">
     select
     count(1)
     from
