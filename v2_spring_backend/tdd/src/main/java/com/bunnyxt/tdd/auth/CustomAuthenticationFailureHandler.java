@@ -23,6 +23,29 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         response.setHeader("Access-Control-Allow-Headers", "*");
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(401);
-        response.getWriter().write("{\"code\":40101,\"message\":\"login failure\",\"detail\":{}}");
+        response.getWriter().write("{\"code\":40101,\"message\":\"login failure\",\"detail\":");
+        if (request.getAttribute("type") == null) {
+            response.getWriter().write("{}}");
+        } else {
+            response.getWriter().write("{\"type\":\"" + request.getAttribute("type") + "\"");
+
+            // check different type of failure
+            if (request.getAttribute("username") != null) {
+                response.getWriter().write(",\"username\":\"" + request.getAttribute("username") + "\"}}");
+            }
+
+            if (request.getAttribute("password") != null) {
+                response.getWriter().write(",\"password\":\"" + request.getAttribute("password") + "\"}}");
+            }
+
+            if (request.getAttribute("recaptcha") != null) {
+                response.getWriter().write(",\"recaptcha\":\"" + request.getAttribute("recaptcha") + "\"");
+                if (request.getAttribute("error-codes") != null) {
+                    response.getWriter().write(",\"error-codes\":\"" +
+                            ((String) request.getAttribute("error-codes")).replace("\"", "") + "\"");
+                }
+                response.getWriter().write("}}");
+            }
+        }
     }
 }
