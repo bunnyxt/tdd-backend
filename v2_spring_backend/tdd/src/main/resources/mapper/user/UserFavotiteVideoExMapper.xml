@@ -168,10 +168,6 @@
         count(1)
         from
         tdd_user_favorite_video as u
-        left join
-        tdd_video as v
-        on
-        u.aid = v.aid
         <where>
             and u.userid = #{userid}
             <if test="start_ts > 0">
