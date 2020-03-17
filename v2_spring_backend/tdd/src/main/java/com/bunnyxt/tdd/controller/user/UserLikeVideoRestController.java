@@ -19,7 +19,7 @@ public class UserLikeVideoRestController {
 
     // user ============================================================================================================
 
-    // user post favorite video
+    // user post like video
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/like/video/{aid}", method = RequestMethod.POST)
     public TddCommonResponse postUserLikeVideo(@PathVariable Integer aid)
@@ -35,7 +35,7 @@ public class UserLikeVideoRestController {
         return userLikeVideoService.postUserLikeVideo(userid, aid);
     }
 
-    // user delete favorite video
+    // user delete like video
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/like/video/{aid}", method = RequestMethod.DELETE)
     public TddCommonResponse deleteUserLikeVideo(@PathVariable Integer aid)
@@ -51,7 +51,7 @@ public class UserLikeVideoRestController {
         return userLikeVideoService.deleteUserLikeVideo(userid, aid);
     }
 
-    // user favorite video status
+    // user like video status
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/like/video/{aid}", method = RequestMethod.GET)
     public UserLikeVideo queryUserLikeVideo(@PathVariable Integer aid)
@@ -67,7 +67,7 @@ public class UserLikeVideoRestController {
         return userLikeVideoService.queryUserLikeVideo(userid, aid);
     }
 
-    // video favorite count
+    // video like count
     @RequestMapping(value = "/video/{aid}/like", method = RequestMethod.GET)
     public Integer queryUserLikeVideoCount(@PathVariable Integer aid)
             throws InvalidRequestParameterException {
