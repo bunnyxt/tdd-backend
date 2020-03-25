@@ -23,6 +23,12 @@ public class UserFavoriteMemberExServiceImpl implements UserFavoriteMemberExServ
         Integer offset = PageNumModfier.calcOffset(ps, pn);
 
         // modify order_by
+        if (order_by.equals("mid")) {
+            order_by = "u.mid";
+        }
+        if (order_by.equals("video_count")) {
+            order_by = "m.video_count";
+        }
         if (order_by.equals("added")) {
             order_by = "u.added"; // here order by added of user favorite time
         }
@@ -43,6 +49,12 @@ public class UserFavoriteMemberExServiceImpl implements UserFavoriteMemberExServ
         Integer offset = PageNumModfier.calcOffset(ps, pn);
 
         // modify order_by
+        if (order_by.equals("mid")) {
+            order_by = "u.mid"; // here order by mid of user favorite
+        }
+        if (order_by.equals("video_count")) {
+            order_by = "m.video_count";
+        }
         if (order_by.equals("added")) {
             order_by = "u.added"; // here order by added of user favorite time
         }
