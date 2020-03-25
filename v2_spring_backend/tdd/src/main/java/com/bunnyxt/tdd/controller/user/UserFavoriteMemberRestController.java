@@ -73,7 +73,7 @@ public class UserFavoriteMemberRestController {
     }
 
     // member favorite count
-    @RequestMapping(value = "/video/{mid}/member", method = RequestMethod.GET)
+    @RequestMapping(value = "/member/{mid}/favorite", method = RequestMethod.GET)
     public Integer queryUserFavoriteMemberCount(@PathVariable Integer mid)
             throws InvalidRequestParameterException {
         // check params
