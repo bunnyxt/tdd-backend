@@ -7,6 +7,7 @@ import com.bunnyxt.tdd.service.user.UserSignInService;
 import com.bunnyxt.tdd.util.CalendarUtil;
 import com.bunnyxt.tdd.util.PageNumModfier;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -68,11 +69,16 @@ public class UserSignInServiceImpl implements UserSignInService {
         UserSignInOverview userSignInOverview = userSignInOverviewDao.queryUserSignInOverviewByUserid(userid);
         Integer last_added = userSignInOverview.getLast_added();
         Integer new_last_added_days = 1;
-        if (last_added >= start_ts - 24 * 60 * 60 && last_added <= end_ts - 24 * 60 * 60) {
-            // yesterday signed in, last_added_days++
-            new_last_added_days = userSignInOverview.getLast_added_days() + 1;
+        if (last_added == null) {
+            // first sign in
+            userSignInOverviewDao.updateUserSignInOverviewByUseridWhenSignIn(userid, added, 1);
+        } else {
+            if (last_added >= start_ts - 24 * 60 * 60 && last_added <= end_ts - 24 * 60 * 60) {
+                // yesterday signed in, last_added_days++
+                new_last_added_days = userSignInOverview.getLast_added_days() + 1;
+            }
+            userSignInOverviewDao.updateUserSignInOverviewByUseridWhenSignIn(userid, added, new_last_added_days);
         }
-        userSignInOverviewDao.updateUserSignInOverviewByUseridWhenSignIn(userid, added, new_last_added_days);
 
         // add point
         double[] addPointArr = {0, 5, 10, 15, 20, 25};
