@@ -70,4 +70,9 @@
         userid = #{userid}
     </update>
 
+    <insert id="addUserSignInOverview">
+        insert into tdd_user_sign_in_overview(userid)
+        values(#{userid})
+    </insert>
+
 </mapper>
