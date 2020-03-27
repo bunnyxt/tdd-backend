@@ -14,4 +14,6 @@ public interface UserSignInOverviewDao {
     Integer queryUserSignInOverviewsCount(Integer start_ts, Integer end_ts);
 
     void updateUserSignInOverviewByUseridWhenSignIn(Long userid, Integer last_added, Integer last_added_days);
+
+    void addUserSignInOverview(Long userid);
 }

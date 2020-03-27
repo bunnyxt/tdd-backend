@@ -163,4 +163,33 @@
         where
         id = #{id}
     </update>
+
+    <select id="queryUserByPhone" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user
+        where
+        username = #{phone}
+    </select>
+
+    <select id="queryUserByEmail" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user
+        where
+        email = #{email}
+    </select>
+
+    <insert id="addUser">
+        insert into tdd_user(added, username, password, email, phone)
+        values (#{added}, #{username}, #{password}, #{email}, #{phone})
+    </insert>
+
+    <update id="updateUserNicknameById">
+        update tdd_user
+        set nickname = #{nickname}
+        where id = #{id}
+    </update>
 </mapper>
