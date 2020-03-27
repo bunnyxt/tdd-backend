@@ -9,6 +9,9 @@ import com.alibaba.fastjson.JSONArray;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 // ref: https://www.jianshu.com/p/5b660b32d96d
 
@@ -18,7 +21,18 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException {
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8080"); // TODO set response to multiple address
+        String []  allowDomain= {
+                "http://localhost:8080",
+                "http://tdd.bunnyxt.com", "https://tdd.bunnyxt.com",
+                "http://tdd2.bunnyxt.com", "https://tdd2.bunnyxt.com"
+        };
+        Set<String> allowedOrigins = new HashSet<String>(Arrays.asList(allowDomain));
+        String originHeader=((HttpServletRequest) request).getHeader("Origin");
+        if (allowedOrigins.contains(originHeader)) {
+            response.setHeader("Access-Control-Allow-Origin", originHeader); // TODO set response to multiple address
+        } else {
+            response.setHeader("Access-Control-Allow-Origin", "https://tdd.bunnyxt.com");
+        }
         response.setHeader("Access-Control-Allow-Methods", "*");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Headers", "*");
