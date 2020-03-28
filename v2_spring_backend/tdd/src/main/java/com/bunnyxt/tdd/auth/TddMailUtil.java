@@ -43,6 +43,8 @@ public class TddMailUtil {
             Properties prop = new Properties();
             prop.setProperty("mail.host", mail_host);
             prop.setProperty("mail.transport.protocol", "smtp");
+            prop.setProperty("mail.smtp.socketFactory.port", "465");
+            prop.setProperty("mail.smtp.ssl.enable", "true");
             prop.setProperty("mail.smtp.auth", "true");
 
             // 使用JavaMail发送邮件的5个步骤
