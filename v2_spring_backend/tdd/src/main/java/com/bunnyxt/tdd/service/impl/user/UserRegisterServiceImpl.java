@@ -163,6 +163,10 @@ public class UserRegisterServiceImpl implements UserRegisterService {
             return new TddCommonResponse("fail", "code expired of regkey " + regkey);
         }
 
+        if (code != task.getCode()) {
+            return new TddCommonResponse("fail", "wrong code " + code);
+        }
+
         User user;
         user = userDao.queryUserByUsername(task.getUsername());
         if (user != null) {
