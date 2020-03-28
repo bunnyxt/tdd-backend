@@ -48,10 +48,10 @@ public class UserRegisterRestController {
             pattern = "^1[3456789]\\d{9}$";
         }
         if (!Pattern.matches(pattern, validation)) {
-            throw new InvalidRequestParameterException("validation", null, "invalid " + method + " format");
+            throw new InvalidRequestParameterException("validation", validation, "invalid " + method + " format");
         }
         if (method.equals("email") && validation.length() > 200) {
-            throw new InvalidRequestParameterException("validation", null, "invalid " + method + " format, length of email is too long");
+            throw new InvalidRequestParameterException("validation", validation, "invalid " + method + " format, length of email is too long");
         }
         // username
         if (username == null) {
