@@ -14,9 +14,12 @@ import java.util.Map;
 
 public class TddSmsUtil {
 
-    public static boolean sendCode(String phone, String code) {
+    private static String ACCESS_KEY_ID = "<access-key-id>";
+    private static String ACCESS_KEY_SECRET = "<access-key-secret>";
+
+    private static boolean sendTddCode(String phone, String code, String TemplateCode) {
         DefaultProfile profile = DefaultProfile.getProfile(
-                "cn-hangzhou", "<access-key-id>", "<access-key-secret>");
+                "cn-hangzhou", ACCESS_KEY_ID, ACCESS_KEY_SECRET);
         IAcsClient client = new DefaultAcsClient(profile);
 
         CommonRequest request = new CommonRequest();
@@ -27,7 +30,7 @@ public class TddSmsUtil {
         request.putQueryParameter("RegionId", "cn-hangzhou");
         request.putQueryParameter("PhoneNumbers", phone);
         request.putQueryParameter("SignName", "天钿Daily");
-        request.putQueryParameter("TemplateCode", "<your-template-code>");
+        request.putQueryParameter("TemplateCode", TemplateCode);
         request.putQueryParameter("TemplateParam", "{\"code\": \"" + code + "\"}");
         try {
             CommonResponse response = client.getCommonResponse(request);
@@ -45,5 +48,13 @@ public class TddSmsUtil {
             return false;
         }
         return true;
+    }
+
+    public static boolean sendRegCode(String phone, String code) {
+        return sendTddCode(phone, code, "SMS_xxxxxxxxx");
+    }
+
+    public static boolean sendBindCode(String phone, String code) {
+        return sendTddCode(phone, code, "SMS_xxxxxxxxx");
     }
 }
