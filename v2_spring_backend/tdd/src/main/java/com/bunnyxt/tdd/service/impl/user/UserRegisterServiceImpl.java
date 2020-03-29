@@ -2,6 +2,7 @@ package com.bunnyxt.tdd.service.impl.user;
 
 import com.alibaba.fastjson.JSON;
 import com.bunnyxt.tdd.auth.TddMailUtil;
+import com.bunnyxt.tdd.auth.TddRecaptchaAuthUtil;
 import com.bunnyxt.tdd.auth.TddSmsUtil;
 import com.bunnyxt.tdd.dao.RoleDao;
 import com.bunnyxt.tdd.dao.user.UserDao;
@@ -12,6 +13,8 @@ import com.bunnyxt.tdd.model.user.User;
 import com.bunnyxt.tdd.model.user.UserRegisterTask;
 import com.bunnyxt.tdd.service.user.UserRegisterService;
 import com.bunnyxt.tdd.util.CalendarUtil;
+import com.bunnyxt.tdd.util.TddCodeKeyGenerator;
+import com.bunnyxt.tdd.util.TddResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -44,30 +47,9 @@ public class UserRegisterServiceImpl implements UserRegisterService {
     @Override
     public TddCommonResponse requestCode(String method, String validation, String username, String password, String recaptcha) {
         // check recaptcha
-        BufferedReader in = null;
-        String result = "";
-        try {
-            String secret = "recaptcha-secret"; // set your own recaptcha secret here
-            URL url = new URL("https://recaptcha.net/recaptcha/api/siteverify?secret="+secret+"&response="+recaptcha);
-            URLConnection conn = url.openConnection();
-            conn.connect();
-            in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line;
-            while ((line = in.readLine()) != null) {
-                result += line;
-            }
-            Map resultMap = (Map) JSON.parse(result);
-            if ((Boolean) resultMap.get("success")) {
-                // System.out.println("recaptcha validation success");
-            } else {
-                Map<String, Object> map = new HashMap<>();
-                map.put("error-codes", resultMap.get("error-codes").toString());
-                return new TddCommonResponse("fail", "fail to validate recaptcha", map);
-            }
-        } catch (Exception e) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("exception", e.toString());
-            return new TddCommonResponse("fail", "fail to validate recaptcha", map);
+        TddCommonResponse recaptchaResponse = TddRecaptchaAuthUtil.check(recaptcha);
+        if (recaptchaResponse.getStatus().equals("fail")) {
+            return recaptchaResponse;
         }
 
         // check username
@@ -104,17 +86,8 @@ public class UserRegisterServiceImpl implements UserRegisterService {
         Integer expired = added + 5 * 60;  // 5 min later
 
         // make code and regkey
-        String code;
-        String regkey;
-
-        // implement your algorithm here
-        Random rand = new Random(System.currentTimeMillis());
-        Integer randCode = rand.nextInt(1000000);
-        code = String.valueOf(randCode);
-        for (int i = 0; i < 6 - code.length(); i++) {
-            code = "0" + code;
-        }
-        regkey = DigestUtils.md5DigestAsHex(code.getBytes());
+        String code = TddCodeKeyGenerator.generateCode();
+        String regkey = TddCodeKeyGenerator.generateKeyViaCode(code);
 
         // send code via email or phone
         if (method.equals("email")) {
