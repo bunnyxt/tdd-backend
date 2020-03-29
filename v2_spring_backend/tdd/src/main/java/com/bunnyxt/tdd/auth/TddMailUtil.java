@@ -9,12 +9,6 @@ import java.util.Properties;
 
 public class TddMailUtil {
 
-    private static String mailFrom = "user@example.com";// 指明邮件的发件人
-    private static String password_mailFrom = "yourPassw0rd";// 指明邮件的发件人登陆密码
-    private static String mailTo = null;    // 指明邮件的收件人
-    private static String mailTittle = null;// 邮件的标题
-    private static String mailText = null;    // 邮件的文本内容
-    private static String mail_host = "smtp.example.com";    // 邮件的服务器域名
 
     private static MimeMessage createSimpleMail(Session session, String mailfrom, String mailTo, String mailTittle,
                                                String mailText) throws Exception {
@@ -22,7 +16,7 @@ public class TddMailUtil {
         MimeMessage message = new MimeMessage(session);
         // 指明邮件的发件人
         message.setFrom(new InternetAddress(mailfrom));
-        // 指明邮件的收件人，现在发件人和收件人是一样的，那就是自己给自己发
+        // 指明邮件的收件人
         message.setRecipient(Message.RecipientType.TO, new InternetAddress(mailTo));
         // 邮件的标题
         message.setSubject(mailTittle);
@@ -32,19 +26,20 @@ public class TddMailUtil {
         return message;
     }
 
-    public static boolean sendCode(String email, String code) {
-        mailTo = email;
-        mailTittle = "天钿Daily - 注册验证码";
-        mailText = "亲爱的用户：<br>" +
-                "您正在使用本邮箱注册「天钿Daily」用户，验证码为：" + code + "，有效期为5分钟，请勿告知他人此验证码，若非本人操作请忽视<br>" +
-                "by.bunnyxt";
+    private static boolean sendMail(String email, String title, String text) {
+        String mailFrom = "user@example.com";// 指明邮件的发件人
+        String password_mailFrom = "yourPassw0rd";// 指明邮件的发件人登陆密码
+        String mailTo = email;    // 指明邮件的收件人
+        String mailTittle = title;// 邮件的标题
+        String mailText = text;    // 邮件的文本内容
+        String mail_host = "smtp.example.com";    // 邮件的服务器域名
 
         try {
             Properties prop = new Properties();
             prop.setProperty("mail.host", mail_host);
             prop.setProperty("mail.transport.protocol", "smtp");
-            prop.setProperty("mail.smtp.socketFactory.port", "465");
-            prop.setProperty("mail.smtp.ssl.enable", "true");
+            prop.setProperty("mail.smtp.socketFactory.port", "465"); // set to SSL port
+            prop.setProperty("mail.smtp.ssl.enable", "true"); // enable SSL
             prop.setProperty("mail.smtp.auth", "true");
 
             // 使用JavaMail发送邮件的5个步骤
@@ -67,5 +62,21 @@ public class TddMailUtil {
             return false;
         }
         return true;
+    }
+
+    public static boolean sendRegCode(String email, String code) {
+        String mailTittle = "天钿Daily - 注册验证码";
+        String mailText = "亲爱的用户：<br>" +
+                "您正在使用本邮箱注册「天钿Daily」用户，验证码为：" + code + "，有效期为5分钟，请勿告知他人此验证码，若非本人操作请忽视<br>" +
+                "by.bunnyxt";
+        return sendMail(email, mailTittle, mailText);
+    }
+
+    public static boolean sendBindCode(String email, String code, String username) {
+        String mailTittle = "天钿Daily - 绑定邮箱验证码";
+        String mailText = "亲爱的用户：<br>" +
+                "您正在将本邮箱绑定到「天钿Daily」用户" + username + "，验证码为：" + code + "，有效期为5分钟，请勿告知他人此验证码，若非本人操作请忽视<br>" +
+                "by.bunnyxt";
+        return sendMail(email, mailTittle, mailText);
     }
 }
