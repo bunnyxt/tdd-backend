@@ -10,9 +10,14 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:8080")
+                .allowedOrigins("http://localhost:8080", // for debug
+                        "chrome-extension://phdhijbcfjgnhdajagackoddmfegcfeh", // for chrome extension
+                        "http://tdd.bunnyxt.com", "https://tdd.bunnyxt.com", // for production
+                        "http://tdd2.bunnyxt.com", "https://tdd2.bunnyxt.com") // for inner test
                 .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("Content-Type", "Access-Control-Allow-Headers", "Authorization", "X-Requested-With")
+                .allowedHeaders("Content-Type", "Access-Control-Allow-Origin",
+                        "Access-Control-Allow-Headers", "Authorization", "X-Requested-With")
                 .allowCredentials(true);
     }
+
 }
