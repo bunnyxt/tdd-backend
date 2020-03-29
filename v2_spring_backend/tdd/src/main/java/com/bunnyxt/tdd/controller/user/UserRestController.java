@@ -1,7 +1,9 @@
 package com.bunnyxt.tdd.controller.user;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bunnyxt.tdd.auth.TddAuthUtil;
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
+import com.bunnyxt.tdd.model.TddCommonResponse;
 import com.bunnyxt.tdd.model.user.User;
 import com.bunnyxt.tdd.service.user.UserService;
 import com.bunnyxt.tdd.util.TddParamCheckUtil;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @CrossOrigin
 @RestController
@@ -38,7 +41,68 @@ public class UserRestController {
     }
 
     // user change personal profile
-    // TODO
+
+    // bind email
+    @PreAuthorize("hasRole('user')")
+    @RequestMapping(value = "/user/bind/email/code", method = RequestMethod.POST)
+    public TddCommonResponse bindEmailRequestCode(@RequestBody JSONObject jsonObject)
+            throws InvalidRequestParameterException {
+        // get params
+        String email = jsonObject.get("email").toString();
+        String recaptcha = jsonObject.getString("recaptcha");
+
+        // check params
+        if (email == null) {
+            throw new InvalidRequestParameterException("email", null, "email should not be null");
+        }
+        String pattern = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
+        if (!Pattern.matches(pattern, email)) {
+            throw new InvalidRequestParameterException("email", email, "invalid email format");
+        }
+        if (email.length() > 200) {
+            throw new InvalidRequestParameterException("email", email, "invalid email format, length of email is too long");
+        }
+        if (recaptcha == null) {
+            throw new InvalidRequestParameterException("recaptcha", null, "recaptcha should not be null");
+        }
+
+        // get userid
+        Long userid = TddAuthUtil.GetCurrentUser().getId();
+
+        return userService.bindEmailRequestCode(userid, email, recaptcha);
+    }
+
+    @PreAuthorize("hasRole('user')")
+    @RequestMapping(value = "/user/bind/email/validation", method = RequestMethod.POST)
+    public TddCommonResponse bindEmailValidation(@RequestBody JSONObject jsonObject)
+            throws InvalidRequestParameterException {
+        // get params
+        String bindkey = jsonObject.get("bindkey").toString();
+        String code = jsonObject.get("code").toString();
+
+        // check params
+        if (bindkey == null) {
+            throw new InvalidRequestParameterException("bindkey", null, "bindkey should not be null");
+        }
+        if (code == null) {
+            throw new InvalidRequestParameterException("code", null, "code should not be null");
+        }
+
+        // get userid
+        Long userid = TddAuthUtil.GetCurrentUser().getId();
+
+        return userService.bindEmailValidation(userid, bindkey, code);
+    }
+
+    @PreAuthorize("hasRole('user')")
+    @RequestMapping(value = "/user/bind/email", method = RequestMethod.DELETE)
+    public TddCommonResponse bindEmailUnbind()
+            throws InvalidRequestParameterException {
+        // get userid
+        Long userid = TddAuthUtil.GetCurrentUser().getId();
+
+        return userService.bindEmailUnbind(userid);
+    }
 
     // admin ===========================================================================================================
 
