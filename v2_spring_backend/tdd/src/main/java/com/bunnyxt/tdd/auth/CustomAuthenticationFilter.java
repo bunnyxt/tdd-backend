@@ -1,6 +1,7 @@
 package com.bunnyxt.tdd.auth;
 
 import com.alibaba.fastjson.JSON;
+import com.bunnyxt.tdd.model.TddCommonResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -45,10 +46,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             String recaptcha = authenticationBean.getRecaptcha();
 
             // for debug
-            if (recaptcha != null && recaptcha.equals("debug")) {
-                return new UsernamePasswordAuthenticationToken(
-                        authenticationBean.getUsername(), authenticationBean.getPassword());
-            }
+//            if (recaptcha != null && recaptcha.equals("debug")) {
+//                return new UsernamePasswordAuthenticationToken(
+//                        authenticationBean.getUsername(), authenticationBean.getPassword());
+//            }
             // debug end
 
             if (recaptcha == null) {
@@ -60,39 +61,24 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             }
 
             // check validity
-            BufferedReader in = null;
-            String result = "";
-            try {
-                String secret = "yoursecretkey"; // set your own recaptcha secret here
-                URL url = new URL("https://recaptcha.net/recaptcha/api/siteverify?secret="+secret+"&response="+recaptcha);
-                URLConnection conn = url.openConnection();
-                conn.connect();
-                in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                String line;
-                while ((line = in.readLine()) != null) {
-                    result += line;
-                }
-                Map resultMap = (Map) JSON.parse(result);
-                if ((Boolean) resultMap.get("success")) {
-                    // System.out.println("recaptcha validation success");
-                    return new UsernamePasswordAuthenticationToken(
-                            authenticationBean.getUsername(), authenticationBean.getPassword());
-                } else {
-                    // System.out.println("recaptcha validation fail");
-                    // System.out.println(resultMap.get("error-codes").toString());
+            TddCommonResponse recaptchaResponse = TddRecaptchaAuthUtil.check(recaptcha);
+            if (recaptchaResponse.getStatus().equals("success")) {
+                return new UsernamePasswordAuthenticationToken(
+                        authenticationBean.getUsername(), authenticationBean.getPassword());
+            } else {
+                if (recaptchaResponse.getDetail().containsKey("error-codes")) {
                     request.setAttribute("type", "recaptcha");
                     request.setAttribute("recaptcha", "recaptcha validation fail");
-                    request.setAttribute("error-codes", resultMap.get("error-codes").toString());
+                    request.setAttribute("error-codes", recaptchaResponse.getDetail().get("error-codes"));
+                    return new UsernamePasswordAuthenticationToken(
+                            "", "");
+                } else {
+                    System.out.println(recaptchaResponse.getDetail().get("exception"));
+                    request.setAttribute("type", "recaptcha");
+                    request.setAttribute("recaptcha", "fail to validate recaptcha");
                     return new UsernamePasswordAuthenticationToken(
                             "", "");
                 }
-            } catch (Exception e) {
-                // e.printStackTrace();
-                // System.out.println("fail to validate recaptcha");
-                request.setAttribute("type", "recaptcha");
-                request.setAttribute("recaptcha", "fail to validate recaptcha");
-                return new UsernamePasswordAuthenticationToken(
-                                "", "");
             }
         } catch (IOException e) {
             return new UsernamePasswordAuthenticationToken(
