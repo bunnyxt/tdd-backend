@@ -91,12 +91,16 @@ public class UserRegisterServiceImpl implements UserRegisterService {
 
         // send code via email or phone
         if (method.equals("email")) {
-            if (!TddMailUtil.sendCode(validation, code)) {
-                return new TddCommonResponse("fail", "fail to sent validation code to email " + validation);
+            if (!TddMailUtil.sendRegCode(validation, code)) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("email", validation);
+                return new TddCommonResponse("fail", "fail to sent validation code", map);
             }
         } else if (method.equals("phone")) {
-            if (!TddSmsUtil.sendCode(validation, code)) {
-                return new TddCommonResponse("fail", "fail to sent validation code to phone " + validation);
+            if (!TddSmsUtil.sendRegCode(validation, code)) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("phone", validation);
+                return new TddCommonResponse("fail", "fail to sent validation code", map);
             }
         }
 
@@ -124,20 +128,28 @@ public class UserRegisterServiceImpl implements UserRegisterService {
     public TddCommonResponse goRegister(String regkey, String code) {
         UserRegisterTask task = userRegisterDao.queryUserRegisterTaskByRegKey(regkey);
         if (task == null) {
-            return new TddCommonResponse("fail", "no register task found with regkey " + regkey);
+            Map<String, Object> map = new HashMap<>();
+            map.put("regkey", regkey);
+            return new TddCommonResponse("fail", "no register task found", map);
         }
 
         if (task.getStatus() != 0) {
-            return new TddCommonResponse("fail", "invalid status of regkey " + regkey);
+            Map<String, Object> map = new HashMap<>();
+            map.put("regkey", regkey);
+            return new TddCommonResponse("fail", "invalid task status", map);
         }
 
         Integer nowTs = CalendarUtil.getNowTs();
         if (nowTs > task.getExpired()) {
-            return new TddCommonResponse("fail", "code expired of regkey " + regkey);
+            Map<String, Object> map = new HashMap<>();
+            map.put("regkey", regkey);
+            return new TddCommonResponse("fail", "code expired", map);
         }
 
         if (!code.equals(task.getCode())) {
-            return new TddCommonResponse("fail", "wrong code " + code);
+            Map<String, Object> map = new HashMap<>();
+            map.put("code", code);
+            return new TddCommonResponse("fail", "wrong code", map);
         }
 
         User user;
