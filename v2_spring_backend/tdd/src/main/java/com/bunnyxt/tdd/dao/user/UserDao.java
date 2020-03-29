@@ -29,4 +29,8 @@ public interface UserDao {
 
     void updateUserNicknameById(Long id, String nickname);
 
+    void updateUserEmailById(Long id, String email);
+
+    void updateUserEmailToNullById(Long id);
+
 }

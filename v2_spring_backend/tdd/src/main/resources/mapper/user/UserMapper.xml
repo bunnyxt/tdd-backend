@@ -192,4 +192,16 @@
         set nickname = #{nickname}
         where id = #{id}
     </update>
+
+    <update id="updateUserEmailById">
+        update tdd_user
+        set email = #{email}
+        where id = #{id}
+    </update>
+
+    <update id="updateUserEmailToNullById">
+        update tdd_user
+        set email = NULL
+        where id = #{id}
+    </update>
 </mapper>
