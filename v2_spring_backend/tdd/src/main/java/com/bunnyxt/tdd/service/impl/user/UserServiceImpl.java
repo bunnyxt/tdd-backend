@@ -169,6 +169,12 @@ public class UserServiceImpl implements UserService {
             return new TddCommonResponse("fail", "user have not bind email yet");
         }
 
+        // check whether bind phone, since user must bind either phone or email
+        String phone = user.getPhone();
+        if (phone == null) {
+            return new TddCommonResponse("fail", "cannot unbind last only validation");
+        }
+
         // update user email
         userDao.updateUserEmailToNullById(userid);
 
