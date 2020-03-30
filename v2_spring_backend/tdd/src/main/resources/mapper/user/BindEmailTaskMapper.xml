@@ -34,4 +34,10 @@
         where bindkey = #{bindkey}
     </update>
 
+    <update id="updateLaterSucceedBindEmailTaskStatus">
+        update tdd_bind_email_task
+        set status = #{status}
+        where userid = #{userid} and email = #{email} and status = 0
+    </update>
+
 </mapper>

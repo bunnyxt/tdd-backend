@@ -159,6 +159,9 @@ public class UserServiceImpl implements UserService {
         // update bind email log
         bindEmailTaskDao.updateBindEmailTaskStatusByBindKey(bindkey, Byte.valueOf("1"));
 
+        // set status of task with same userid and email to 3: later succeed
+        bindEmailTaskDao.updateLaterSucceedBindEmailTaskStatus(userid, task.getEmail(), Byte.valueOf("3"));
+
         Map<String, Object> map = new HashMap<>();
         map.put("userid", task.getUserid());
         map.put("email", task.getEmail());
