@@ -25,4 +25,6 @@ public interface UserService {
     TddCommonResponse bindPhoneValidation(Long userid, String bindkey, String code);
 
     TddCommonResponse bindPhoneUnbind(Long userid);
+
+    TddCommonResponse setNickname(User user, String nickname);
 }

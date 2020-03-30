@@ -18,4 +18,19 @@
         values(#{added}, #{userid}, #{action}, #{detail})
     </insert>
 
+    <select id="queryLastSetNicknameLogViaUserid" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"></include>
+        from
+        tdd_user_log
+        where
+        userid = #{userid}
+        and
+        action = 'set nickname'
+        order by
+        added
+        desc
+        limit 1
+    </select>
+
 </mapper>

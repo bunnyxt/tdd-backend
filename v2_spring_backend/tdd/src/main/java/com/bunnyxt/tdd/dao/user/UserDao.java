@@ -37,4 +37,6 @@ public interface UserDao {
 
     void updateUserPhoneToNullById(Long id);
 
+    User queryUserByNickname(String nickname);
+
 }

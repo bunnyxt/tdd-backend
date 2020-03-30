@@ -155,6 +155,32 @@ public class UserRestController {
         return userService.bindPhoneUnbind(userid);
     }
 
+    // set nickname
+    @PreAuthorize("hasRole('user')")
+    @RequestMapping(value = "/user/set/nickname", method = RequestMethod.POST)
+    public TddCommonResponse setNickname(@RequestBody JSONObject jsonObject)
+            throws InvalidRequestParameterException {
+        // get params
+        String nickname = jsonObject.getString("nickname");
+
+        // check params
+        if (nickname == null) {
+            throw new InvalidRequestParameterException("nickname", null, "nickname should not be null");
+        }
+        if (nickname.length() < 2 || nickname.length() > 18) {
+            throw new InvalidRequestParameterException("nickname", nickname, "nickname length should between 2 and 18");
+        }
+        if (nickname.startsWith("tdduser")) {
+            throw new InvalidRequestParameterException("nickname", nickname, "cannot set nickname start with tdduser");
+        }
+        // TODO check whether sensitive nickname
+
+        // get user
+        User user = TddAuthUtil.GetCurrentUser();
+
+        return userService.setNickname(user, nickname);
+    }
+
     // admin ===========================================================================================================
 
     @PreAuthorize("hasRole('admin')")

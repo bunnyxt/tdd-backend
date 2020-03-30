@@ -3,14 +3,12 @@ package com.bunnyxt.tdd.service.impl.user;
 import com.bunnyxt.tdd.auth.TddMailUtil;
 import com.bunnyxt.tdd.auth.TddRecaptchaAuthUtil;
 import com.bunnyxt.tdd.auth.TddSmsUtil;
-import com.bunnyxt.tdd.dao.user.BindEmailTaskDao;
-import com.bunnyxt.tdd.dao.user.BindPhoneTaskDao;
-import com.bunnyxt.tdd.dao.user.UserDao;
-import com.bunnyxt.tdd.dao.user.UserLogDao;
+import com.bunnyxt.tdd.dao.user.*;
 import com.bunnyxt.tdd.model.TddCommonResponse;
 import com.bunnyxt.tdd.model.user.BindEmailTask;
 import com.bunnyxt.tdd.model.user.BindPhoneTask;
 import com.bunnyxt.tdd.model.user.User;
+import com.bunnyxt.tdd.model.user.UserLog;
 import com.bunnyxt.tdd.service.user.UserService;
 import com.bunnyxt.tdd.util.CalendarUtil;
 import com.bunnyxt.tdd.util.PageNumModfier;
@@ -38,6 +36,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserLogDao userLogDao;
+
+    @Autowired
+    UserHistoryPointDao userHistoryPointDao;
 
     @Override
     public User queryUserById(Long id) {
@@ -324,5 +325,64 @@ public class UserServiceImpl implements UserService {
         userLogDao.addUserLog(added, userid, "unbind phone", phone);
 
         return new TddCommonResponse("success", "unbind phone done");
+    }
+
+    @Override
+    public TddCommonResponse setNickname(User user, String nickname) {
+        // check whether new nickname same with before
+        if (nickname.equals(user.getNickname())) {
+            return new TddCommonResponse("fail", "nickname same with before");
+        }
+
+        // check whether nickname already used
+        User user_ = userDao.queryUserByNickname(nickname);
+        if (user_ != null) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("nickname", nickname);
+            return new TddCommonResponse("fail", "nickname already used", map);
+        }
+
+        // check last set nickname, cd 7 days
+        UserLog log = userLogDao.queryLastSetNicknameLogViaUserid(user.getId());
+        if (log != null && log.getAdded() > CalendarUtil.getNowTs() - 7 * 24 * 60 * 60) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("last", log.getAdded());
+            return new TddCommonResponse("fail", "nickname changed in 7 days", map);
+        }
+
+        // check whether first set
+        double cost = 50;
+        if (user.getNickname().startsWith("tdduser")) {
+            cost = 0;
+        }
+
+        // check whether point enough
+        if (user.getPoint() < cost) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("require", cost);
+            map.put("left", user.getPoint());
+            return new TddCommonResponse("fail", "point not enough", map);
+        }
+
+        Integer added = CalendarUtil.getNowTs();
+
+        if (cost > 0) {
+            // set point cost
+            userDao.updateUserPointById(cost, user.getId());
+
+            // set log
+            userHistoryPointDao.addUserHistoryPoint(added, user.getId(), -cost, "修改昵称");
+        }
+
+        // set username
+        userDao.updateUserNicknameById(user.getId(), nickname);
+
+        // add user log
+        userLogDao.addUserLog(added, user.getId(), "set nickname", nickname);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("userid", user.getId());
+        map.put("nickname", nickname);
+        return new TddCommonResponse("success", "finish set nickname", map);
     }
 }

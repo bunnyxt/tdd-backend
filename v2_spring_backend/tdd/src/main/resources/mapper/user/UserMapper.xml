@@ -216,4 +216,13 @@
         set phone = NULL
         where id = #{id}
     </update>
+
+    <select id="queryUserByNickname" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user
+        where
+        nickname = #{nickname}
+    </select>
 </mapper>
