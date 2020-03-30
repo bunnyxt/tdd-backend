@@ -154,7 +154,10 @@ public class UserServiceImpl implements UserService {
         // update bind email log
         bindEmailTaskDao.updateBindEmailTaskStatusByBindKey(bindkey, Byte.valueOf("1"));
 
-        return new TddCommonResponse("success", "bind email task done");
+        Map<String, Object> map = new HashMap<>();
+        map.put("userid", task.getUserid());
+        map.put("email", task.getEmail());
+        return new TddCommonResponse("success", "bind email task done", map);
     }
 
     @Override
