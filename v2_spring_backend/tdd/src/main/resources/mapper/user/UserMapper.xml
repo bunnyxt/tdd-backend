@@ -204,4 +204,16 @@
         set email = NULL
         where id = #{id}
     </update>
+
+    <update id="updateUserPhoneById">
+        update tdd_user
+        set phone = #{phone}
+        where id = #{id}
+    </update>
+
+    <update id="updateUserPhoneToNullById">
+        update tdd_user
+        set phone = NULL
+        where id = #{id}
+    </update>
 </mapper>

@@ -10,4 +10,6 @@ public interface BindEmailTaskDao {
     BindEmailTask queryBindEmailTaskByBindKey(String bindkey);
 
     void updateBindEmailTaskStatusByBindKey(String bindkey, Byte status);
+
+    void updateLaterSucceedBindEmailTaskStatus(Long userid, String email, Byte status);
 }

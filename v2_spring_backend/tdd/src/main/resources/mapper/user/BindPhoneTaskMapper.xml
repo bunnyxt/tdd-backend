@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.user.BindPhoneTaskDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.user.BindPhoneTask">
+        <id column="id" property="id" />
+        <result column="added" property="added" />
+        <result column="userid" property="userid" />
+        <result column="phone" property="phone" />
+        <result column="bindkey" property="bindkey" />
+        <result column="code" property="code" />
+        <result column="expired" property="expired" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id, added, userid, phone, bindkey, code, expired, status
+    </sql>
+
+    <insert id="addBindPhoneTask">
+        insert into tdd_bind_phone_task(added, userid, phone, bindkey, code, expired, status)
+        values(#{added}, #{userid}, #{phone}, #{bindkey}, #{code}, #{expired}, #{status})
+    </insert>
+
+    <select id="queryBindPhoneTaskByBindKey" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from tdd_bind_phone_task
+        where bindkey = #{bindkey}
+    </select>
+
+    <update id="updateBindPhoneTaskStatusByBindKey">
+        update tdd_bind_phone_task
+        set status = #{status}
+        where bindkey = #{bindkey}
+    </update>
+
+    <update id="updateLaterSucceedBindPhoneTaskStatus">
+        update tdd_bind_phone_task
+        set status = #{status}
+        where userid = #{userid} and phone = #{phone} and status = 0
+    </update>
+
+</mapper>

@@ -104,6 +104,61 @@ public class UserRestController {
         return userService.bindEmailUnbind(userid);
     }
 
+    // bind phone
+    @PreAuthorize("hasRole('user')")
+    @RequestMapping(value = "/user/bind/phone/code", method = RequestMethod.POST)
+    public TddCommonResponse bindPhoneRequestCode(@RequestBody JSONObject jsonObject)
+            throws InvalidRequestParameterException {
+        // get params
+        String phone = jsonObject.get("phone").toString();
+        String recaptcha = jsonObject.getString("recaptcha");
+
+        // check params
+        if (phone == null) {
+            throw new InvalidRequestParameterException("phone", null, "phone should not be null");
+        }
+        String pattern = "^1[3456789]\\d{9}$";
+        if (!Pattern.matches(pattern, phone)) {
+            throw new InvalidRequestParameterException("phone", phone, "invalid phone format");
+        }
+        if (recaptcha == null) {
+            throw new InvalidRequestParameterException("recaptcha", null, "recaptcha should not be null");
+        }
+
+        // get userid
+        Long userid = TddAuthUtil.GetCurrentUser().getId();
+
+        return userService.bindPhoneRequestCode(userid, phone, recaptcha);
+    }
+
+    @PreAuthorize("hasRole('user')")
+    @RequestMapping(value = "/user/bind/phone/validation", method = RequestMethod.POST)
+    public TddCommonResponse bindPhoneValidation(@RequestBody JSONObject jsonObject)
+            throws InvalidRequestParameterException {
+        // get params
+        String bindkey = jsonObject.get("bindkey").toString();
+        String code = jsonObject.get("code").toString();
+
+        // check params
+        TddParamCheckUtil.bindkey(bindkey);
+        TddParamCheckUtil.code(code);
+
+        // get userid
+        Long userid = TddAuthUtil.GetCurrentUser().getId();
+
+        return userService.bindPhoneValidation(userid, bindkey, code);
+    }
+
+    @PreAuthorize("hasRole('user')")
+    @RequestMapping(value = "/user/bind/phone", method = RequestMethod.DELETE)
+    public TddCommonResponse bindPhoneUnbind()
+            throws InvalidRequestParameterException {
+        // get userid
+        Long userid = TddAuthUtil.GetCurrentUser().getId();
+
+        return userService.bindPhoneUnbind(userid);
+    }
+
     // admin ===========================================================================================================
 
     @PreAuthorize("hasRole('admin')")
