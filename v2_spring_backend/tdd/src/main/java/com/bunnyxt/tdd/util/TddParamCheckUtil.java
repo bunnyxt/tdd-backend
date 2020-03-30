@@ -58,4 +58,18 @@ public class TddParamCheckUtil {
             throw new InvalidRequestParameterException("ps", ps, "ps should between 1 and " + maxPs);
         }
     }
+
+    private static void _not_null(String value, String name) {
+        if (value == null) {
+            throw new InvalidRequestParameterException(name, null, name + " should not be null");
+        }
+    }
+
+    public static void bindkey(String bindkey) {
+        _not_null(bindkey, "bindkey");
+    }
+
+    public static void code(String code) {
+        _not_null(code, "code");
+    }
 }

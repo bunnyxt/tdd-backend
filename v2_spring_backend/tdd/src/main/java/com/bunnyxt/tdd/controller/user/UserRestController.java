@@ -81,12 +81,8 @@ public class UserRestController {
         String code = jsonObject.get("code").toString();
 
         // check params
-        if (bindkey == null) {
-            throw new InvalidRequestParameterException("bindkey", null, "bindkey should not be null");
-        }
-        if (code == null) {
-            throw new InvalidRequestParameterException("code", null, "code should not be null");
-        }
+        TddParamCheckUtil.bindkey(bindkey);
+        TddParamCheckUtil.code(code);
 
         // get userid
         Long userid = TddAuthUtil.GetCurrentUser().getId();
