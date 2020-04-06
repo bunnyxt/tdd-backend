@@ -29,7 +29,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
         Set<String> allowedOrigins = new HashSet<String>(Arrays.asList(allowDomain));
         String originHeader=((HttpServletRequest) request).getHeader("Origin");
         if (allowedOrigins.contains(originHeader)) {
-            response.setHeader("Access-Control-Allow-Origin", originHeader); // TODO set response to multiple address
+            response.setHeader("Access-Control-Allow-Origin", originHeader); // set response to multiple address
         } else {
             response.setHeader("Access-Control-Allow-Origin", "https://tdd.bunnyxt.com");
         }

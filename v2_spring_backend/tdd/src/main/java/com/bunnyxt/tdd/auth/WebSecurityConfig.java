@@ -65,6 +65,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     httpServletResponse.setStatus(200);
                     httpServletResponse.getWriter().write("{\"code\":20002,\"message\":\"logout success\",\"detail\":{}}");
                 })
+//                .and()
+//                .sessionManagement()
+//                .invalidSessionUrl("/timeout")
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(customLoginUrlAuthenticationEntryPoint())
