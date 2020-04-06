@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.user.UserFavoriteMemberExDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.user.UserFavoriteMemberEx">
+        <id column="u_id" property="id" />
+        <result column="u_added" property="added" />
+        <result column="userid" property="userid" />
+        <result column="u_mid" property="mid" />
+        <association property="member" javaType="com.bunnyxt.tdd.model.MemberEx">
+            <result column="m_id" property="id" />
+            <result column="m_added" property="added" />
+            <result column="m_mid" property="mid" />
+            <result column="m_sex" property="sex" />
+            <result column="m_name" property="name" />
+            <result column="m_face" property="face" />
+            <result column="m_sign" property="sign" />
+            <result column="m_video_count" property="video_count" />
+            <association property="last_video" javaType="com.bunnyxt.tdd.model.fragment.VideoFragment">
+                <result column="v_aid" property="aid" />
+                <result column="v_pic" property="pic" />
+                <result column="v_title" property="title" />
+                <result column="v_pubdate" property="pubdate" />
+                <result column="v_mid" property="mid" />
+                <association property="laststat" javaType="com.bunnyxt.tdd.model.fragment.VideoRecordFragment">
+                    <result column="r_added" property="added" />
+                    <result column="r_view" property="view" />
+                    <result column="r_danmaku" property="danmaku" />
+                    <result column="r_reply" property="reply" />
+                    <result column="r_favorite" property="favorite" />
+                    <result column="r_coin" property="coin" />
+                    <result column="r_share" property="share" />
+                    <result column="r_like" property="like" />
+                </association>
+            </association>
+            <association property="last_total_stat" javaType="com.bunnyxt.tdd.model.fragment.MemberTotalStatRecordFragment">
+                <result column="sr_added" property="added" />
+                <result column="sr_video_count" property="video_count" />
+                <result column="sr_view" property="view" />
+                <result column="sr_danmaku" property="danmaku" />
+                <result column="sr_reply" property="reply" />
+                <result column="sr_favorite" property="favorite" />
+                <result column="sr_coin" property="coin" />
+                <result column="sr_share" property="share" />
+                <result column="sr_like" property="like" />
+            </association>
+            <association property="last_follower" javaType="com.bunnyxt.tdd.model.fragment.MemberFollowerRecordFragment">
+                <result column="fr_added" property="added" />
+                <result column="fr_follower" property="follower" />
+            </association>
+        </association>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        u.id u_id, u.added u_added, userid, u.mid u_mid,
+        m.id m_id, m.added m_added, m.mid m_mid, m.sex m_sex, m.name m_name, m.face m_face, m.sign m_sign, m.video_count m_video_count,
+        v.aid v_aid, v.pic v_pic, v.title v_title, v.pubdate v_pubdate, v.mid v_mid,
+        r.added r_added, r.view r_view, r.danmaku r_danmaku, r.reply r_reply, r.favorite r_favorite, r.coin r_coin, r.share r_share, r.like r_like,
+        sr.added sr_added, sr.video_count sr_video_count, sr.view sr_view, sr.danmaku sr_danmaku, sr.reply sr_reply,
+        sr.favorite sr_favorite, sr.coin sr_coin, sr.share sr_share, sr.like sr_like,
+        fr.added fr_added, fr.follower fr_follower
+    </sql>
+
+    <select id="queryUserFavoriteMemberExsMe" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user_favorite_member as u
+        left join tdd_member as m on u.mid = m.mid
+        left join tdd_video v on m.last_video = v.id
+        left join tdd_video_record r on v.laststat = r.id
+        left join tdd_member_total_stat_record sr on m.last_total_stat = sr.id
+        left join tdd_member_follower_record fr on m.last_follower = fr.id
+        <where>
+            and u.userid = #{userid}
+            <if test="sex != null and sex.length() > 0">
+                and m.sex = #{sex}
+            </if>
+            <if test="name != null and name.length() > 0">
+                and INSTR(lower(m.name), lower(#{name}))
+            </if>
+        </where>
+        order by
+        ${order_by}
+        <if test="desc == 1">
+            desc
+        </if>
+        limit
+        #{offset}, #{ps}
+    </select>
+
+    <select id="queryUserFavoriteMemberExsMeCount" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_user_favorite_member as u
+        left join tdd_member as m on u.mid = m.mid
+        left join tdd_video v on m.last_video = v.id
+        left join tdd_video_record r on v.laststat = r.id
+        left join tdd_member_total_stat_record sr on m.last_total_stat = sr.id
+        left join tdd_member_follower_record fr on m.last_follower = fr.id
+        <where>
+            and u.userid = #{userid}
+            <if test="sex != null and sex.length() > 0">
+                and m.sex = #{sex}
+            </if>
+            <if test="name != null and name.length() > 0">
+                and INSTR(lower(m.name), lower(#{name}))
+            </if>
+        </where>
+    </select>
+
+    <select id="queryUserFavoriteMemberExs" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user_favorite_member as u
+        left join tdd_member as m on u.mid = m.mid
+        left join tdd_video v on m.last_video = v.id
+        left join tdd_video_record r on v.laststat = r.id
+        left join tdd_member_total_stat_record sr on m.last_total_stat = sr.id
+        left join tdd_member_follower_record fr on m.last_follower = fr.id
+        <where>
+            and u.userid = #{userid}
+            <if test="start_ts > 0">
+                and u.added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and u.added &lt;= #{end_ts}
+            </if>
+        </where>
+        order by
+        ${order_by}
+        <if test="desc == 1">
+            desc
+        </if>
+        limit
+        #{offset}, #{ps}
+    </select>
+
+    <select id="queryUserFavoriteMemberExsCount" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_user_favorite_member as u
+        <where>
+            and u.userid = #{userid}
+            <if test="start_ts > 0">
+                and u.added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and u.added &lt;= #{end_ts}
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.user.UserSignInOverviewDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.user.UserSignInOverview">
+        <id column="id" property="id" />
+        <result column="userid" property="userid" />
+        <result column="total" property="total" />
+        <result column="last_added" property="last_added" />
+        <result column="last_added_days" property="last_added_days" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id, userid, total, last_added, last_added_days
+    </sql>
+
+    <select id="queryUserSignInOverviewByUserid" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user_sign_in_overview
+        where
+        userid = #{userid}
+    </select>
+
+    <select id="queryUserSignInOverviews" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user_sign_in_overview
+        <where>
+            <if test="start_ts > 0">
+                and last_added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and last_added &lt;= #{end_ts}
+            </if>
+        </where>
+        order by
+        ${order_by}
+        <if test="desc == 1">
+            desc
+        </if>
+        limit
+        #{offset}, #{ps}
+    </select>
+
+    <select id="queryUserSignInOverviewsCount" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_user_sign_in_overview
+        <where>
+            <if test="start_ts > 0">
+                and last_added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and last_added &lt;= #{end_ts}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateUserSignInOverviewByUseridWhenSignIn">
+        update
+        tdd_user_sign_in_overview
+        set
+        total = total + 1,
+        last_added = #{last_added},
+        last_added_days = #{last_added_days}
+        where
+        userid = #{userid}
+    </update>
+
+    <insert id="addUserSignInOverview">
+        insert into tdd_user_sign_in_overview(userid)
+        values(#{userid})
+    </insert>
+
+</mapper>

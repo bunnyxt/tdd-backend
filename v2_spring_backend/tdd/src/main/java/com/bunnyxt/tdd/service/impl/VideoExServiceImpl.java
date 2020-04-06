@@ -17,19 +17,9 @@ public class VideoExServiceImpl implements VideoExService {
     @Autowired
     private VideoExDao videoExDao;
 
-    @Autowired
-    private VideoStaffExDao videoStaffExDao;
-
     @Override
     public VideoEx queryVideoByAid(Integer aid) {
-        VideoEx videoEx = videoExDao.queryVideoByAid(aid);
-
-        // set staff
-        if(videoEx != null && videoEx.getHasstaff() == 1) {
-            videoEx.setStaff(videoStaffExDao.queryVideoStaffsByAid(aid));
-        }
-
-        return videoEx;
+        return videoExDao.queryVideoByAid(aid);
     }
 
     @Override
@@ -45,17 +35,7 @@ public class VideoExServiceImpl implements VideoExService {
             order_by = "r.like"; // cannot be like since like is a possible keyword there
         }
 
-        List<VideoEx> videoExList = videoExDao.queryVideos(vc, start_ts, end_ts, activity, recent, title, up, order_by, desc, offset, ps);
-
-        // set staff
-        for (VideoEx videoEx : videoExList) {
-            if (videoEx.getHasstaff() == 1) {
-                Integer aid = videoEx.getAid();
-                videoEx.setStaff(videoStaffExDao.queryVideoStaffsByAid(aid));
-            }
-        }
-
-        return videoExList;
+        return videoExDao.queryVideos(vc, start_ts, end_ts, activity, recent, title, up, order_by, desc, offset, ps);
     }
 
     @Override
@@ -75,17 +55,7 @@ public class VideoExServiceImpl implements VideoExService {
             order_by = "r.like"; // cannot be like since like is a possible keyword there
         }
 
-        List<VideoEx> videoExList = videoExDao.queryVideosByMid(mid, order_by, desc, offset, ps);
-
-        // set staff
-        for (VideoEx videoEx : videoExList) {
-            if (videoEx.getHasstaff() == 1) {
-                Integer aid = videoEx.getAid();
-                videoEx.setStaff(videoStaffExDao.queryVideoStaffsByAid(aid));
-            }
-        }
-
-        return videoExList;
+        return videoExDao.queryVideosByMid(mid, order_by, desc, offset, ps);
     }
 
     @Override

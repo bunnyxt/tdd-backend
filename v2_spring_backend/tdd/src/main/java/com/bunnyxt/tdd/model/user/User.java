@@ -1,5 +1,7 @@
-package com.bunnyxt.tdd.model;
+package com.bunnyxt.tdd.model.user;
 
+import com.bunnyxt.tdd.model.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,14 +15,18 @@ public class User implements UserDetails {
     private Long id;
     private Integer added;
     private String username;
+    @JsonIgnore
     private String password;
     private Boolean enabled;
     private String nickname;
     private String email;
     private String phone;
+    private Double point;
+    private Double exp;
     private List<Role> roles;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role role : roles) {
@@ -83,6 +89,10 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
     public Integer getAdded() {
         return added;
     }
@@ -113,5 +123,21 @@ public class User implements UserDetails {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Double getPoint() {
+        return point;
+    }
+
+    public void setPoint(Double point) {
+        this.point = point;
+    }
+
+    public Double getExp() {
+        return exp;
+    }
+
+    public void setExp(Double exp) {
+        this.exp = exp;
     }
 }

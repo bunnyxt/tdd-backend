@@ -8,4 +8,6 @@ public interface RoleDao {
 
     List<Role> queryRolesByUserId(Long userId);
 
+    void addUserRole(Long userId, Long roleId);
+
 }

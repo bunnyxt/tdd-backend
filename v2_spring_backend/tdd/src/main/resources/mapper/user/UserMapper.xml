@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.user.UserDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.user.User">
+        <id column="id" property="id" />
+        <result column="added" property="added" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="enabled" property="enabled" />
+        <result column="nickname" property="nickname" />
+        <result column="email" property="email" />
+        <result column="phone" property="phone" />
+        <result column="point" property="point" />
+        <result column="exp" property="exp" />
+    </resultMap>
+
+    <resultMap id="BaseResultMapWithRole" type="com.bunnyxt.tdd.model.user.User">
+        <id column="u_id" property="id" />
+        <result column="u_added" property="added" />
+        <result column="u_username" property="username" />
+        <result column="u_password" property="password" />
+        <result column="u_enabled" property="enabled" />
+        <result column="u_nickname" property="nickname" />
+        <result column="u_email" property="email" />
+        <result column="u_phone" property="phone" />
+        <result column="u_point" property="point" />
+        <result column="u_exp" property="exp" />
+        <collection property="roles" ofType="com.bunnyxt.tdd.model.Role">
+            <id column="r_id" property="id"/>
+            <result column="r_name" property="name"/>
+            <result column="r_title" property="title"/>
+        </collection>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id, added, username, password, enabled, nickname, email, phone, point, exp
+    </sql>
+
+    <sql id="BaseColumnListWithRole">
+        u.id u_id, u.added u_added, u.username u_username, u.password u_password, u.enabled u_enabled, u.nickname u_nickname,
+        u.email u_email, u.phone u_phone, u.point u_point, u.exp u_exp, r.id r_id, r.name r_name, r.title r_title
+    </sql>
+
+    <select id="queryUserByUsername" resultMap="BaseResultMapWithRole">
+        select
+        <include refid="BaseColumnListWithRole" />
+        from
+        tdd_user u
+        left join
+        tdd_user_role ur
+        on
+        u.id = ur.userid
+        left join
+        tdd_role r
+        on
+        r.id = ur.roleid
+        where
+        u.username = #{username}
+    </select>
+
+    <select id="queryUserById" resultMap="BaseResultMapWithRole">
+        select
+        <include refid="BaseColumnListWithRole" />
+        from
+        tdd_user u
+        left join
+        tdd_user_role ur
+        on
+        u.id = ur.userid
+        left join
+        tdd_role r
+        on
+        r.id = ur.roleid
+        where
+        u.id = #{id}
+    </select>
+
+    <select id="queryUsers" resultMap="BaseResultMapWithRole">
+        select
+        <include refid="BaseColumnListWithRole" />
+        from
+        tdd_user u
+        left join
+        tdd_user_role ur
+        on
+        u.id = ur.userid
+        left join
+        tdd_role r
+        on
+        r.id = ur.roleid
+        <where>
+            <if test="username != null and username.length() > 0">
+                and INSTR(lower(u.username), lower(#{username}))
+            </if>
+            <if test="email != null and email.length() > 0">
+                and INSTR(lower(u.email), lower(#{email}))
+            </if>
+            <if test="phone != null and phone.length() > 0">
+                and INSTR(lower(u.phone), lower(#{phone}))
+            </if>
+            <if test="enabled == 0 or enabled == 1">
+                and u.enabled = #{enabled}
+            </if>
+            <if test="role != null and role.length() > 0">
+                and INSTR(lower(r.name), lower(#{role}))
+            </if>
+        </where>
+        order by
+        #{order_by}
+        <if test="desc == 1">
+            desc
+        </if>
+        limit
+        #{offset}, #{ps}
+    </select>
+
+    <select id="queryUsersCount" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_user u
+        left join
+        tdd_user_role ur
+        on
+        u.id = ur.userid
+        left join
+        tdd_role r
+        on
+        r.id = ur.roleid
+        <where>
+            <if test="username != null and username.length() > 0">
+                and INSTR(lower(u.username), lower(#{username}))
+            </if>
+            <if test="email != null and email.length() > 0">
+                and INSTR(lower(u.email), lower(#{email}))
+            </if>
+            <if test="phone != null and phone.length() > 0">
+                and INSTR(lower(u.phone), lower(#{phone}))
+            </if>
+            <if test="enabled == 0 or enabled == 1">
+                and u.enabled = #{enabled}
+            </if>
+            <if test="role != null and role.length() > 0">
+                and INSTR(lower(r.name), lower(#{role}))
+            </if>
+        </where>
+    </select>
+
+    <update id="updateUserPointById">
+        update
+        tdd_user
+        set
+        point = point + #{point}
+        where
+        id = #{id}
+    </update>
+
+    <update id="updateUserExpById">
+        update
+        tdd_user
+        set
+        exp = exp + #{exp}
+        where
+        id = #{id}
+    </update>
+
+    <select id="queryUserByPhone" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user
+        where
+        username = #{phone}
+    </select>
+
+    <select id="queryUserByEmail" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user
+        where
+        email = #{email}
+    </select>
+
+    <insert id="addUser">
+        insert into tdd_user(added, username, password, email, phone)
+        values (#{added}, #{username}, #{password}, #{email}, #{phone})
+    </insert>
+
+    <update id="updateUserNicknameById">
+        update tdd_user
+        set nickname = #{nickname}
+        where id = #{id}
+    </update>
+
+    <update id="updateUserEmailById">
+        update tdd_user
+        set email = #{email}
+        where id = #{id}
+    </update>
+
+    <update id="updateUserEmailToNullById">
+        update tdd_user
+        set email = NULL
+        where id = #{id}
+    </update>
+
+    <update id="updateUserPhoneById">
+        update tdd_user
+        set phone = #{phone}
+        where id = #{id}
+    </update>
+
+    <update id="updateUserPhoneToNullById">
+        update tdd_user
+        set phone = NULL
+        where id = #{id}
+    </update>
+
+    <select id="queryUserByNickname" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_user
+        where
+        nickname = #{nickname}
+    </select>
+</mapper>

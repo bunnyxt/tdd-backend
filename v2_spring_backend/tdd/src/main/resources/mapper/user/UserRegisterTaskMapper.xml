@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.user.UserRegisterDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.user.UserRegisterTask">
+        <id column="id" property="id" />
+        <result column="added" property="added" />
+        <result column="method" property="method" />
+        <result column="phone" property="phone" />
+        <result column="email" property="email" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="regkey" property="regkey" />
+        <result column="code" property="code" />
+        <result column="expired" property="expired" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        id, added, method, phone, email, username, password, regkey, code, expired, status
+    </sql>
+
+    <insert id="addUserRegisterTask">
+        insert into tdd_register_task(added, method, phone, email, username, password, regkey, code, expired, status)
+        values(#{added}, #{method}, #{phone}, #{email}, #{username}, #{password}, #{regkey}, #{code}, #{expired}, #{status})
+    </insert>
+
+    <update id="updateUserRegisterTaskStatus">
+        update tdd_register_task
+        set status = #{status}
+        where regkey = #{regkey}
+    </update>
+
+    <select id="queryUserRegisterTaskByRegKey" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_register_task
+        where
+        regkey = #{regkey}
+    </select>
+
+</mapper>

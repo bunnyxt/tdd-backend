@@ -1,8 +1,6 @@
-package com.bunnyxt.tdd.service.impl;
+package com.bunnyxt.tdd.service.impl.user;
 
-import com.bunnyxt.tdd.dao.RoleDao;
-import com.bunnyxt.tdd.dao.UserDao;
-import com.bunnyxt.tdd.model.User;
+import com.bunnyxt.tdd.dao.user.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,24 +8,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserDetailsService {
+public class UserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserDao userDao;
 
-    @Autowired
-    private RoleDao roleDao;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // TODO check validity of username
-        User user = userDao.queryUserByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("cannot find user with username " + username);
-        }
-
-        user.setRoles(roleDao.queryRolesByUserId(user.getId()));
-
-        return user;
+        return userDao.queryUserByUsername(username);
     }
 }

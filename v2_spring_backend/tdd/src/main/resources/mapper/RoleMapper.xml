@@ -23,4 +23,9 @@
         where
         ur.userid = #{userId}
     </select>
+
+    <insert id="addUserRole">
+        insert into tdd_user_role(userid, roleid)
+        values(#{userId}, #{roleId})
+    </insert>
 </mapper>
