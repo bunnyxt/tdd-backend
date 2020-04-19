@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.VideoRecordHourlyDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.VideoRecordHourly">
+        <result column="added" property="added" />
+        <result column="bvid" property="bvid" />
+        <result column="`view`" property="view" />
+        <result column="danmaku" property="danmaku" />
+        <result column="reply" property="reply" />
+        <result column="favorite" property="favorite" />
+        <result column="coin" property="coin" />
+        <result column="share" property="share" />
+        <result column="`like`" property="like" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        added, bvid, `view`, danmaku, reply, favorite, coin, share, `like`
+    </sql>
+
+    <sql id="BaseColumnListWithA">
+        a.added, a.bvid, a.`view`, a.danmaku, a.reply, a.favorite, a.coin, a.share, a.`like`
+    </sql>
+
+    <select id="queryVideoRecordHourlys" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_video_record_hourly
+        <where>
+            <if test="bvid != '0000000000'">
+                and bvid = #{bvid}
+            </if>
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+        </where>
+        <choose>
+            <when test="bvid != '0000000000' and last_count > 0">
+                order by added desc limit #{last_count}
+            </when>
+            <otherwise>
+                limit #{offset}, #{ps}
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="queryVideoRecordHourlysCount" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_video_record_hourly
+        <where>
+            <if test="bvid != '0000000000'">
+                and bvid = #{bvid}
+            </if>
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+        </where>
+    </select>
+
+</mapper>
