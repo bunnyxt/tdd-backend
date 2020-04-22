@@ -22,6 +22,8 @@ public class VideoRecordHourlyRestController {
     @Autowired
     private VideoRecordHourlyService videoRecordHourlyService;
 
+    // full ver ========================================================================================================
+
     @RequestMapping(value = "/video/{aid}/record/hourly", method = RequestMethod.GET)
     public ResponseEntity<List<VideoRecordHourly>> queryVideoRecordHourlysByAid(@PathVariable Integer aid,
                                                                                 @RequestParam(defaultValue = "0") Integer last_count,
@@ -88,5 +90,56 @@ public class VideoRecordHourlyRestController {
 
         // add headers
         return TddResponseUtil.AssembleList(list, totalCount);
+    }
+
+    // count only ======================================================================================================
+
+    @RequestMapping(value = "/video/{aid}/record/hourly/count", method = RequestMethod.GET)
+    public Integer queryVideoRecordHourlysCountByAid(@PathVariable Integer aid,
+                                                     @RequestParam(defaultValue = "0") Integer last_count,
+                                                     @RequestParam(defaultValue = "0") Integer start_ts,
+                                                     @RequestParam(defaultValue = "0") Integer end_ts)
+            throws InvalidRequestParameterException {
+        // check params
+        if (last_count < 0 || last_count > 5000) {
+            // 0 -> no limit
+            throw new InvalidRequestParameterException("last_count", last_count, "last_count should between 0 and 5000");
+        }
+        return queryVideoRecordHourlysCount(aid, "0000000000", last_count, start_ts, end_ts);
+    }
+
+    @RequestMapping(value = "/video/BV{bvid}/record/hourly/count", method = RequestMethod.GET)
+    public Integer queryVideoRecordHourlysCountByBvid(@PathVariable String bvid,
+                                                      @RequestParam(defaultValue = "0") Integer last_count,
+                                                      @RequestParam(defaultValue = "0") Integer start_ts,
+                                                      @RequestParam(defaultValue = "0") Integer end_ts)
+            throws InvalidRequestParameterException {
+        // check params
+        if (last_count < 0 || last_count > 5000) {
+            // 0 -> no limit
+            throw new InvalidRequestParameterException("last_count", last_count, "last_count should between 0 and 5000");
+        }
+        return queryVideoRecordHourlysCount(0, bvid, last_count, start_ts, end_ts);
+    }
+
+    @RequestMapping(value = "/record/hourly/count", method = RequestMethod.GET)
+    public Integer queryVideoRecordHourlysCount(@RequestParam(defaultValue = "0") Integer aid,
+                                                @RequestParam(defaultValue = "0000000000") String bvid,
+                                                Integer last_count,
+                                                @RequestParam(defaultValue = "0") Integer start_ts,
+                                                @RequestParam(defaultValue = "0") Integer end_ts)
+            throws InvalidRequestParameterException {
+        // check params
+        if (bvid.equals("0000000000")) {
+            // bvid not assigned, check aid
+            if (aid > 0) {
+                // set bvid via aid
+                bvid = TddAbidUtil.a2b(aid);
+            } else if (aid < 0) {
+                throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
+            }
+        }
+
+        return videoRecordHourlyService.queryVideoRecordHourlysCount(bvid, start_ts, end_ts);
     }
 }
