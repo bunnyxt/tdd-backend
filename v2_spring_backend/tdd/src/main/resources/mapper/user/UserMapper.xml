@@ -225,4 +225,10 @@
         where
         nickname = #{nickname}
     </select>
+
+    <update id="updateUserPasswordById">
+        update tdd_user
+        set password = #{password}
+        where id = #{id}
+    </update>
 </mapper>

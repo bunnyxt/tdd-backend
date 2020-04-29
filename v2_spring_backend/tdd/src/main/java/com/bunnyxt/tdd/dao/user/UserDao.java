@@ -39,4 +39,6 @@ public interface UserDao {
 
     User queryUserByNickname(String nickname);
 
+    void updateUserPasswordById(Long id, String password);
+
 }

@@ -181,6 +181,32 @@ public class UserRestController {
         return userService.setNickname(user, nickname);
     }
 
+    // change password
+    @PreAuthorize("hasRole('user')")
+    @RequestMapping(value = "/user/change/password", method = RequestMethod.POST)
+    public TddCommonResponse changePassword(@RequestBody JSONObject jsonObject)
+            throws InvalidRequestParameterException {
+        // get params
+        String password = jsonObject.getString("password");
+
+        // check params
+        if (password == null) {
+            throw new InvalidRequestParameterException("password", null, "password should not be null");
+        }
+        if (password.length() < 6 || password.length() > 16) {
+            throw new InvalidRequestParameterException("password", password, "length of password should between 6 and 16");
+        }
+        String pattern = "^[A-Za-z0-9!@#$%^&*()\\-=_+\\[\\]\\\\{}|;:'\",./<>?`~]+$";
+        if (!Pattern.matches(pattern, password)) {
+            throw new InvalidRequestParameterException("password", password, "invalid character detected");
+        }
+
+        // get user
+        User user = TddAuthUtil.GetCurrentUser();
+
+        return userService.changePassword(user, password);
+    }
+
     // admin ===========================================================================================================
 
     @PreAuthorize("hasRole('admin')")

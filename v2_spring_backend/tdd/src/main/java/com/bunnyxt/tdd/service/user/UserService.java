@@ -27,4 +27,6 @@ public interface UserService {
     TddCommonResponse bindPhoneUnbind(Long userid);
 
     TddCommonResponse setNickname(User user, String nickname);
+
+    TddCommonResponse changePassword(User user, String password);
 }

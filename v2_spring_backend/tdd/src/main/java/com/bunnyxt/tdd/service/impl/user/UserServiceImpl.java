@@ -14,6 +14,7 @@ import com.bunnyxt.tdd.util.CalendarUtil;
 import com.bunnyxt.tdd.util.PageNumModfier;
 import com.bunnyxt.tdd.util.TddCodeKeyGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -384,5 +385,22 @@ public class UserServiceImpl implements UserService {
         map.put("userid", user.getId());
         map.put("nickname", nickname);
         return new TddCommonResponse("success", "finish set nickname", map);
+    }
+
+    @Override
+    public TddCommonResponse changePassword(User user, String password) {
+        Integer added = CalendarUtil.getNowTs();
+
+        password = new BCryptPasswordEncoder().encode(password);  // encrypt here
+
+        // change password
+        userDao.updateUserPasswordById(user.getId(), password);
+
+        // add user log
+        userLogDao.addUserLog(added, user.getId(), "change password", user.getPassword() + "-> " + password);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("userid", user.getId());
+        return new TddCommonResponse("success", "finish change password", map);
     }
 }
