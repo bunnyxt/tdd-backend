@@ -11,9 +11,10 @@ public class TaskRestController {
     @Autowired
     TaskService taskService;
 
+    // deprecated
     @RequestMapping(value = "/task/visit/video/{aid}/record", method = RequestMethod.POST)
     public void addVisitVideoRecord(@PathVariable Integer aid) {
-        Long userid = 3L;  // TODO set user role only and change to real userid
-        taskService.addVisitVideoRecord(aid, userid);
+//        Long userid = 3L;  // TODO set user role only and change to real userid
+//        taskService.addVisitVideoRecord(aid, userid);
     }
 }
