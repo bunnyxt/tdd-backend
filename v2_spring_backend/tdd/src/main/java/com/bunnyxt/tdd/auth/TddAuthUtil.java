@@ -11,6 +11,9 @@ public class TddAuthUtil {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             user = (User)authentication.getPrincipal();
+        } catch (ClassCastException e) {
+            // user not logged in
+//            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
