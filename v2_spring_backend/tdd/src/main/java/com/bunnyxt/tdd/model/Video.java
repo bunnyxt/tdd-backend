@@ -5,6 +5,7 @@ public class Video {
     private Long id;
     private Integer added;
     private Integer aid;
+    private String  bvid;
     private Integer videos;
     private Integer tid;
     private String tname;
@@ -222,5 +223,13 @@ public class Video {
 
     public void setRecent(Byte recent) {
         this.recent = recent;
+    }
+
+    public String getBvid() {
+        return bvid;
+    }
+
+    public void setBvid(String bvid) {
+        this.bvid = bvid;
     }
 }
