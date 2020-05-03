@@ -24,6 +24,9 @@
     <select id="queryVideoRecordHourlys" resultMap="BaseResultMap">
         select
         <include refid="BaseColumnList" />
+        from (
+        select
+        <include refid="BaseColumnList"/>
         from
         tdd_video_record_hourly
         <where>
@@ -37,19 +40,55 @@
                 and added &lt;= #{end_ts}
             </if>
         </where>
+        union
+        select
+        <include refid="BaseColumnList"/>
+        from
+        tdd_video_record_hourly_2
+        <where>
+            <if test="bvid != '0000000000'">
+                and bvid = #{bvid}
+            </if>
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+        </where>
+        union
+        select
+        <include refid="BaseColumnList"/>
+        from
+        tdd_video_record_hourly_3
+        <where>
+            <if test="bvid != '0000000000'">
+                and bvid = #{bvid}
+            </if>
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+        </where>
+        ) as _
         <choose>
             <when test="bvid != '0000000000' and last_count > 0">
                 order by added desc limit #{last_count}
             </when>
             <otherwise>
-                limit #{offset}, #{ps}
+                order by added limit #{offset}, #{ps}
             </otherwise>
         </choose>
     </select>
 
     <select id="queryVideoRecordHourlysCount" resultType="Integer">
         select
-        count(1)
+        sum(c)
+        from (
+        select
+        count(1) as c
         from
         tdd_video_record_hourly
         <where>
@@ -63,6 +102,39 @@
                 and added &lt;= #{end_ts}
             </if>
         </where>
+        union all
+        select
+        count(1) as c
+        from
+        tdd_video_record_hourly_2
+        <where>
+            <if test="bvid != '0000000000'">
+                and bvid = #{bvid}
+            </if>
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+        </where>
+        union all
+        select
+        count(1) as c
+        from
+        tdd_video_record_hourly_3
+        <where>
+            <if test="bvid != '0000000000'">
+                and bvid = #{bvid}
+            </if>
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+        </where>
+        ) as _
     </select>
 
 </mapper>
