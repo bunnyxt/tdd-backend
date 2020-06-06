@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.video.record.rank.WeeklyDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrentEx">
+        <result column="c_bvid" property="bvid" />
+        <result column="start_added" property="start_added" />
+        <result column="now_added" property="now_added" />
+        <result column="now_view" property="now_view" />
+        <result column="now_danmaku" property="now_danmaku" />
+        <result column="now_reply" property="now_reply" />
+        <result column="now_favorite" property="now_favorite" />
+        <result column="now_coin" property="now_coin" />
+        <result column="now_share" property="now_share" />
+        <result column="now_like" property="now_like" />
+        <result column="incr_view" property="incr_view" />
+        <result column="incr_danmaku" property="incr_danmaku" />
+        <result column="incr_reply" property="incr_reply" />
+        <result column="incr_favorite" property="incr_favorite" />
+        <result column="incr_coin" property="incr_coin" />
+        <result column="incr_share" property="incr_share" />
+        <result column="incr_like" property="incr_like" />
+        <result column="point" property="point" />
+        <result column="xiua" property="xiua" />
+        <result column="xiub" property="xiub" />
+        <result column="rank" property="rank" />
+        <association property="video" javaType="com.bunnyxt.tdd.model.fragment.VideoMemberFragment">
+            <result column="aid" property="aid" />
+            <result column="bvid" property="bvid" />
+            <result column="title" property="title" />
+            <result column="pic" property="pic" />
+            <result column="pubdate" property="pubdate" />
+            <association property="member" javaType="com.bunnyxt.tdd.model.fragment.MemberFragment">
+                <result column="sex" property="sex" />
+                <result column="name" property="name" />
+                <result column="face" property="face" />
+                <result column="sign" property="sign" />
+            </association>
+        </association>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        c.bvid c_bvid, start_added, now_added,
+        now_view, now_danmaku, now_reply, now_favorite, now_coin, now_share, now_like,
+        incr_view, incr_danmaku, incr_reply, incr_favorite, incr_coin, incr_share, incr_like,
+        point, xiua, xiub, rank,
+        v.aid, v.bvid, v.title, v.pic, v.pubdate,
+        m.sex, m.name, m.face, m.sign
+    </sql>
+
+    <select id="queryWeeklyCurrentExs" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from
+        tdd_video_record_rank_weekly_current as c
+        left join
+        tdd_video as v
+        on
+        c.bvid = v.bvid
+        left join
+        tdd_member as m
+        on
+        v.mid = m.mid
+        order by
+        ${order_by}
+        <if test="desc == 1">
+            desc
+        </if>
+        limit
+        #{offset}, #{ps}
+    </select>
+
+    <select id="queryWeeklyCurrentExsCount" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_video_record_rank_weekly_current
+    </select>
+
+</mapper>
