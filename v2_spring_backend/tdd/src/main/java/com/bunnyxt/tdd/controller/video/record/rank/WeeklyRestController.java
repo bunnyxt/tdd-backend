@@ -22,7 +22,7 @@ public class WeeklyRestController {
     @RequestMapping(value = "/video/record/rank/weekly/current", method = RequestMethod.GET)
     public ResponseEntity<List<WeeklyCurrentEx>> queryWeeklyCurrents(@RequestParam(defaultValue = "rank") String order_rule,
                                                                      @RequestParam(defaultValue = "1") Integer pn,
-                                                                     @RequestParam(defaultValue = "20") Integer ps)
+                                                                     @RequestParam(defaultValue = "30") Integer ps)
             throws InvalidRequestParameterException {
         // check params
         List<String> allowedOrderRule = new ArrayList<String>(){{
@@ -34,7 +34,7 @@ public class WeeklyRestController {
                     "only support order by " + allowedOrderRule.toString());
         }
         TddParamCheckUtil.pn(pn);
-        TddParamCheckUtil.ps(ps, 20);
+        TddParamCheckUtil.ps(ps, 30);
 
         // get list
         List<WeeklyCurrentEx> list = weeklyService.queryWeeklyCurrentExs(order_rule, pn, ps);

@@ -33,7 +33,7 @@ public class WeeklyServiceImpl implements WeeklyService {
         }
 
         // pn, ps -> offset, ps
-        ps = PageNumModfier.modifyPs(ps, 20);
+        ps = PageNumModfier.modifyPs(ps, 30);
         pn = PageNumModfier.modifyPn(pn);
         Integer offset = PageNumModfier.calcOffset(ps, pn);
 
