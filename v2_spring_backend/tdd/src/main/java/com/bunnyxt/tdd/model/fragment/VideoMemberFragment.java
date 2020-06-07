@@ -1,11 +1,13 @@
 package com.bunnyxt.tdd.model.fragment;
 
 public class VideoMemberFragment {
+
     private Long aid;
     private String bvid;
     private String title;
     private String pic;
     private Integer pubdate;
+    private Integer mid;
     private MemberFragment member;
 
     public Long getAid() {
@@ -54,5 +56,13 @@ public class VideoMemberFragment {
 
     public void setMember(MemberFragment member) {
         this.member = member;
+    }
+
+    public Integer getMid() {
+        return mid;
+    }
+
+    public void setMid(Integer mid) {
+        this.mid = mid;
     }
 }
