@@ -7,6 +7,7 @@ public class VideoMemberFragment {
     private String title;
     private String pic;
     private Integer pubdate;
+    private Integer videos;
     private Integer mid;
     private MemberFragment member;
 
@@ -64,5 +65,13 @@ public class VideoMemberFragment {
 
     public void setMid(Integer mid) {
         this.mid = mid;
+    }
+
+    public Integer getVideos() {
+        return videos;
+    }
+
+    public void setVideos(Integer videos) {
+        this.videos = videos;
     }
 }

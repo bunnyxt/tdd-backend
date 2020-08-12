@@ -29,6 +29,7 @@
             <result column="title" property="title" />
             <result column="pic" property="pic" />
             <result column="pubdate" property="pubdate" />
+            <result column="videos" property="videos" />
             <result column="mid" property="mid" />
             <association property="member" javaType="com.bunnyxt.tdd.model.fragment.MemberFragment">
                 <result column="sex" property="sex" />
@@ -44,7 +45,7 @@
         now_view, now_danmaku, now_reply, now_favorite, now_coin, now_share, now_like,
         incr_view, incr_danmaku, incr_reply, incr_favorite, incr_coin, incr_share, incr_like,
         point, xiua, xiub, rank,
-        v.aid, v.bvid, v.title, v.pic, v.pubdate, v.mid,
+        v.aid, v.bvid, v.title, v.pic, v.pubdate, v.videos, v.mid,
         m.sex, m.name, m.face, m.sign
     </sql>
 
