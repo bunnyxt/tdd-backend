@@ -28,6 +28,12 @@ public class WeeklyRestController {
         List<String> allowedOrderRule = new ArrayList<String>(){{
             add("rank");
             add("incr_view");
+            add("incr_danmaku");
+            add("incr_reply");
+            add("incr_favorite");
+            add("incr_coin");
+            add("incr_share");
+            add("incr_like");
         }};
         if (!allowedOrderRule.contains(order_rule)) {
             throw new InvalidRequestParameterException("order_rule", order_rule,

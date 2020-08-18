@@ -22,7 +22,13 @@ public class WeeklyServiceImpl implements WeeklyService {
         Integer desc;
         switch (order_rule) {
             case "incr_view":
-                order_by = "incr_view";
+            case "incr_danmaku":
+            case "incr_reply":
+            case "incr_favorite":
+            case "incr_coin":
+            case "incr_share":
+            case "incr_like":
+                order_by = order_rule;
                 desc = 1;
                 break;
             case "rank":
