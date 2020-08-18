@@ -72,4 +72,23 @@ public class TddParamCheckUtil {
     public static void code(String code) {
         _not_null(code, "code");
     }
+
+    public static void bvid(String bvid) {
+        // bvid should be 10 size length
+        if (bvid.length() != 10) {
+            throw new InvalidRequestParameterException("bvid", bvid, "bvid should be 10 size length");
+        }
+        // only support 1??4?1?7?? format
+        if (!(bvid.charAt(0) == '1' && bvid.charAt(3) == '4' && bvid.charAt(5) == '1' && bvid.charAt(7) == '7')) {
+            throw new InvalidRequestParameterException("bvid", bvid, "only support 1??4?1?7?? format");
+        }
+        // character should in table
+        String table = "fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF";
+        for (int i = 0; i < 10; i++) {
+            if (table.indexOf(bvid.charAt(i)) == -1) {
+                // invalid character
+                throw new InvalidRequestParameterException("bvid", bvid, "invalid character " + bvid.charAt(i) + "in bvid found");
+            }
+        }
+    }
 }
