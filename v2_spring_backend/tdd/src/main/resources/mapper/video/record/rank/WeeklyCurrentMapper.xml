@@ -78,4 +78,44 @@
         tdd_video_record_rank_weekly_current
     </select>
 
+    <resultMap id="SingleResultMap" type="com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrent">
+        <result column="bvid" property="bvid" />
+        <result column="start_added" property="start_added" />
+        <result column="now_added" property="now_added" />
+        <result column="now_view" property="now_view" />
+        <result column="now_danmaku" property="now_danmaku" />
+        <result column="now_reply" property="now_reply" />
+        <result column="now_favorite" property="now_favorite" />
+        <result column="now_coin" property="now_coin" />
+        <result column="now_share" property="now_share" />
+        <result column="now_like" property="now_like" />
+        <result column="incr_view" property="incr_view" />
+        <result column="incr_danmaku" property="incr_danmaku" />
+        <result column="incr_reply" property="incr_reply" />
+        <result column="incr_favorite" property="incr_favorite" />
+        <result column="incr_coin" property="incr_coin" />
+        <result column="incr_share" property="incr_share" />
+        <result column="incr_like" property="incr_like" />
+        <result column="point" property="point" />
+        <result column="xiua" property="xiua" />
+        <result column="xiub" property="xiub" />
+        <result column="rank" property="rank" />
+    </resultMap>
+
+    <sql id="SingleColumnList">
+        bvid, start_added, now_added,
+        now_view, now_danmaku, now_reply, now_favorite, now_coin, now_share, now_like,
+        incr_view, incr_danmaku, incr_reply, incr_favorite, incr_coin, incr_share, incr_like,
+        point, xiua, xiub, rank
+    </sql>
+
+    <select id="queryWeeklyCurrentByBvid" resultMap="SingleResultMap">
+        select
+        <include refid="SingleColumnList" />
+        from
+        tdd_video_record_rank_weekly_current
+        where
+        bvid = #{bvid}
+    </select>
+
 </mapper>

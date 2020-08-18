@@ -1,6 +1,7 @@
 package com.bunnyxt.tdd.controller.video.record.rank;
 
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
+import com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrent;
 import com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrentEx;
 import com.bunnyxt.tdd.service.video.record.rank.WeeklyService;
 import com.bunnyxt.tdd.util.TddParamCheckUtil;
@@ -49,5 +50,14 @@ public class WeeklyRestController {
         Integer totalCount = weeklyService.queryWeeklyCurrentExsCount();
 
         return TddResponseUtil.AssembleList(list, totalCount);
+    }
+
+    @RequestMapping(value = "/video/record/rank/weekly/current/BV{bvid}", method = RequestMethod.GET)
+    public WeeklyCurrent queryWeeklyCurrentByBvid(@PathVariable String bvid)
+            throws InvalidRequestParameterException {
+        // check params
+        TddParamCheckUtil.bvid(bvid);
+
+        return weeklyService.queryWeeklyCurrentByBvid(bvid);
     }
 }
