@@ -25,8 +25,8 @@ public class WeeklyArchiveRestController {
             @PathVariable Long id,
             @RequestParam(defaultValue = "rank") String order_rule,
             @RequestParam(defaultValue = "1") Integer pn,
-            @RequestParam(defaultValue = "30") Integer ps)
-            throws InvalidRequestParameterException {
+            @RequestParam(defaultValue = "30") Integer ps
+    ) throws InvalidRequestParameterException {
         // check params
         TddParamCheckUtil.arch_id(id);
         List<String> allowedOrderRule = new ArrayList<String>(){{
