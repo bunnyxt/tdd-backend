@@ -10,7 +10,7 @@ import java.util.*;
 
 @CrossOrigin
 @RestController
-public class WeeklyColorRestController {
+public class WeeklyCurrentColorRestController {
 
     @Autowired
     private WeeklyCurrentColorService weeklyCurrentColorService;
