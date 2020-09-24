@@ -1,8 +1,9 @@
 package com.bunnyxt.tdd.controller.video.record.rank;
 
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
-import com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrentColor;
-import com.bunnyxt.tdd.service.video.record.rank.WeeklyCurrentColorService;
+import com.bunnyxt.tdd.model.video.record.rank.WeeklyColor;
+import com.bunnyxt.tdd.service.video.record.rank.WeeklyColorService;
+import com.bunnyxt.tdd.util.TddParamCheckUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,23 +14,38 @@ import java.util.*;
 public class WeeklyCurrentColorRestController {
 
     @Autowired
-    private WeeklyCurrentColorService weeklyCurrentColorService;
+    private WeeklyColorService weeklyColorService;
 
-    @RequestMapping(value = "/video/record/rank/weekly/current/color", method = RequestMethod.GET)
-    public Map<String, Map<String, Double>> queryWeeklyCurrentColors()
-            throws InvalidRequestParameterException {
-        List<WeeklyCurrentColor> colorList = weeklyCurrentColorService.queryWeeklyCurrentColors();
-
-        Map<String, Map<String, Double>> colorMap = new HashMap<>();
-        for (WeeklyCurrentColor color : colorList) {
+    private Map<String, Map<String, Double>> buildWeeklyColorMap(List<WeeklyColor> weeklyColorList) {
+        Map<String, Map<String, Double>> weeklyColorMap = new HashMap<>();
+        for (WeeklyColor color : weeklyColorList) {
             Map<String, Double> valueMap = new HashMap<>();
             valueMap.put("a", color.getA());
             valueMap.put("b", color.getB());
             valueMap.put("c", color.getC());
             valueMap.put("d", color.getD());
-            colorMap.put(color.getProperty(), valueMap);
+            weeklyColorMap.put(color.getProperty(), valueMap);
         }
+        return weeklyColorMap;
+    }
 
-        return colorMap;
+    @RequestMapping(value = "/video/record/rank/weekly/current/color", method = RequestMethod.GET)
+    public Map<String, Map<String, Double>> queryWeeklyCurrentColors()
+            throws InvalidRequestParameterException {
+        return buildWeeklyColorMap(
+                weeklyColorService.queryWeeklyCurrentColors()
+        );
+    }
+
+    @RequestMapping(value = "/video/record/rank/weekly/archive/{id}/color", method = RequestMethod.GET)
+    public Map<String, Map<String, Double>> queryWeeklyCurrentColors(
+            @PathVariable Long id
+    ) throws InvalidRequestParameterException {
+        // check params
+        TddParamCheckUtil.arch_id(id);
+
+        return buildWeeklyColorMap(
+                weeklyColorService.queryWeeklyArchiveColorById(id)
+        );
     }
 }

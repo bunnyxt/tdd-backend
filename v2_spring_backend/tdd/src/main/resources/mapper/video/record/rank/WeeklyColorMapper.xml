@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.video.record.rank.WeeklyColorDao">
+    <resultMap id="WeeklyColorResultMap" type="com.bunnyxt.tdd.model.video.record.rank.WeeklyColor">
+        <result column="property" property="property" />
+        <result column="a" property="a" />
+        <result column="b" property="b" />
+        <result column="c" property="c" />
+        <result column="d" property="d" />
+    </resultMap>
+
+    <sql id="WeeklyColorColumnList">
+        property, a, b, c, d
+    </sql>
+
+    <select id="queryWeeklyCurrentColors" resultMap="WeeklyColorResultMap">
+        select
+        <include refid="WeeklyColorColumnList" />
+        from
+        tdd_video_record_rank_weekly_current_color
+    </select>
+
+    <select id="queryWeeklyArchiveColorsById" resultMap="WeeklyColorResultMap">
+        select
+        <include refid="WeeklyColorColumnList" />
+        from
+        tdd_video_record_rank_weekly_archive_color
+        where
+        arch_id = #{id}
+    </select>
+</mapper>
