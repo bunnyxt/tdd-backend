@@ -3,7 +3,7 @@ package com.bunnyxt.tdd.controller.video.record.rank;
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
 import com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrent;
 import com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrentEx;
-import com.bunnyxt.tdd.service.video.record.rank.WeeklyService;
+import com.bunnyxt.tdd.service.video.record.rank.WeeklyCurrentService;
 import com.bunnyxt.tdd.util.TddParamCheckUtil;
 import com.bunnyxt.tdd.util.TddResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import java.util.List;
 public class WeeklyCurrentRestController {
 
     @Autowired
-    private WeeklyService weeklyService;
+    private WeeklyCurrentService weeklyCurrentService;
 
     @RequestMapping(value = "/video/record/rank/weekly/current", method = RequestMethod.GET)
     public ResponseEntity<List<WeeklyCurrentEx>> queryWeeklyCurrentExs(
@@ -45,8 +45,8 @@ public class WeeklyCurrentRestController {
         TddParamCheckUtil.ps(ps, 30);
 
         return TddResponseUtil.AssembleList(
-                weeklyService.queryWeeklyCurrentExs(order_rule, pn, ps),
-                weeklyService.queryWeeklyCurrentExsCount()
+                weeklyCurrentService.queryWeeklyCurrentExs(order_rule, pn, ps),
+                weeklyCurrentService.queryWeeklyCurrentExsCount()
         );
     }
 
@@ -57,6 +57,6 @@ public class WeeklyCurrentRestController {
         // check params
         TddParamCheckUtil.bvid(bvid);
 
-        return weeklyService.queryWeeklyCurrentByBvid(bvid);
+        return weeklyCurrentService.queryWeeklyCurrentByBvid(bvid);
     }
 }

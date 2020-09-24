@@ -1,12 +1,13 @@
-package com.bunnyxt.tdd.dao.video.record.rank;
+package com.bunnyxt.tdd.service.video.record.rank;
 
 import com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrent;
 import com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrentEx;
+
 import java.util.List;
 
-public interface WeeklyDao {
+public interface WeeklyCurrentService {
 
-    List<WeeklyCurrentEx> queryWeeklyCurrentExs(String order_by, Integer desc, Integer offset, Integer ps);
+    List<WeeklyCurrentEx> queryWeeklyCurrentExs(String order_rule, Integer pn, Integer ps);
 
     Integer queryWeeklyCurrentExsCount();
 

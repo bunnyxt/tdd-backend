@@ -1,9 +1,9 @@
 package com.bunnyxt.tdd.service.impl.video.record.rank;
 
-import com.bunnyxt.tdd.dao.video.record.rank.WeeklyDao;
+import com.bunnyxt.tdd.dao.video.record.rank.WeeklyCurrentDao;
 import com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrent;
 import com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrentEx;
-import com.bunnyxt.tdd.service.video.record.rank.WeeklyService;
+import com.bunnyxt.tdd.service.video.record.rank.WeeklyCurrentService;
 import com.bunnyxt.tdd.util.PageNumModfier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class WeeklyServiceImpl implements WeeklyService {
+public class WeeklyCurrentServiceImpl implements WeeklyCurrentService {
 
     @Autowired
-    WeeklyDao weeklyDao;
+    WeeklyCurrentDao weeklyCurrentDao;
 
     @Override
     public List<WeeklyCurrentEx> queryWeeklyCurrentExs(String order_rule, Integer pn, Integer ps) {
@@ -44,16 +44,16 @@ public class WeeklyServiceImpl implements WeeklyService {
         pn = PageNumModfier.modifyPn(pn);
         Integer offset = PageNumModfier.calcOffset(ps, pn);
 
-        return weeklyDao.queryWeeklyCurrentExs(order_by, desc, offset, ps);
+        return weeklyCurrentDao.queryWeeklyCurrentExs(order_by, desc, offset, ps);
     }
 
     @Override
     public Integer queryWeeklyCurrentExsCount() {
-        return weeklyDao.queryWeeklyCurrentExsCount();
+        return weeklyCurrentDao.queryWeeklyCurrentExsCount();
     }
 
     @Override
     public WeeklyCurrent queryWeeklyCurrentByBvid(String bvid) {
-        return weeklyDao.queryWeeklyCurrentByBvid(bvid);
+        return weeklyCurrentDao.queryWeeklyCurrentByBvid(bvid);
     }
 }

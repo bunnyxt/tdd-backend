@@ -2,13 +2,8 @@ package com.bunnyxt.tdd.controller.video.record.rank;
 
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
 import com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrentColor;
-import com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrentEx;
 import com.bunnyxt.tdd.service.video.record.rank.WeeklyColorService;
-import com.bunnyxt.tdd.service.video.record.rank.WeeklyService;
-import com.bunnyxt.tdd.util.TddParamCheckUtil;
-import com.bunnyxt.tdd.util.TddResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
