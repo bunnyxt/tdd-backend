@@ -8,5 +8,5 @@ public interface WeeklyArchiveOverviewService {
 
     List<WeeklyArchiveOverview> queryWeeklyArchiveOverviews();
 
-    WeeklyArchiveOverview queryWeeklyArchiveOverviewById(Long id);
+    WeeklyArchiveOverview queryWeeklyArchiveOverviewByArchId(Long arch_id);
 }

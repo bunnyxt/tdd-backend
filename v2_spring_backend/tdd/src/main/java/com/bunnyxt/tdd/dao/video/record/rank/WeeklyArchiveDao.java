@@ -7,9 +7,9 @@ import com.bunnyxt.tdd.model.video.record.rank.WeeklyArchiveEx;
 
 public interface WeeklyArchiveDao {
 
-    List<WeeklyArchiveEx> queryWeeklyArchiveExsById(Long id, String order_by, Integer desc, Integer offset, Integer ps);
+    List<WeeklyArchiveEx> queryWeeklyArchiveExsByArchId(Long arch_id, String order_by, Integer desc, Integer offset, Integer ps);
 
-    Integer queryWeeklyArchiveExsCountById(Long id);
+    Integer queryWeeklyArchiveExsCountByArchId(Long arch_id);
 
     List<WeeklyArchive> queryWeeklyArchivesByBvid(String bvid);
 

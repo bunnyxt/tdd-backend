@@ -20,7 +20,7 @@ public class WeeklyColorServiceImpl implements WeeklyColorService {
     }
 
     @Override
-    public List<WeeklyColor> queryWeeklyArchiveColorById(Long id) {
-        return weeklyColorDao.queryWeeklyArchiveColorsById(id);
+    public List<WeeklyColor> queryWeeklyArchiveColorByArchId(Long arch_id) {
+        return weeklyColorDao.queryWeeklyArchiveColorsByArchId(arch_id);
     }
 }

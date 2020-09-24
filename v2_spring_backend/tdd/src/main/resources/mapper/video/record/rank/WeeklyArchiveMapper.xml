@@ -50,7 +50,7 @@
         m.sex, m.name, m.face, m.sign
     </sql>
 
-    <select id="queryWeeklyArchiveExsById" resultMap="WeeklyArchiveExResultMap">
+    <select id="queryWeeklyArchiveExsByArchId" resultMap="WeeklyArchiveExResultMap">
         select
         <include refid="WeeklyArchiveExColumnList" />
         from
@@ -64,7 +64,7 @@
         on
         v.mid = m.mid
         where
-        arch_id = #{id}
+        arch_id = #{arch_id}
         order by
         ${order_by}
         <if test="desc == 1">
@@ -74,13 +74,13 @@
         #{offset}, #{ps}
     </select>
 
-    <select id="queryWeeklyArchiveExsCountById" resultType="Integer">
+    <select id="queryWeeklyArchiveExsCountByArchId" resultType="Integer">
         select
         count(1)
         from
         tdd_video_record_rank_weekly_archive
         where
-        arch_id = #{id}
+        arch_id = #{arch_id}
     </select>
 
     <resultMap id="WeeklyArchiveResultMap" type="com.bunnyxt.tdd.model.video.record.rank.WeeklyArchive">

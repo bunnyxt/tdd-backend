@@ -8,5 +8,5 @@ public interface WeeklyColorDao {
 
     List<WeeklyColor> queryWeeklyCurrentColors();
 
-    List<WeeklyColor> queryWeeklyArchiveColorsById(Long id);
+    List<WeeklyColor> queryWeeklyArchiveColorsByArchId(Long arch_id);
 }

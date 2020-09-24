@@ -22,13 +22,13 @@ public class WeeklyArchiveOverviewRestController {
         return weeklyArchiveOverviewService.queryWeeklyArchiveOverviews();
     }
 
-    @RequestMapping(value = "/video/record/rank/weekly/archive/{id}/overview", method = RequestMethod.GET)
-    public WeeklyArchiveOverview queryWeeklyArchiveOverviewById(
-            @PathVariable Long id
+    @RequestMapping(value = "/video/record/rank/weekly/archive/{arch_id}/overview", method = RequestMethod.GET)
+    public WeeklyArchiveOverview queryWeeklyArchiveOverviewByArchId(
+            @PathVariable Long arch_id
     ) throws InvalidRequestParameterException {
         // check params
-        TddParamCheckUtil.arch_id(id);
+        TddParamCheckUtil.arch_id(arch_id);
 
-        return weeklyArchiveOverviewService.queryWeeklyArchiveOverviewById(id);
+        return weeklyArchiveOverviewService.queryWeeklyArchiveOverviewByArchId(arch_id);
     }
 }

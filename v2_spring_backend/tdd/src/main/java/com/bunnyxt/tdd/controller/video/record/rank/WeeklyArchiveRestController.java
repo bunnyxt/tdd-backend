@@ -20,15 +20,15 @@ public class WeeklyArchiveRestController {
     @Autowired
     private WeeklyArchiveService weeklyArchiveService;
 
-    @RequestMapping(value = "/video/record/rank/weekly/archive/{id}", method = RequestMethod.GET)
-    public ResponseEntity<List<WeeklyArchiveEx>> queryWeeklyArchiveById(
-            @PathVariable Long id,
+    @RequestMapping(value = "/video/record/rank/weekly/archive/{arch_id}", method = RequestMethod.GET)
+    public ResponseEntity<List<WeeklyArchiveEx>> queryWeeklyArchiveByArchId(
+            @PathVariable Long arch_id,
             @RequestParam(defaultValue = "rank") String order_rule,
             @RequestParam(defaultValue = "1") Integer pn,
             @RequestParam(defaultValue = "30") Integer ps
     ) throws InvalidRequestParameterException {
         // check params
-        TddParamCheckUtil.arch_id(id);
+        TddParamCheckUtil.arch_id(arch_id);
         List<String> allowedOrderRule = new ArrayList<String>(){{
             add("rank");
             add("incr_view");
@@ -47,8 +47,8 @@ public class WeeklyArchiveRestController {
         TddParamCheckUtil.ps(ps, 30);
 
         return TddResponseUtil.AssembleList(
-                weeklyArchiveService.queryWeeklyArchiveExsById(id, order_rule, pn, ps),
-                weeklyArchiveService.queryWeeklyArchiveExsCountById(id)
+                weeklyArchiveService.queryWeeklyArchiveExsByArchId(arch_id, order_rule, pn, ps),
+                weeklyArchiveService.queryWeeklyArchiveExsCountByArchId(arch_id)
         );
     }
 

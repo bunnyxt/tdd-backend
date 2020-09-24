@@ -17,7 +17,7 @@ public class WeeklyArchiveServiceImpl implements WeeklyArchiveService {
     WeeklyArchiveDao weeklyArchiveDao;
 
     @Override
-    public List<WeeklyArchiveEx> queryWeeklyArchiveExsById(Long id, String order_rule, Integer pn, Integer ps) {
+    public List<WeeklyArchiveEx> queryWeeklyArchiveExsByArchId(Long arch_id, String order_rule, Integer pn, Integer ps) {
         // order_rule -> order_by & desc
         String order_by;
         Integer desc;
@@ -44,12 +44,12 @@ public class WeeklyArchiveServiceImpl implements WeeklyArchiveService {
         pn = PageNumModfier.modifyPn(pn);
         Integer offset = PageNumModfier.calcOffset(ps, pn);
 
-        return weeklyArchiveDao.queryWeeklyArchiveExsById(id, order_by, desc, offset, ps);
+        return weeklyArchiveDao.queryWeeklyArchiveExsByArchId(arch_id, order_by, desc, offset, ps);
     }
 
     @Override
-    public Integer queryWeeklyArchiveExsCountById(Long id) {
-        return weeklyArchiveDao.queryWeeklyArchiveExsCountById(id);
+    public Integer queryWeeklyArchiveExsCountByArchId(Long arch_id) {
+        return weeklyArchiveDao.queryWeeklyArchiveExsCountByArchId(arch_id);
     }
 
     @Override

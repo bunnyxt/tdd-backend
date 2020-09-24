@@ -20,12 +20,12 @@
         tdd_video_record_rank_weekly_current_color
     </select>
 
-    <select id="queryWeeklyArchiveColorsById" resultMap="WeeklyColorResultMap">
+    <select id="queryWeeklyArchiveColorsByArchId" resultMap="WeeklyColorResultMap">
         select
         <include refid="WeeklyColorColumnList" />
         from
         tdd_video_record_rank_weekly_archive_color
         where
-        arch_id = #{id}
+        arch_id = #{arch_id}
     </select>
 </mapper>

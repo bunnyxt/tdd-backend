@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface WeeklyArchiveService {
 
-    List<WeeklyArchiveEx> queryWeeklyArchiveExsById(Long id, String order_rule, Integer pn, Integer ps);
+    List<WeeklyArchiveEx> queryWeeklyArchiveExsByArchId(Long arch_id, String order_rule, Integer pn, Integer ps);
 
-    Integer queryWeeklyArchiveExsCountById(Long id);
+    Integer queryWeeklyArchiveExsCountByArchId(Long arch_id);
 
     List<WeeklyArchive> queryWeeklyArchivesByBvid(String bvid);
 

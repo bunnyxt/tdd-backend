@@ -19,12 +19,12 @@
         tdd_video_record_rank_weekly_archive_overview
     </select>
 
-    <select id="queryWeeklyArchiveOverviewById" resultMap="WeeklyArchiveOverviewResultMap">
+    <select id="queryWeeklyArchiveOverviewByArchId" resultMap="WeeklyArchiveOverviewResultMap">
         select
         <include refid="WeeklyArchiveOverviewColumnList" />
         from
         tdd_video_record_rank_weekly_archive_overview
         where
-        id = #{id}
+        id = #{arch_id}
     </select>
 </mapper>

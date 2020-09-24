@@ -20,7 +20,7 @@ public class WeeklyArchiveOverviewServiceImpl implements WeeklyArchiveOverviewSe
     }
 
     @Override
-    public WeeklyArchiveOverview queryWeeklyArchiveOverviewById(Long id) {
-        return weeklyArchiveOverviewDao.queryWeeklyArchiveOverviewById(id);
+    public WeeklyArchiveOverview queryWeeklyArchiveOverviewByArchId(Long arch_id) {
+        return weeklyArchiveOverviewDao.queryWeeklyArchiveOverviewByArchId(arch_id);
     }
 }

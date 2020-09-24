@@ -8,5 +8,5 @@ public interface WeeklyColorService {
 
     List<WeeklyColor> queryWeeklyCurrentColors();
 
-    List<WeeklyColor> queryWeeklyArchiveColorById(Long id);
+    List<WeeklyColor> queryWeeklyArchiveColorByArchId(Long arch_id);
 }

@@ -37,15 +37,15 @@ public class WeeklyColorRestController {
         );
     }
 
-    @RequestMapping(value = "/video/record/rank/weekly/archive/{id}/color", method = RequestMethod.GET)
-    public Map<String, Map<String, Double>> queryWeeklyCurrentColors(
-            @PathVariable Long id
+    @RequestMapping(value = "/video/record/rank/weekly/archive/{arch_id}/color", method = RequestMethod.GET)
+    public Map<String, Map<String, Double>> queryWeeklyCurrentColorByArchId(
+            @PathVariable Long arch_id
     ) throws InvalidRequestParameterException {
         // check params
-        TddParamCheckUtil.arch_id(id);
+        TddParamCheckUtil.arch_id(arch_id);
 
         return buildWeeklyColorMap(
-                weeklyColorService.queryWeeklyArchiveColorById(id)
+                weeklyColorService.queryWeeklyArchiveColorByArchId(arch_id)
         );
     }
 }
