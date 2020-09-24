@@ -91,4 +91,9 @@ public class TddParamCheckUtil {
             }
         }
     }
+
+    public static void arch_id(Long id) {
+        // default: 0, no limit
+        _zero_plus(id, "arch_id");
+    }
 }

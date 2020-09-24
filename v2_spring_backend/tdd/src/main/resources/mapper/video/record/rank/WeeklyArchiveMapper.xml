@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.video.record.rank.WeeklyArchiveDao">
+    <resultMap id="WeeklyArchiveExResultMap" type="com.bunnyxt.tdd.model.video.record.rank.WeeklyArchiveEx">
+        <result column="arch_id" property="arch_id" />
+        <result column="a_bvid" property="bvid" />
+        <result column="start_added" property="start_added" />
+        <result column="arch_added" property="arch_added" />
+        <result column="arch_view" property="arch_view" />
+        <result column="arch_danmaku" property="arch_danmaku" />
+        <result column="arch_reply" property="arch_reply" />
+        <result column="arch_favorite" property="arch_favorite" />
+        <result column="arch_coin" property="arch_coin" />
+        <result column="arch_share" property="arch_share" />
+        <result column="arch_like" property="arch_like" />
+        <result column="incr_view" property="incr_view" />
+        <result column="incr_danmaku" property="incr_danmaku" />
+        <result column="incr_reply" property="incr_reply" />
+        <result column="incr_favorite" property="incr_favorite" />
+        <result column="incr_coin" property="incr_coin" />
+        <result column="incr_share" property="incr_share" />
+        <result column="incr_like" property="incr_like" />
+        <result column="point" property="point" />
+        <result column="xiua" property="xiua" />
+        <result column="xiub" property="xiub" />
+        <result column="rank" property="rank" />
+        <association property="video" javaType="com.bunnyxt.tdd.model.fragment.VideoMemberFragment">
+            <result column="aid" property="aid" />
+            <result column="bvid" property="bvid" />
+            <result column="title" property="title" />
+            <result column="pic" property="pic" />
+            <result column="pubdate" property="pubdate" />
+            <result column="videos" property="videos" />
+            <result column="mid" property="mid" />
+            <association property="member" javaType="com.bunnyxt.tdd.model.fragment.MemberFragment">
+                <result column="sex" property="sex" />
+                <result column="name" property="name" />
+                <result column="face" property="face" />
+                <result column="sign" property="sign" />
+            </association>
+        </association>
+    </resultMap>
+
+    <sql id="WeeklyArchiveExColumnList">
+        arch_id, a.bvid a_bvid, start_added, arch_added,
+        arch_view, arch_danmaku, arch_reply, arch_favorite, arch_coin, arch_share, arch_like,
+        incr_view, incr_danmaku, incr_reply, incr_favorite, incr_coin, incr_share, incr_like,
+        point, xiua, xiub, rank,
+        v.aid, v.bvid, v.title, v.pic, v.pubdate, v.videos, v.mid,
+        m.sex, m.name, m.face, m.sign
+    </sql>
+
+    <select id="queryWeeklyArchiveExsById" resultMap="WeeklyArchiveExResultMap">
+        select
+        <include refid="WeeklyArchiveExColumnList" />
+        from
+        tdd_video_record_rank_weekly_archive as a
+        left join
+        tdd_video as v
+        on
+        a.bvid = v.bvid
+        left join
+        tdd_member as m
+        on
+        v.mid = m.mid
+        where
+        arch_id = #{id}
+        order by
+        ${order_by}
+        <if test="desc == 1">
+            desc
+        </if>
+        limit
+        #{offset}, #{ps}
+    </select>
+
+    <select id="queryWeeklyArchiveExsCountById" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_video_record_rank_weekly_archive
+        where
+        arch_id = #{id}
+    </select>
+
+    <resultMap id="WeeklyArchiveResultMap" type="com.bunnyxt.tdd.model.video.record.rank.WeeklyArchive">
+        <result column="arch_id" property="arch_id" />
+        <result column="bvid" property="bvid" />
+        <result column="start_added" property="start_added" />
+        <result column="arch_added" property="arch_added" />
+        <result column="arch_view" property="arch_view" />
+        <result column="arch_danmaku" property="arch_danmaku" />
+        <result column="arch_reply" property="arch_reply" />
+        <result column="arch_favorite" property="arch_favorite" />
+        <result column="arch_coin" property="arch_coin" />
+        <result column="arch_share" property="arch_share" />
+        <result column="arch_like" property="arch_like" />
+        <result column="incr_view" property="incr_view" />
+        <result column="incr_danmaku" property="incr_danmaku" />
+        <result column="incr_reply" property="incr_reply" />
+        <result column="incr_favorite" property="incr_favorite" />
+        <result column="incr_coin" property="incr_coin" />
+        <result column="incr_share" property="incr_share" />
+        <result column="incr_like" property="incr_like" />
+        <result column="point" property="point" />
+        <result column="xiua" property="xiua" />
+        <result column="xiub" property="xiub" />
+        <result column="rank" property="rank" />
+    </resultMap>
+
+    <sql id="WeeklyArchiveColumnList">
+        arch_id, bvid, start_added, arch_added,
+        arch_view, arch_danmaku, arch_reply, arch_favorite, arch_coin, arch_share, arch_like,
+        incr_view, incr_danmaku, incr_reply, incr_favorite, incr_coin, incr_share, incr_like,
+        point, xiua, xiub, rank
+    </sql>
+
+    <select id="queryWeeklyArchivesByBvid" resultMap="WeeklyArchiveResultMap">
+        select
+        <include refid="WeeklyArchiveColumnList" />
+        from
+        tdd_video_record_rank_weekly_archive
+        where
+        bvid = #{bvid}
+    </select>
+
+    <select id="queryWeeklyArchivesCountByBvid" resultType="Integer">
+        select
+        count(1)
+        from
+        tdd_video_record_rank_weekly_archive
+        where
+        arch_id = #{id}
+    </select>
+
+</mapper>
