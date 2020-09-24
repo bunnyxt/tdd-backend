@@ -15,16 +15,17 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-public class WeeklyRestController {
+public class WeeklyCurrentRestController {
 
     @Autowired
     private WeeklyService weeklyService;
 
     @RequestMapping(value = "/video/record/rank/weekly/current", method = RequestMethod.GET)
-    public ResponseEntity<List<WeeklyCurrentEx>> queryWeeklyCurrents(@RequestParam(defaultValue = "rank") String order_rule,
-                                                                     @RequestParam(defaultValue = "1") Integer pn,
-                                                                     @RequestParam(defaultValue = "30") Integer ps)
-            throws InvalidRequestParameterException {
+    public ResponseEntity<List<WeeklyCurrentEx>> queryWeeklyCurrentExs(
+            @RequestParam(defaultValue = "rank") String order_rule,
+            @RequestParam(defaultValue = "1") Integer pn,
+            @RequestParam(defaultValue = "30") Integer ps
+    ) throws InvalidRequestParameterException {
         // check params
         List<String> allowedOrderRule = new ArrayList<String>(){{
             add("rank");
@@ -43,18 +44,16 @@ public class WeeklyRestController {
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 30);
 
-        // get list
-        List<WeeklyCurrentEx> list = weeklyService.queryWeeklyCurrentExs(order_rule, pn, ps);
-
-        // get total count
-        Integer totalCount = weeklyService.queryWeeklyCurrentExsCount();
-
-        return TddResponseUtil.AssembleList(list, totalCount);
+        return TddResponseUtil.AssembleList(
+                weeklyService.queryWeeklyCurrentExs(order_rule, pn, ps),
+                weeklyService.queryWeeklyCurrentExsCount()
+        );
     }
 
     @RequestMapping(value = "/video/record/rank/weekly/current/BV{bvid}", method = RequestMethod.GET)
-    public WeeklyCurrent queryWeeklyCurrentByBvid(@PathVariable String bvid)
-            throws InvalidRequestParameterException {
+    public WeeklyCurrent queryWeeklyCurrentByBvid(
+            @PathVariable String bvid
+    ) throws InvalidRequestParameterException {
         // check params
         TddParamCheckUtil.bvid(bvid);
 
