@@ -26,13 +26,14 @@ public class UserFavoriteMemberExRestController {
     // user favorite video list
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/favorite/member/me", method = RequestMethod.GET)
-    public ResponseEntity<List<UserFavoriteMemberEx>> queryUserFavoriteMembersMe(@RequestParam(defaultValue = "") String name,
-                                                                                 @RequestParam(defaultValue = "") String sex,
-                                                                                 @RequestParam(defaultValue = "added") String order_by,
-                                                                                 @RequestParam(defaultValue = "1") Integer desc,
-                                                                                 @RequestParam(defaultValue = "1") Integer pn,
-                                                                                 @RequestParam(defaultValue = "20") Integer ps)
-            throws InvalidRequestParameterException {
+    public ResponseEntity<List<UserFavoriteMemberEx>> queryUserFavoriteMembersMe(
+            @RequestParam(defaultValue = "") String name,
+            @RequestParam(defaultValue = "") String sex,
+            @RequestParam(defaultValue = "added") String order_by,
+            @RequestParam(defaultValue = "1") Integer desc,
+            @RequestParam(defaultValue = "1") Integer pn,
+            @RequestParam(defaultValue = "20") Integer ps
+    ) throws InvalidRequestParameterException {
         // check params
         List<String> allowedSex = new ArrayList<String>(){{
             add("男");
@@ -69,13 +70,10 @@ public class UserFavoriteMemberExRestController {
         // get userid
         Long userid = TddAuthUtil.GetCurrentUser().getId();
 
-        // get list
-        List<UserFavoriteMemberEx> list = userFavoriteMemberExService.queryUserFavoriteMemberExsMe(userid, name, sex, order_by, desc, pn, ps);
-
-        // get total count
-        Integer totalCount = userFavoriteMemberExService.queryUserFavoriteMemberExsMeCount(userid, name, sex);
-
-        return TddResponseUtil.AssembleList(list, totalCount);
+        return TddResponseUtil.AssembleList(
+                userFavoriteMemberExService.queryUserFavoriteMemberExsMe(userid, name, sex, order_by, desc, pn, ps),
+                userFavoriteMemberExService.queryUserFavoriteMemberExsMeCount(userid, name, sex)
+        );
     }
 
     // admin ===========================================================================================================
@@ -83,14 +81,15 @@ public class UserFavoriteMemberExRestController {
     // check one user's favorite video
     @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/user/favorite/member/tdduser{userid}", method = RequestMethod.GET)
-    public ResponseEntity<List<UserFavoriteMemberEx>> queryUserFavoriteVideos(@PathVariable Long userid,
-                                                                             @RequestParam(defaultValue = "0") Integer start_ts,
-                                                                             @RequestParam(defaultValue = "0") Integer end_ts,
-                                                                             @RequestParam(defaultValue = "added") String order_by,
-                                                                             @RequestParam(defaultValue = "1") Integer desc,
-                                                                             @RequestParam(defaultValue = "1") Integer pn,
-                                                                             @RequestParam(defaultValue = "100") Integer ps)
-            throws InvalidRequestParameterException {
+    public ResponseEntity<List<UserFavoriteMemberEx>> queryUserFavoriteVideos(
+            @PathVariable Long userid,
+            @RequestParam(defaultValue = "0") Integer start_ts,
+            @RequestParam(defaultValue = "0") Integer end_ts,
+            @RequestParam(defaultValue = "added") String order_by,
+            @RequestParam(defaultValue = "1") Integer desc,
+            @RequestParam(defaultValue = "1") Integer pn,
+            @RequestParam(defaultValue = "100") Integer ps
+    ) throws InvalidRequestParameterException {
         // check params
         TddParamCheckUtil.start_ts(start_ts);
         TddParamCheckUtil.end_ts(end_ts);
@@ -105,12 +104,9 @@ public class UserFavoriteMemberExRestController {
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 100);
 
-        // get list
-        List<UserFavoriteMemberEx> list = userFavoriteMemberExService.queryUserFavoriteMemberExs(userid, start_ts, end_ts, order_by, desc, pn, ps);
-
-        // get total count
-        Integer totalCount = userFavoriteMemberExService.queryUserFavoriteMemberExsCount(userid, start_ts, end_ts);
-
-        return TddResponseUtil.AssembleList(list, totalCount);
+        return TddResponseUtil.AssembleList(
+                userFavoriteMemberExService.queryUserFavoriteMemberExs(userid, start_ts, end_ts, order_by, desc, pn, ps),
+                userFavoriteMemberExService.queryUserFavoriteMemberExsCount(userid, start_ts, end_ts)
+        );
     }
 }

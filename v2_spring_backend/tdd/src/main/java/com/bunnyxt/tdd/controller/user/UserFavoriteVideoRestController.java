@@ -30,8 +30,9 @@ public class UserFavoriteVideoRestController {
     // user post favorite video
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/favorite/video/{aid}", method = RequestMethod.POST)
-    public TddCommonResponse postUserFavoriteVideo(@PathVariable Integer aid)
-            throws InvalidRequestParameterException {
+    public TddCommonResponse postUserFavoriteVideo(
+            @PathVariable Integer aid
+    ) throws InvalidRequestParameterException {
         // check params
         if (aid <= 0) {
             throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
@@ -46,8 +47,9 @@ public class UserFavoriteVideoRestController {
     // user delete favorite video
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/favorite/video/{aid}", method = RequestMethod.DELETE)
-    public TddCommonResponse deleteUserFavoriteVideo(@PathVariable Integer aid)
-            throws InvalidRequestParameterException {
+    public TddCommonResponse deleteUserFavoriteVideo(
+            @PathVariable Integer aid
+    ) throws InvalidRequestParameterException {
         // check params
         if (aid <= 0) {
             throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
@@ -62,8 +64,9 @@ public class UserFavoriteVideoRestController {
     // user favorite video status
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/favorite/video/{aid}", method = RequestMethod.GET)
-    public UserFavoriteVideo queryUserFavoriteVideo(@PathVariable Integer aid)
-            throws InvalidRequestParameterException {
+    public UserFavoriteVideo queryUserFavoriteVideo(
+            @PathVariable Integer aid
+    ) throws InvalidRequestParameterException {
         // check params
         if (aid <= 0) {
             throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
@@ -77,8 +80,9 @@ public class UserFavoriteVideoRestController {
 
     // video favorite count
     @RequestMapping(value = "/video/{aid}/favorite", method = RequestMethod.GET)
-    public Integer queryUserFavoriteVideoCount(@PathVariable Integer aid)
-            throws InvalidRequestParameterException {
+    public Integer queryUserFavoriteVideoCount(
+            @PathVariable Integer aid
+    ) throws InvalidRequestParameterException {
         // check params
         if (aid <= 0) {
             throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
@@ -91,14 +95,15 @@ public class UserFavoriteVideoRestController {
 
     // video favorite count
     @RequestMapping(value = "/video/{aid}/favorite/user", method = RequestMethod.GET)
-    public ResponseEntity<List<UserFavoriteVideo>> queryUserFavoriteVideoUsers(@PathVariable Integer aid,
-                                                                               @RequestParam(defaultValue = "0") Integer start_ts,
-                                                                               @RequestParam(defaultValue = "0") Integer end_ts,
-                                                                               @RequestParam(defaultValue = "added") String order_by,
-                                                                               @RequestParam(defaultValue = "1") Integer desc,
-                                                                               @RequestParam(defaultValue = "1") Integer pn,
-                                                                               @RequestParam(defaultValue = "100") Integer ps)
-            throws InvalidRequestParameterException {
+    public ResponseEntity<List<UserFavoriteVideo>> queryUserFavoriteVideoUsers(
+            @PathVariable Integer aid,
+            @RequestParam(defaultValue = "0") Integer start_ts,
+            @RequestParam(defaultValue = "0") Integer end_ts,
+            @RequestParam(defaultValue = "added") String order_by,
+            @RequestParam(defaultValue = "1") Integer desc,
+            @RequestParam(defaultValue = "1") Integer pn,
+            @RequestParam(defaultValue = "100") Integer ps
+    ) throws InvalidRequestParameterException {
         // check params
         if (aid <= 0) {
             throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
@@ -116,12 +121,9 @@ public class UserFavoriteVideoRestController {
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 100);
 
-        // get list
-        List<UserFavoriteVideo> list = userFavoriteVideoService.queryUserFavoriteVideoUsers(aid, start_ts, end_ts, order_by, desc, pn, ps);
-
-        // get total count
-        Integer totalCount = userFavoriteVideoService.queryUserFavoriteVideoUsersCount(aid, start_ts, end_ts);
-
-        return TddResponseUtil.AssembleList(list, totalCount);
+        return TddResponseUtil.AssembleList(
+                userFavoriteVideoService.queryUserFavoriteVideoUsers(aid, start_ts, end_ts, order_by, desc, pn, ps),
+                userFavoriteVideoService.queryUserFavoriteVideoUsersCount(aid, start_ts, end_ts)
+        );
     }
 }

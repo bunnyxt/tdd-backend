@@ -16,8 +16,9 @@ public class UpdateLogRestController {
     UpdateLogService updateLogService;
 
     @RequestMapping(value = "/updatelog", method = RequestMethod.GET)
-    public List<UpdateLog> queryUpdateLogs(@RequestParam(defaultValue = "5") Integer last_count)
-            throws InvalidRequestParameterException {
+    public List<UpdateLog> queryUpdateLogs(
+            @RequestParam(defaultValue = "5") Integer last_count
+    ) throws InvalidRequestParameterException {
         // check params
         if (last_count < 0) {
             throw new InvalidRequestParameterException("last_count", last_count, "last_count should not be negative");

@@ -22,8 +22,9 @@ public class UserLikeVideoRestController {
     // user post like video
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/like/video/{aid}", method = RequestMethod.POST)
-    public TddCommonResponse postUserLikeVideo(@PathVariable Integer aid)
-            throws InvalidRequestParameterException {
+    public TddCommonResponse postUserLikeVideo(
+            @PathVariable Integer aid
+    ) throws InvalidRequestParameterException {
         // check params
         if (aid <= 0) {
             throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
@@ -38,8 +39,9 @@ public class UserLikeVideoRestController {
     // user delete like video
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/like/video/{aid}", method = RequestMethod.DELETE)
-    public TddCommonResponse deleteUserLikeVideo(@PathVariable Integer aid)
-            throws InvalidRequestParameterException {
+    public TddCommonResponse deleteUserLikeVideo(
+            @PathVariable Integer aid
+    ) throws InvalidRequestParameterException {
         // check params
         if (aid <= 0) {
             throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
@@ -54,8 +56,9 @@ public class UserLikeVideoRestController {
     // user like video status
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/like/video/{aid}", method = RequestMethod.GET)
-    public UserLikeVideo queryUserLikeVideo(@PathVariable Integer aid)
-            throws InvalidRequestParameterException {
+    public UserLikeVideo queryUserLikeVideo(
+            @PathVariable Integer aid
+    ) throws InvalidRequestParameterException {
         // check params
         if (aid <= 0) {
             throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
@@ -69,8 +72,9 @@ public class UserLikeVideoRestController {
 
     // video like count
     @RequestMapping(value = "/video/{aid}/like", method = RequestMethod.GET)
-    public Integer queryUserLikeVideoCount(@PathVariable Integer aid)
-            throws InvalidRequestParameterException {
+    public Integer queryUserLikeVideoCount(
+            @PathVariable Integer aid
+    ) throws InvalidRequestParameterException {
         // check params
         if (aid <= 0) {
             throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");

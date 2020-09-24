@@ -22,8 +22,10 @@ public class VideoRestController {
 
     @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/video/{aid}", method = RequestMethod.PUT)
-    public Video updateVideoByAid(@PathVariable Integer aid, @RequestBody Video video)
-            throws InvalidRequestParameterException, IllegalAccessException {
+    public Video updateVideoByAid(
+            @PathVariable Integer aid,
+            @RequestBody Video video
+    ) throws InvalidRequestParameterException, IllegalAccessException {
         // when use PUT method, you could provide multiple parameters of video,
         // then all provided params will be updated, if they are allowed to be updated
 

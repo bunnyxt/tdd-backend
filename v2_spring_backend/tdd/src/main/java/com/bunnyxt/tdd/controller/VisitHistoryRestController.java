@@ -24,7 +24,9 @@ public class VisitHistoryRestController {
     // video ===========================================================================================================
 
     @RequestMapping(value = "/visit/history/video/BV{bvid}", method = RequestMethod.POST)
-    public void addVisitHistoryVideo(@PathVariable String bvid) {
+    public void addVisitHistoryVideo(
+            @PathVariable String bvid
+    ) {
         User currentUser = TddAuthUtil.GetCurrentUser();
         Long userid = 3L;
         if (currentUser != null) {
@@ -40,8 +42,8 @@ public class VisitHistoryRestController {
             @RequestParam(defaultValue = "0") Integer end_ts,
             @RequestParam(defaultValue = "1") Integer desc,
             @RequestParam(defaultValue = "1") Integer pn,
-            @RequestParam(defaultValue = "20") Integer ps)
-            throws InvalidRequestParameterException {
+            @RequestParam(defaultValue = "20") Integer ps
+    ) throws InvalidRequestParameterException {
         // get userid
         Long userid = TddAuthUtil.GetCurrentUser().getId();
 
@@ -56,8 +58,8 @@ public class VisitHistoryRestController {
             @RequestParam(defaultValue = "0") Integer end_ts,
             @RequestParam(defaultValue = "1") Integer desc,
             @RequestParam(defaultValue = "1") Integer pn,
-            @RequestParam(defaultValue = "20") Integer ps)
-            throws InvalidRequestParameterException {
+            @RequestParam(defaultValue = "20") Integer ps
+    ) throws InvalidRequestParameterException {
         // check params
         TddParamCheckUtil.start_ts(start_ts);
         TddParamCheckUtil.end_ts(end_ts);
@@ -65,12 +67,9 @@ public class VisitHistoryRestController {
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 20);
 
-        // get list
-        List<VisitHistoryVideoEx> list = visitHistoryService.getVisitHistoryVideoByUserid(userid, start_ts, end_ts, desc, pn, ps);
-
-        // get total count
-        Integer totalCount = visitHistoryService.getVisitHistoryVideoCountByUserid(userid, start_ts, end_ts);
-
-        return TddResponseUtil.AssembleList(list, totalCount);
+        return TddResponseUtil.AssembleList(
+                visitHistoryService.getVisitHistoryVideoByUserid(userid, start_ts, end_ts, desc, pn, ps),
+                visitHistoryService.getVisitHistoryVideoCountByUserid(userid, start_ts, end_ts)
+        );
     }
 }

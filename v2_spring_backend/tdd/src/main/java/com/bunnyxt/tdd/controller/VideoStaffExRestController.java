@@ -17,8 +17,9 @@ public class VideoStaffExRestController {
     private VideoStaffExService videoStaffExService;
 
     @RequestMapping(value = "/video/{aid}/staff", method = RequestMethod.GET)
-    public List<VideoStaffEx> queryVideoStaffsByAid(@PathVariable Integer aid)
-            throws InvalidPropertiesFormatException {
+    public List<VideoStaffEx> queryVideoStaffsByAid(
+            @PathVariable Integer aid
+    ) throws InvalidPropertiesFormatException {
         // check params
         if (aid < 0) {
             throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");

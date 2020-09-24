@@ -40,8 +40,9 @@ public class UserSignInOverviewRestController {
     // check one user's sign in overview
     @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/user/signin/overview/tdduser{userid}", method = RequestMethod.GET)
-    public UserSignInOverview queryUserSignInsMe(@PathVariable Long userid)
-            throws InvalidRequestParameterException {
+    public UserSignInOverview queryUserSignInsMe(
+            @PathVariable Long userid
+    ) throws InvalidRequestParameterException {
         // check params
         TddParamCheckUtil.userid(userid);
 
@@ -51,13 +52,14 @@ public class UserSignInOverviewRestController {
     // overall query
     @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/user/signin/overview", method = RequestMethod.GET)
-    public ResponseEntity<List<UserSignInOverview>> queryUserSignIns(@RequestParam(defaultValue = "0") Integer start_ts,
-                                                                     @RequestParam(defaultValue = "0") Integer end_ts,
-                                                                     @RequestParam(defaultValue = "total") String order_by,
-                                                                     @RequestParam(defaultValue = "1") Integer desc,
-                                                                     @RequestParam(defaultValue = "1") Integer pn,
-                                                                     @RequestParam(defaultValue = "100") Integer ps)
-            throws InvalidRequestParameterException {
+    public ResponseEntity<List<UserSignInOverview>> queryUserSignIns(
+            @RequestParam(defaultValue = "0") Integer start_ts,
+            @RequestParam(defaultValue = "0") Integer end_ts,
+            @RequestParam(defaultValue = "total") String order_by,
+            @RequestParam(defaultValue = "1") Integer desc,
+            @RequestParam(defaultValue = "1") Integer pn,
+            @RequestParam(defaultValue = "100") Integer ps
+    ) throws InvalidRequestParameterException {
         // check params
         TddParamCheckUtil.start_ts(start_ts);
         TddParamCheckUtil.end_ts(end_ts);
@@ -75,12 +77,9 @@ public class UserSignInOverviewRestController {
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 100);
 
-        // get list
-        List<UserSignInOverview> list = userSignInOverviewService.queryUserSignInOverviews(start_ts, end_ts, order_by, desc, pn, ps);
-
-        // get total count
-        Integer totalCount = userSignInOverviewService.queryUserSignInOverviewsCount(start_ts, end_ts);
-
-        return TddResponseUtil.AssembleList(list, totalCount);
+        return TddResponseUtil.AssembleList(
+                userSignInOverviewService.queryUserSignInOverviews(start_ts, end_ts, order_by, desc, pn, ps),
+                userSignInOverviewService.queryUserSignInOverviewsCount(start_ts, end_ts)
+        );
     }
 }

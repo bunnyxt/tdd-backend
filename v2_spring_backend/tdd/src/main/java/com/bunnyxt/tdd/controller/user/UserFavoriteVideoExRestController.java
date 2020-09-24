@@ -26,12 +26,13 @@ public class UserFavoriteVideoExRestController {
     // user favorite video list
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/favorite/video/me", method = RequestMethod.GET)
-    public ResponseEntity<List<UserFavoriteVideoEx>> queryUserFavoriteVideosMe(@RequestParam(defaultValue = "") String title,
-                                                                               @RequestParam(defaultValue = "added") String order_by,
-                                                                               @RequestParam(defaultValue = "1") Integer desc,
-                                                                               @RequestParam(defaultValue = "1") Integer pn,
-                                                                               @RequestParam(defaultValue = "20") Integer ps)
-            throws InvalidRequestParameterException {
+    public ResponseEntity<List<UserFavoriteVideoEx>> queryUserFavoriteVideosMe(
+            @RequestParam(defaultValue = "") String title,
+            @RequestParam(defaultValue = "added") String order_by,
+            @RequestParam(defaultValue = "1") Integer desc,
+            @RequestParam(defaultValue = "1") Integer pn,
+            @RequestParam(defaultValue = "20") Integer ps
+    ) throws InvalidRequestParameterException {
         // check params
         List<String> allowedOrderBy = new ArrayList<String>(){{
             add("added");
@@ -55,13 +56,10 @@ public class UserFavoriteVideoExRestController {
         // get userid
         Long userid = TddAuthUtil.GetCurrentUser().getId();
 
-        // get list
-        List<UserFavoriteVideoEx> list = userFavoriteVideoExService.queryUserFavoriteVideoExsMe(userid, title, order_by, desc, pn, ps);
-
-        // get total count
-        Integer totalCount = userFavoriteVideoExService.queryUserFavoriteVideoExsMeCount(userid, title);
-
-        return TddResponseUtil.AssembleList(list, totalCount);
+        return TddResponseUtil.AssembleList(
+                userFavoriteVideoExService.queryUserFavoriteVideoExsMe(userid, title, order_by, desc, pn, ps),
+                userFavoriteVideoExService.queryUserFavoriteVideoExsMeCount(userid, title)
+        );
     }
 
     // admin ===========================================================================================================
@@ -69,14 +67,15 @@ public class UserFavoriteVideoExRestController {
     // check one user's favorite video
     @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/user/favorite/video/tdduser{userid}", method = RequestMethod.GET)
-    public ResponseEntity<List<UserFavoriteVideoEx>> queryUserFavoriteVideos(@PathVariable Long userid,
-                                                                             @RequestParam(defaultValue = "0") Integer start_ts,
-                                                                             @RequestParam(defaultValue = "0") Integer end_ts,
-                                                                             @RequestParam(defaultValue = "added") String order_by,
-                                                                             @RequestParam(defaultValue = "1") Integer desc,
-                                                                             @RequestParam(defaultValue = "1") Integer pn,
-                                                                             @RequestParam(defaultValue = "100") Integer ps)
-            throws InvalidRequestParameterException {
+    public ResponseEntity<List<UserFavoriteVideoEx>> queryUserFavoriteVideos(
+            @PathVariable Long userid,
+            @RequestParam(defaultValue = "0") Integer start_ts,
+            @RequestParam(defaultValue = "0") Integer end_ts,
+            @RequestParam(defaultValue = "added") String order_by,
+            @RequestParam(defaultValue = "1") Integer desc,
+            @RequestParam(defaultValue = "1") Integer pn,
+            @RequestParam(defaultValue = "100") Integer ps
+    ) throws InvalidRequestParameterException {
         // check params
         TddParamCheckUtil.start_ts(start_ts);
         TddParamCheckUtil.end_ts(end_ts);
@@ -91,12 +90,9 @@ public class UserFavoriteVideoExRestController {
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 100);
 
-        // get list
-        List<UserFavoriteVideoEx> list = userFavoriteVideoExService.queryUserFavoriteVideoExs(userid, start_ts, end_ts, order_by, desc, pn, ps);
-
-        // get total count
-        Integer totalCount = userFavoriteVideoExService.queryUserFavoriteVideoExsCount(userid, start_ts, end_ts);
-
-        return TddResponseUtil.AssembleList(list, totalCount);
+        return TddResponseUtil.AssembleList(
+                userFavoriteVideoExService.queryUserFavoriteVideoExs(userid, start_ts, end_ts, order_by, desc, pn, ps),
+                userFavoriteVideoExService.queryUserFavoriteVideoExsCount(userid, start_ts, end_ts)
+        );
     }
 }

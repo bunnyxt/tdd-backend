@@ -4,6 +4,8 @@ import com.bunnyxt.tdd.dao.MemberMidDao;
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
 import com.bunnyxt.tdd.model.MemberEx;
 import com.bunnyxt.tdd.service.MemberExService;
+import com.bunnyxt.tdd.util.TddParamCheckUtil;
+import com.bunnyxt.tdd.util.TddResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,18 +27,21 @@ public class MemberExRestController {
     private MemberMidDao memberMidDao;
 
     @RequestMapping(value = "/member/{mid}", method = RequestMethod.GET)
-    public MemberEx queryMemberByMid(@PathVariable Integer mid) {
+    public MemberEx queryMemberByMid(
+            @PathVariable Integer mid
+    ) {
         return memberExService.queryMemberByMid(mid);
     }
 
     @RequestMapping(value = "/member", method = RequestMethod.GET)
-    public ResponseEntity<List<MemberEx>> queryMembers(@RequestParam(defaultValue = "") String sex,
-                                                       @RequestParam(defaultValue = "") String name,
-                                                       @RequestParam(defaultValue = "sr_view") String order_by,
-                                                       @RequestParam(defaultValue = "1") Integer desc,
-                                                       @RequestParam(defaultValue = "1") Integer pn,
-                                                       @RequestParam(defaultValue = "20") Integer ps)
-            throws InvalidRequestParameterException {
+    public ResponseEntity<List<MemberEx>> queryMembers(
+            @RequestParam(defaultValue = "") String sex,
+            @RequestParam(defaultValue = "") String name,
+            @RequestParam(defaultValue = "sr_view") String order_by,
+            @RequestParam(defaultValue = "1") Integer desc,
+            @RequestParam(defaultValue = "1") Integer pn,
+            @RequestParam(defaultValue = "20") Integer ps
+    ) throws InvalidRequestParameterException {
         // check params
         List<String> allowedSex = new ArrayList<String>(){{
             add("男");
@@ -72,33 +77,20 @@ public class MemberExRestController {
             throw new InvalidRequestParameterException("order_by", order_by,
                     "only support order by " + allowedOrderBy.toString());
         }
-        if (desc != 0 && desc != 1) {
-            throw new InvalidRequestParameterException("desc", desc, "desc should be 0 or 1");
-        }
-        if (pn <= 0) {
-            throw new InvalidRequestParameterException("pn", pn, "pn should be greater than 0");
-        }
-        if (ps <= 0 || ps > 20) {
-            throw new InvalidRequestParameterException("ps", ps, "ps should between 1 and 20");
-        }
+        TddParamCheckUtil.desc(desc);
+        TddParamCheckUtil.pn(pn);
+        TddParamCheckUtil.ps(ps, 20);
 
-        // get list
-        List<MemberEx> list = memberExService.queryMembers(sex, name, order_by, desc, pn, ps);
-
-        // get total count
-        Integer totalCount = memberExService.queryMembersCount(sex, name);
-
-        // add headers
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("x-total-count", String.valueOf(totalCount));
-        headers.add("Access-Control-Allow-Headers", "x-total-count");
-        headers.add("Access-Control-Expose-Headers", "x-total-count");
-        return new ResponseEntity<>(list, headers, HttpStatus.OK);
+        return TddResponseUtil.AssembleList(
+                memberExService.queryMembers(sex, name, order_by, desc, pn, ps),
+                memberExService.queryMembersCount(sex, name)
+        );
     }
 
     @RequestMapping(value = "/member/random", method = RequestMethod.GET)
-    public List<MemberEx> queryVideosRandom(@RequestParam(defaultValue = "1") Integer count)
-            throws InvalidRequestParameterException {
+    public List<MemberEx> queryVideosRandom(
+            @RequestParam(defaultValue = "1") Integer count
+    ) throws InvalidRequestParameterException {
         // check params
         if (count <= 0 || count > 20) {
             throw new InvalidRequestParameterException("count", count, "count should between 1 and 20");

@@ -45,8 +45,9 @@ public class UserRestController {
     // bind email
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/bind/email/code", method = RequestMethod.POST)
-    public TddCommonResponse bindEmailRequestCode(@RequestBody JSONObject jsonObject)
-            throws InvalidRequestParameterException {
+    public TddCommonResponse bindEmailRequestCode(
+            @RequestBody JSONObject jsonObject
+    ) throws InvalidRequestParameterException {
         // get params
         String email = jsonObject.get("email").toString();
         String recaptcha = jsonObject.getString("recaptcha");
@@ -74,8 +75,9 @@ public class UserRestController {
 
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/bind/email/validation", method = RequestMethod.POST)
-    public TddCommonResponse bindEmailValidation(@RequestBody JSONObject jsonObject)
-            throws InvalidRequestParameterException {
+    public TddCommonResponse bindEmailValidation(
+            @RequestBody JSONObject jsonObject
+    ) throws InvalidRequestParameterException {
         // get params
         String bindkey = jsonObject.get("bindkey").toString();
         String code = jsonObject.get("code").toString();
@@ -103,8 +105,9 @@ public class UserRestController {
     // bind phone
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/bind/phone/code", method = RequestMethod.POST)
-    public TddCommonResponse bindPhoneRequestCode(@RequestBody JSONObject jsonObject)
-            throws InvalidRequestParameterException {
+    public TddCommonResponse bindPhoneRequestCode(
+            @RequestBody JSONObject jsonObject
+    ) throws InvalidRequestParameterException {
         // get params
         String phone = jsonObject.get("phone").toString();
         String recaptcha = jsonObject.getString("recaptcha");
@@ -129,8 +132,9 @@ public class UserRestController {
 
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/bind/phone/validation", method = RequestMethod.POST)
-    public TddCommonResponse bindPhoneValidation(@RequestBody JSONObject jsonObject)
-            throws InvalidRequestParameterException {
+    public TddCommonResponse bindPhoneValidation(
+            @RequestBody JSONObject jsonObject
+    ) throws InvalidRequestParameterException {
         // get params
         String bindkey = jsonObject.get("bindkey").toString();
         String code = jsonObject.get("code").toString();
@@ -158,8 +162,9 @@ public class UserRestController {
     // set nickname
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/set/nickname", method = RequestMethod.POST)
-    public TddCommonResponse setNickname(@RequestBody JSONObject jsonObject)
-            throws InvalidRequestParameterException {
+    public TddCommonResponse setNickname(
+            @RequestBody JSONObject jsonObject
+    ) throws InvalidRequestParameterException {
         // get params
         String nickname = jsonObject.getString("nickname");
 
@@ -184,8 +189,9 @@ public class UserRestController {
     // change password
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/change/password", method = RequestMethod.POST)
-    public TddCommonResponse changePassword(@RequestBody JSONObject jsonObject)
-            throws InvalidRequestParameterException {
+    public TddCommonResponse changePassword(
+            @RequestBody JSONObject jsonObject
+    ) throws InvalidRequestParameterException {
         // get params
         String password = jsonObject.getString("password");
 
@@ -217,16 +223,17 @@ public class UserRestController {
 
     @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> queryUsers(@RequestParam(defaultValue = "") String username,
-                                                 @RequestParam(defaultValue = "") String email,
-                                                 @RequestParam(defaultValue = "") String phone,
-                                                 @RequestParam(defaultValue = "-1") Integer enabled,
-                                                 @RequestParam(defaultValue = "") String role,
-                                                 @RequestParam(defaultValue = "added") String order_by,
-                                                 @RequestParam(defaultValue = "0") Integer desc,
-                                                 @RequestParam(defaultValue = "1") Integer pn,
-                                                 @RequestParam(defaultValue = "20") Integer ps)
-            throws InvalidRequestParameterException {
+    public ResponseEntity<List<User>> queryUsers(
+            @RequestParam(defaultValue = "") String username,
+            @RequestParam(defaultValue = "") String email,
+            @RequestParam(defaultValue = "") String phone,
+            @RequestParam(defaultValue = "-1") Integer enabled,
+            @RequestParam(defaultValue = "") String role,
+            @RequestParam(defaultValue = "added") String order_by,
+            @RequestParam(defaultValue = "0") Integer desc,
+            @RequestParam(defaultValue = "1") Integer pn,
+            @RequestParam(defaultValue = "20") Integer ps
+    ) throws InvalidRequestParameterException {
         // check params
         // TODO username, email, phone
         // enabled
@@ -258,12 +265,9 @@ public class UserRestController {
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 20);
 
-        // get list
-        List<User> list = userService.queryUsers(username, email, phone, enabled, role, order_by, desc, pn, ps);
-
-        // get total count
-        Integer totalCount = userService.queryUsersCount(username, email, phone, enabled, role);
-
-        return TddResponseUtil.AssembleList(list, totalCount);
+        return TddResponseUtil.AssembleList(
+                userService.queryUsers(username, email, phone, enabled, role, order_by, desc, pn, ps),
+                userService.queryUsersCount(username, email, phone, enabled, role)
+        );
     }
 }

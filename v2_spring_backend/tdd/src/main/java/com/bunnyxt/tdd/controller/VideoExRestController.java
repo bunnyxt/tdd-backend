@@ -4,6 +4,8 @@ import com.bunnyxt.tdd.dao.VideoAidDao;
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
 import com.bunnyxt.tdd.model.VideoEx;
 import com.bunnyxt.tdd.service.VideoExService;
+import com.bunnyxt.tdd.util.TddParamCheckUtil;
+import com.bunnyxt.tdd.util.TddResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,23 +27,26 @@ public class VideoExRestController {
     private VideoAidDao videoAidDao;
 
     @RequestMapping(value = "/video/{aid}", method = RequestMethod.GET)
-    public VideoEx queryVideoByAid(@PathVariable Integer aid) {
+    public VideoEx queryVideoByAid(
+            @PathVariable Integer aid
+    ) {
         return videoExService.queryVideoByAid(aid);
     }
 
     @RequestMapping(value = "/video", method = RequestMethod.GET)
-    public ResponseEntity<List<VideoEx>> queryVideos(@RequestParam(defaultValue = "0") Integer vc,
-                                                     @RequestParam(defaultValue = "0") Integer start_ts,
-                                                     @RequestParam(defaultValue = "0") Integer end_ts,
-                                                     @RequestParam(defaultValue = "-1") Integer activity,
-                                                     @RequestParam(defaultValue = "-1") Integer recent,
-                                                     @RequestParam(defaultValue = "") String title,
-                                                     @RequestParam(defaultValue = "") String up,
-                                                     @RequestParam(defaultValue = "pubdate") String order_by,
-                                                     @RequestParam(defaultValue = "1") Integer desc,
-                                                     @RequestParam(defaultValue = "1") Integer pn,
-                                                     @RequestParam(defaultValue = "20") Integer ps)
-            throws InvalidRequestParameterException {
+    public ResponseEntity<List<VideoEx>> queryVideos(
+            @RequestParam(defaultValue = "0") Integer vc,
+            @RequestParam(defaultValue = "0") Integer start_ts,
+            @RequestParam(defaultValue = "0") Integer end_ts,
+            @RequestParam(defaultValue = "-1") Integer activity,
+            @RequestParam(defaultValue = "-1") Integer recent,
+            @RequestParam(defaultValue = "") String title,
+            @RequestParam(defaultValue = "") String up,
+            @RequestParam(defaultValue = "pubdate") String order_by,
+            @RequestParam(defaultValue = "1") Integer desc,
+            @RequestParam(defaultValue = "1") Integer pn,
+            @RequestParam(defaultValue = "20") Integer ps
+    ) throws InvalidRequestParameterException {
         // check params
         if (vc != 0 && vc != 1) {
             throw new InvalidRequestParameterException("vc", vc, "vc should be 0 or 1");
@@ -52,9 +57,7 @@ public class VideoExRestController {
         if (recent < -1 || recent > 2) {
             throw new InvalidRequestParameterException("recent", recent, "recent should be 0 or 1 or 2");
         }
-        if (desc != 0 && desc != 1) {
-            throw new InvalidRequestParameterException("desc", desc, "desc should be 0 or 1");
-        }
+        TddParamCheckUtil.desc(desc);
         List<String> allowedOrderBy = new ArrayList<String>(){{
             add("pubdate");
             add("view");
@@ -69,30 +72,19 @@ public class VideoExRestController {
             throw new InvalidRequestParameterException("order_by", order_by,
                     "only support order by " + allowedOrderBy.toString());
         }
-        if (pn <= 0) {
-            throw new InvalidRequestParameterException("pn", pn, "pn should be greater than 0");
-        }
-        if (ps <= 0 || ps > 20) {
-            throw new InvalidRequestParameterException("ps", ps, "ps should between 1 and 20");
-        }
+        TddParamCheckUtil.pn(pn);
+        TddParamCheckUtil.ps(ps, 20);
 
-        // get list
-        List<VideoEx> list = videoExService.queryVideos(vc, start_ts, end_ts, activity, recent, title, up, order_by, desc, pn, ps);
-
-        // get total count
-        Integer totalCount = videoExService.queryVideosCount(vc, start_ts, end_ts, activity, recent, title, up);
-
-        // add headers
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("x-total-count", String.valueOf(totalCount));
-        headers.add("Access-Control-Allow-Headers", "x-total-count");
-        headers.add("Access-Control-Expose-Headers", "x-total-count");
-        return new ResponseEntity<>(list, headers, HttpStatus.OK);
+        return TddResponseUtil.AssembleList(
+                videoExService.queryVideos(vc, start_ts, end_ts, activity, recent, title, up, order_by, desc, pn, ps),
+                videoExService.queryVideosCount(vc, start_ts, end_ts, activity, recent, title, up)
+        );
     }
 
     @RequestMapping(value = "/video/random", method = RequestMethod.GET)
-    public List<VideoEx> queryVideosRandom(@RequestParam(defaultValue = "1") Integer count)
-            throws InvalidRequestParameterException {
+    public List<VideoEx> queryVideosRandom(
+            @RequestParam(defaultValue = "1") Integer count
+    ) throws InvalidRequestParameterException {
         // check params
         if (count <= 0 || count > 20) {
             throw new InvalidRequestParameterException("count", count, "count should between 1 and 20");
@@ -129,19 +121,18 @@ public class VideoExRestController {
     }
 
     @RequestMapping(value = "/member/{mid}/video", method = RequestMethod.GET)
-    public ResponseEntity<List<VideoEx>> queryVideosByMid(@PathVariable Integer mid,
-                                          @RequestParam(defaultValue = "pubdate") String order_by,
-                                          @RequestParam(defaultValue = "1") Integer desc,
-                                          @RequestParam(defaultValue = "1") Integer pn,
-                                          @RequestParam(defaultValue = "20") Integer ps)
-            throws InvalidRequestParameterException {
+    public ResponseEntity<List<VideoEx>> queryVideosByMid(
+            @PathVariable Integer mid,
+            @RequestParam(defaultValue = "pubdate") String order_by,
+            @RequestParam(defaultValue = "1") Integer desc,
+            @RequestParam(defaultValue = "1") Integer pn,
+            @RequestParam(defaultValue = "20") Integer ps
+    ) throws InvalidRequestParameterException {
         // check params
         if (mid <= 0) {
             throw new InvalidRequestParameterException("mid", mid, "mid should be greater than 0");
         }
-        if (desc != 0 && desc != 1) {
-            throw new InvalidRequestParameterException("desc", desc, "desc should be 0 or 1");
-        }
+        TddParamCheckUtil.desc(desc);
         List<String> allowedOrderBy = new ArrayList<String>() {{
             add("pubdate");
             add("view");
@@ -156,25 +147,13 @@ public class VideoExRestController {
             throw new InvalidRequestParameterException("order_by", order_by,
                     "only support order by " + allowedOrderBy.toString());
         }
-        if (pn <= 0) {
-            throw new InvalidRequestParameterException("pn", pn, "pn should be greater than 0");
-        }
-        if (ps <= 0 || ps > 20) {
-            throw new InvalidRequestParameterException("ps", ps, "ps should between 1 and 20");
-        }
+        TddParamCheckUtil.pn(pn);
+        TddParamCheckUtil.ps(ps, 20);
 
-        // get list
-        List<VideoEx> list = videoExService.queryVideosByMid(mid, order_by, desc, pn, ps);
-
-        // get total count
-        Integer totalCount = videoExService.queryVideosByMidCount(mid);
-
-        // add headers
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("x-total-count", String.valueOf(totalCount));
-        headers.add("Access-Control-Allow-Headers", "x-total-count");
-        headers.add("Access-Control-Expose-Headers", "x-total-count");
-        return new ResponseEntity<>(list, headers, HttpStatus.OK);
+        return TddResponseUtil.AssembleList(
+                videoExService.queryVideosByMid(mid, order_by, desc, pn, ps),
+                videoExService.queryVideosByMidCount(mid)
+        );
     }
 
 }

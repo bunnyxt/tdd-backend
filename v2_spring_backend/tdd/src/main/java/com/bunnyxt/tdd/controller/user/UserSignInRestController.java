@@ -42,12 +42,13 @@ public class UserSignInRestController {
     // check user's sign in history
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/signin/me", method = RequestMethod.GET)
-    public ResponseEntity<List<UserSignIn>> queryUserSignInsMe(@RequestParam(defaultValue = "0") Integer last_count,
-                                                               @RequestParam(defaultValue = "0") Integer start_ts,
-                                                               @RequestParam(defaultValue = "0") Integer end_ts,
-                                                               @RequestParam(defaultValue = "1") Integer pn,
-                                                               @RequestParam(defaultValue = "100") Integer ps)
-            throws InvalidRequestParameterException {
+    public ResponseEntity<List<UserSignIn>> queryUserSignInsMe(
+            @RequestParam(defaultValue = "0") Integer last_count,
+            @RequestParam(defaultValue = "0") Integer start_ts,
+            @RequestParam(defaultValue = "0") Integer end_ts,
+            @RequestParam(defaultValue = "1") Integer pn,
+            @RequestParam(defaultValue = "100") Integer ps
+    ) throws InvalidRequestParameterException {
         // get userid
         Long userid = TddAuthUtil.GetCurrentUser().getId();
 
@@ -59,26 +60,28 @@ public class UserSignInRestController {
     // check one user's sign in history
     @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/user/signin/tdduser{userid}", method = RequestMethod.GET)
-    public ResponseEntity<List<UserSignIn>> queryUserSignInsByUserid(@PathVariable Long userid,
-                                                                     @RequestParam(defaultValue = "0") Integer last_count,
-                                                                     @RequestParam(defaultValue = "0") Integer start_ts,
-                                                                     @RequestParam(defaultValue = "0") Integer end_ts,
-                                                                     @RequestParam(defaultValue = "1") Integer pn,
-                                                                     @RequestParam(defaultValue = "100") Integer ps)
-            throws InvalidRequestParameterException {
+    public ResponseEntity<List<UserSignIn>> queryUserSignInsByUserid(
+            @PathVariable Long userid,
+            @RequestParam(defaultValue = "0") Integer last_count,
+            @RequestParam(defaultValue = "0") Integer start_ts,
+            @RequestParam(defaultValue = "0") Integer end_ts,
+            @RequestParam(defaultValue = "1") Integer pn,
+            @RequestParam(defaultValue = "100") Integer ps
+    ) throws InvalidRequestParameterException {
         return queryUserSignIns(userid, last_count, start_ts, end_ts, pn, ps);
     }
 
     // overall query
     @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/user/signin", method = RequestMethod.GET)
-    public ResponseEntity<List<UserSignIn>> queryUserSignIns(@RequestParam(defaultValue = "0") Long userid,
-                                                             @RequestParam(defaultValue = "0") Integer last_count,
-                                                             @RequestParam(defaultValue = "0") Integer start_ts,
-                                                             @RequestParam(defaultValue = "0") Integer end_ts,
-                                                             @RequestParam(defaultValue = "1") Integer pn,
-                                                             @RequestParam(defaultValue = "100") Integer ps)
-            throws InvalidRequestParameterException {
+    public ResponseEntity<List<UserSignIn>> queryUserSignIns(
+            @RequestParam(defaultValue = "0") Long userid,
+            @RequestParam(defaultValue = "0") Integer last_count,
+            @RequestParam(defaultValue = "0") Integer start_ts,
+            @RequestParam(defaultValue = "0") Integer end_ts,
+            @RequestParam(defaultValue = "1") Integer pn,
+            @RequestParam(defaultValue = "100") Integer ps
+    ) throws InvalidRequestParameterException {
         // check params
         TddParamCheckUtil.userid(userid);
         TddParamCheckUtil.last_count(last_count, 100);
@@ -87,13 +90,10 @@ public class UserSignInRestController {
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 100);
 
-        // get list
-        List<UserSignIn> list = userSignInService.queryUserSignIns(userid, last_count, start_ts, end_ts, pn, ps);
-
-        // get total count
-        Integer totalCount = userSignInService.queryUserSignInsCount(userid, start_ts, end_ts);
-
-        return TddResponseUtil.AssembleList(list, totalCount);
+        return TddResponseUtil.AssembleList(
+                userSignInService.queryUserSignIns(userid, last_count, start_ts, end_ts, pn, ps),
+                userSignInService.queryUserSignInsCount(userid, start_ts, end_ts)
+        );
     }
 
 }

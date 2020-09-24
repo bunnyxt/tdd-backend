@@ -27,8 +27,9 @@ public class UserFavoriteMemberRestController {
     // user post favorite member
     @PreAuthorize(value = "hasRole('user')")
     @RequestMapping(value = "/user/favorite/member/{mid}", method = RequestMethod.POST)
-    public TddCommonResponse postUserFavoriteMember(@PathVariable Integer mid)
-            throws InvalidRequestParameterException {
+    public TddCommonResponse postUserFavoriteMember(
+            @PathVariable Integer mid
+    ) throws InvalidRequestParameterException {
         // check params
         if (mid <= 0) {
             throw new InvalidRequestParameterException("mid", mid, "mid should be greater than 0");
@@ -43,8 +44,9 @@ public class UserFavoriteMemberRestController {
     // user delete favorite member
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/favorite/member/{mid}", method = RequestMethod.DELETE)
-    public TddCommonResponse deleteUserFavoriteMember(@PathVariable Integer mid)
-            throws InvalidRequestParameterException {
+    public TddCommonResponse deleteUserFavoriteMember(
+            @PathVariable Integer mid
+    ) throws InvalidRequestParameterException {
         // check params
         if (mid <= 0) {
             throw new InvalidRequestParameterException("mid", mid, "mid should be greater than 0");
@@ -59,8 +61,9 @@ public class UserFavoriteMemberRestController {
     // user favorite member status
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/favorite/member/{mid}", method = RequestMethod.GET)
-    public UserFavoriteMember queryUserFavoriteMember(@PathVariable Integer mid)
-            throws InvalidRequestParameterException {
+    public UserFavoriteMember queryUserFavoriteMember(
+            @PathVariable Integer mid
+    ) throws InvalidRequestParameterException {
         // check params
         if (mid <= 0) {
             throw new InvalidRequestParameterException("mid", mid, "mid should be greater than 0");
@@ -74,8 +77,9 @@ public class UserFavoriteMemberRestController {
 
     // member favorite count
     @RequestMapping(value = "/member/{mid}/favorite", method = RequestMethod.GET)
-    public Integer queryUserFavoriteMemberCount(@PathVariable Integer mid)
-            throws InvalidRequestParameterException {
+    public Integer queryUserFavoriteMemberCount(
+            @PathVariable Integer mid
+    ) throws InvalidRequestParameterException {
         // check params
         if (mid <= 0) {
             throw new InvalidRequestParameterException("mid", mid, "mid should be greater than 0");
@@ -88,14 +92,15 @@ public class UserFavoriteMemberRestController {
 
     // video favorite count
     @RequestMapping(value = "/member/{mid}/favorite/user", method = RequestMethod.GET)
-    public ResponseEntity<List<UserFavoriteMember>> queryUserFavoriteVideoUsers(@PathVariable Integer mid,
-                                                                                @RequestParam(defaultValue = "0") Integer start_ts,
-                                                                                @RequestParam(defaultValue = "0") Integer end_ts,
-                                                                                @RequestParam(defaultValue = "added") String order_by,
-                                                                                @RequestParam(defaultValue = "1") Integer desc,
-                                                                                @RequestParam(defaultValue = "1") Integer pn,
-                                                                                @RequestParam(defaultValue = "100") Integer ps)
-            throws InvalidRequestParameterException {
+    public ResponseEntity<List<UserFavoriteMember>> queryUserFavoriteVideoUsers(
+            @PathVariable Integer mid,
+            @RequestParam(defaultValue = "0") Integer start_ts,
+            @RequestParam(defaultValue = "0") Integer end_ts,
+            @RequestParam(defaultValue = "added") String order_by,
+            @RequestParam(defaultValue = "1") Integer desc,
+            @RequestParam(defaultValue = "1") Integer pn,
+            @RequestParam(defaultValue = "100") Integer ps
+    ) throws InvalidRequestParameterException {
         // check params
         if (mid <= 0) {
             throw new InvalidRequestParameterException("mid", mid, "aid should be greater than 0");
@@ -113,12 +118,9 @@ public class UserFavoriteMemberRestController {
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 100);
 
-        // get list
-        List<UserFavoriteMember> list = userFavoriteMemberService.queryUserFavoriteMemberUsers(mid, start_ts, end_ts, order_by, desc, pn, ps);
-
-        // get total count
-        Integer totalCount = userFavoriteMemberService.queryUserFavoriteMemberUsersCount(mid, start_ts, end_ts);
-
-        return TddResponseUtil.AssembleList(list, totalCount);
+        return TddResponseUtil.AssembleList(
+                userFavoriteMemberService.queryUserFavoriteMemberUsers(mid, start_ts, end_ts, order_by, desc, pn, ps),
+                userFavoriteMemberService.queryUserFavoriteMemberUsersCount(mid, start_ts, end_ts)
+        );
     }
 }

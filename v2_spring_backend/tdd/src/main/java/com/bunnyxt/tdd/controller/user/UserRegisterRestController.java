@@ -19,8 +19,9 @@ public class UserRegisterRestController {
     UserRegisterService userRegisterService;
 
     @RequestMapping(value = "/register/code", method = RequestMethod.POST)
-    public TddCommonResponse requestCode(@RequestBody JSONObject jsonObject)
-            throws InvalidRequestParameterException {
+    public TddCommonResponse requestCode(
+            @RequestBody JSONObject jsonObject
+    ) throws InvalidRequestParameterException {
         // get params
         String method = jsonObject.getString("method");
         String validation = jsonObject.getString("validation");
@@ -102,8 +103,9 @@ public class UserRegisterRestController {
     }
 
     @RequestMapping(value = "/register/reg", method = RequestMethod.POST)
-    public TddCommonResponse goRegister(@RequestBody JSONObject jsonObject)
-            throws InvalidRequestParameterException {
+    public TddCommonResponse goRegister(
+            @RequestBody JSONObject jsonObject
+    ) throws InvalidRequestParameterException {
         // get params
         String regkey = jsonObject.get("regkey").toString();
         String code = jsonObject.get("code").toString();
