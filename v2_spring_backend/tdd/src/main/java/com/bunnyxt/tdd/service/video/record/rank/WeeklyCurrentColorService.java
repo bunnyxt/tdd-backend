@@ -4,7 +4,7 @@ import com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrentColor;
 
 import java.util.List;
 
-public interface WeeklyColorService {
+public interface WeeklyCurrentColorService {
 
     List<WeeklyCurrentColor> queryWeeklyCurrentColors();
 }
