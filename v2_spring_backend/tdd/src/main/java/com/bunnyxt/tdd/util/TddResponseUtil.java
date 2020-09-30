@@ -15,4 +15,12 @@ public class TddResponseUtil {
         headers.add("Access-Control-Expose-Headers", "x-total-count");
         return new ResponseEntity<>(list, headers, HttpStatus.OK);
     }
+
+    public static <T> ResponseEntity<T> SetMaxAge(T obj, Integer maxAge) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "max-age=" + maxAge.toString());
+        return new ResponseEntity<>(obj, headers, HttpStatus.OK);
+    }
+
+    // TODO create a process chain which can add multiple headers and set status using brief codes
 }

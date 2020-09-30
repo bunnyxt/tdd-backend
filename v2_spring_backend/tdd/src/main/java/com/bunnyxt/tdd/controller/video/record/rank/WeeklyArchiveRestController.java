@@ -46,6 +46,7 @@ public class WeeklyArchiveRestController {
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 30);
 
+        // TODO add max age
         return TddResponseUtil.AssembleList(
                 weeklyArchiveService.queryWeeklyArchiveExsByArchId(arch_id, order_rule, pn, ps),
                 weeklyArchiveService.queryWeeklyArchiveExsCountByArchId(arch_id)
@@ -59,6 +60,7 @@ public class WeeklyArchiveRestController {
         // check params
         TddParamCheckUtil.bvid(bvid);
 
+        // TODO add max age
         return TddResponseUtil.AssembleList(
                 weeklyArchiveService.queryWeeklyArchivesByBvid(bvid),
                 weeklyArchiveService.queryWeeklyArchivesCountByBvid(bvid)

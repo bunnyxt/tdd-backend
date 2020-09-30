@@ -44,6 +44,7 @@ public class WeeklyCurrentRestController {
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 30);
 
+        // TODO add max age
         return TddResponseUtil.AssembleList(
                 weeklyCurrentService.queryWeeklyCurrentExs(order_rule, pn, ps),
                 weeklyCurrentService.queryWeeklyCurrentExsCount()
