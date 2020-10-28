@@ -17,6 +17,7 @@ public class Video {
     private String tags;
     private Integer mid;
     private Integer code;
+    private Integer attribute;
     private Byte hasstaff;
     private String singer;
     private Byte solo;
@@ -231,5 +232,13 @@ public class Video {
 
     public void setBvid(String bvid) {
         this.bvid = bvid;
+    }
+
+    public Integer getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(Integer attribute) {
+        this.attribute = attribute;
     }
 }
