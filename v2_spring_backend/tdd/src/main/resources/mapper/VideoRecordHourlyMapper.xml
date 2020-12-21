@@ -72,6 +72,22 @@
                 and added &lt;= #{end_ts}
             </if>
         </where>
+        union
+        select
+        <include refid="BaseColumnList"/>
+        from
+        tdd_video_record_hourly_4
+        <where>
+            <if test="bvid != '0000000000'">
+                and bvid = #{bvid}
+            </if>
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+        </where>
         ) as _
         <choose>
             <when test="bvid != '0000000000' and last_count > 0">
@@ -123,6 +139,22 @@
         count(1) as c
         from
         tdd_video_record_hourly_3
+        <where>
+            <if test="bvid != '0000000000'">
+                and bvid = #{bvid}
+            </if>
+            <if test="start_ts > 0">
+                and added >= #{start_ts}
+            </if>
+            <if test="end_ts > 0">
+                and added &lt;= #{end_ts}
+            </if>
+        </where>
+        union all
+        select
+        count(1) as c
+        from
+        tdd_video_record_hourly_4
         <where>
             <if test="bvid != '0000000000'">
                 and bvid = #{bvid}
