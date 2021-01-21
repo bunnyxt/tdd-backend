@@ -18,6 +18,8 @@ public class Video {
     private Integer mid;
     private Integer code;
     private Integer attribute;
+    private Integer state;
+    private Integer forward;
     private Byte hasstaff;
     private String singer;
     private Byte solo;
@@ -240,5 +242,21 @@ public class Video {
 
     public void setAttribute(Integer attribute) {
         this.attribute = attribute;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public Integer getForward() {
+        return forward;
+    }
+
+    public void setForward(Integer forward) {
+        this.forward = forward;
     }
 }

@@ -17,6 +17,8 @@
         <result column="mid" property="mid" />
         <result column="code" property="code" />
         <result column="v_attribute" property="attribute" />
+        <result column="state" property="state" />
+        <result column="forward" property="forward" />
         <result column="hasstaff" property="hasstaff" />
         <result column="singer" property="singer" />
         <result column="solo" property="solo" />
@@ -66,7 +68,7 @@
 
     <sql id="BaseColumnList">
         v.id, v.added, v.aid, v.videos, v.tid, v.tname, v.copyright, v.pic, v.title, v.pubdate, v.`desc` description, v.tags, v.mid,
-        v.code,v.`attribute` v_attribute, v.hasstaff, v.singer, v.solo, v.original, v.employed, v.isvc, v.engine, v.freq, v.activity, v.recent,
+        v.code,v.`attribute` v_attribute, v.state, v.forward, v.hasstaff, v.singer, v.solo, v.original, v.employed, v.isvc, v.engine, v.freq, v.activity, v.recent,
         m.sex, m.name, m.face, m.sign,
         r.added r_added, r.view, r.danmaku, r.reply, r.favorite, r.coin, r.share, r.like
     </sql>
