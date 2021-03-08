@@ -5,6 +5,7 @@
         <result column="id" property="id" />
         <result column="added" property="added" />
         <result column="aid" property="aid" />
+        <result column="bvid" property="bvid" />
         <result column="videos" property="videos" />
         <result column="tid" property="tid" />
         <result column="tname" property="tname" />
@@ -32,7 +33,7 @@
     </resultMap>
 
     <sql id="BaseColumnList">
-        id, added, aid, videos, tid, tname, copyright, pic, title, pubdate, `desc` description, tags, mid, code, `attribute` v_attribute, state, forward
+        id, added, aid, bvid, videos, tid, tname, copyright, pic, title, pubdate, `desc` description, tags, mid, code, `attribute` v_attribute, state, forward
         hasstaff, singer, solo, original, employed, isvc, engine, freq, activity, recent
     </sql>
 
