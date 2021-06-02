@@ -2,6 +2,9 @@ package com.bunnyxt.tdd.util;
 
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TddParamCheckUtil {
 
     private static void _zero_plus(Integer value, String name) {
@@ -95,5 +98,18 @@ public class TddParamCheckUtil {
     public static void arch_id(Long id) {
         // default: 0, no limit
         _zero_plus(id, "arch_id");
+    }
+
+    public static void rank_name(String rank_name) {
+        // only these rank name are allowed
+        // WARNING must have corresponding table tdd_video_record_rank_${rank_name}_xxx
+        List<String> allowedRankName = new ArrayList<String>(){{
+            add("weekly");
+            add("monthly");
+        }};
+        if (!allowedRankName.contains(rank_name)) {
+            throw new InvalidRequestParameterException("rank_name", rank_name,
+                    "only support rank name " + allowedRankName.toString());
+        }
     }
 }

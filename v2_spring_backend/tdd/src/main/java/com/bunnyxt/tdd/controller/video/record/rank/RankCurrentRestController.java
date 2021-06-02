@@ -28,14 +28,7 @@ public class RankCurrentRestController {
             @RequestParam(defaultValue = "30") Integer ps
     ) throws InvalidRequestParameterException {
         // check params
-        List<String> allowedRankName = new ArrayList<String>(){{
-            add("weekly");
-            add("monthly");
-        }};
-        if (!allowedRankName.contains(rank_name)) {
-            throw new InvalidRequestParameterException("rank_name", rank_name,
-                    "only support rank name " + allowedRankName.toString());
-        }
+        TddParamCheckUtil.rank_name(rank_name);
         List<String> allowedOrderRule = new ArrayList<String>(){{
             add("rank");
             add("incr_view");
@@ -66,14 +59,7 @@ public class RankCurrentRestController {
             @PathVariable String bvid
     ) throws InvalidRequestParameterException {
         // check params
-        List<String> allowedRankName = new ArrayList<String>(){{
-            add("weekly");
-            add("monthly");
-        }};
-        if (!allowedRankName.contains(rank_name)) {
-            throw new InvalidRequestParameterException("rank_name", rank_name,
-                    "only support rank name " + allowedRankName.toString());
-        }
+        TddParamCheckUtil.rank_name(rank_name);
         TddParamCheckUtil.bvid(bvid);
 
         return rankCurrentService.queryRankCurrentByBvid(rank_name, bvid);
