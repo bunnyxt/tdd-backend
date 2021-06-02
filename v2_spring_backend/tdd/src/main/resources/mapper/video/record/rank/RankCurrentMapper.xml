@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bunnyxt.tdd.dao.video.record.rank.WeeklyCurrentDao">
-    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrentEx">
+<mapper namespace="com.bunnyxt.tdd.dao.video.record.rank.RankCurrentDao">
+    <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.video.record.rank.RankCurrentEx">
         <result column="c_bvid" property="bvid" />
         <result column="start_added" property="start_added" />
         <result column="now_added" property="now_added" />
@@ -49,11 +49,11 @@
         m.sex, m.name, m.face, m.sign
     </sql>
 
-    <select id="queryWeeklyCurrentExs" resultMap="BaseResultMap">
+    <select id="queryRankCurrentExs" resultMap="BaseResultMap">
         select
         <include refid="BaseColumnList" />
         from
-        tdd_video_record_rank_weekly_current as c
+        tdd_video_record_rank_${rank_name}_current as c
         left join
         tdd_video as v
         on
@@ -71,14 +71,14 @@
         #{offset}, #{ps}
     </select>
 
-    <select id="queryWeeklyCurrentExsCount" resultType="Integer">
+    <select id="queryRankCurrentExsCount" resultType="Integer">
         select
         count(1)
         from
-        tdd_video_record_rank_weekly_current
+        tdd_video_record_rank_${rank_name}_current
     </select>
 
-    <resultMap id="SingleResultMap" type="com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrent">
+    <resultMap id="SingleResultMap" type="com.bunnyxt.tdd.model.video.record.rank.RankCurrent">
         <result column="bvid" property="bvid" />
         <result column="start_added" property="start_added" />
         <result column="now_added" property="now_added" />
@@ -109,11 +109,11 @@
         point, xiua, xiub, rank
     </sql>
 
-    <select id="queryWeeklyCurrentByBvid" resultMap="SingleResultMap">
+    <select id="queryRankCurrentByBvid" resultMap="SingleResultMap">
         select
         <include refid="SingleColumnList" />
         from
-        tdd_video_record_rank_weekly_current
+        tdd_video_record_rank_${rank_name}_current
         where
         bvid = #{bvid}
     </select>

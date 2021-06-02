@@ -2,7 +2,7 @@ package com.bunnyxt.tdd.model.video.record.rank;
 
 import com.bunnyxt.tdd.model.fragment.VideoMemberFragment;
 
-public class WeeklyCurrentEx extends WeeklyCurrent {
+public class RankCurrentEx extends RankCurrent {
 
     private VideoMemberFragment video;
 

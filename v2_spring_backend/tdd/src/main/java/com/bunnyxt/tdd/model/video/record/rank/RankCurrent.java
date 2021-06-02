@@ -1,6 +1,6 @@
 package com.bunnyxt.tdd.model.video.record.rank;
 
-public class WeeklyCurrent {
+public class RankCurrent {
 
     private String bvid;
     private Integer start_added;

@@ -1,9 +1,9 @@
 package com.bunnyxt.tdd.service.impl.video.record.rank;
 
-import com.bunnyxt.tdd.dao.video.record.rank.WeeklyCurrentDao;
-import com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrent;
-import com.bunnyxt.tdd.model.video.record.rank.WeeklyCurrentEx;
-import com.bunnyxt.tdd.service.video.record.rank.WeeklyCurrentService;
+import com.bunnyxt.tdd.dao.video.record.rank.RankCurrentDao;
+import com.bunnyxt.tdd.model.video.record.rank.RankCurrent;
+import com.bunnyxt.tdd.model.video.record.rank.RankCurrentEx;
+import com.bunnyxt.tdd.service.video.record.rank.RankCurrentService;
 import com.bunnyxt.tdd.util.PageNumModfier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class WeeklyCurrentServiceImpl implements WeeklyCurrentService {
+public class RankCurrentServiceImpl implements RankCurrentService {
 
     @Autowired
-    WeeklyCurrentDao weeklyCurrentDao;
+    RankCurrentDao rankCurrentDao;
 
     @Override
-    public List<WeeklyCurrentEx> queryWeeklyCurrentExs(String order_rule, Integer pn, Integer ps) {
+    public List<RankCurrentEx> queryRankCurrentExs(String rank_name, String order_rule, Integer pn, Integer ps) {
         // order_rule -> order_by & desc
         String order_by;
         Integer desc;
@@ -44,16 +44,16 @@ public class WeeklyCurrentServiceImpl implements WeeklyCurrentService {
         pn = PageNumModfier.modifyPn(pn);
         Integer offset = PageNumModfier.calcOffset(ps, pn);
 
-        return weeklyCurrentDao.queryWeeklyCurrentExs(order_by, desc, offset, ps);
+        return rankCurrentDao.queryRankCurrentExs(rank_name, order_by, desc, offset, ps);
     }
 
     @Override
-    public Integer queryWeeklyCurrentExsCount() {
-        return weeklyCurrentDao.queryWeeklyCurrentExsCount();
+    public Integer queryRankCurrentExsCount(String rank_name) {
+        return rankCurrentDao.queryRankCurrentExsCount(rank_name);
     }
 
     @Override
-    public WeeklyCurrent queryWeeklyCurrentByBvid(String bvid) {
-        return weeklyCurrentDao.queryWeeklyCurrentByBvid(bvid);
+    public RankCurrent queryRankCurrentByBvid(String rank_name, String bvid) {
+        return rankCurrentDao.queryRankCurrentByBvid(rank_name, bvid);
     }
 }
