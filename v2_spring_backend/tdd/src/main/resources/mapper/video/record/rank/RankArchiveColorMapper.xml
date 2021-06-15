@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bunnyxt.tdd.dao.video.record.rank.RankCurrentColorDao">
+<mapper namespace="com.bunnyxt.tdd.dao.video.record.rank.RankArchiveColorDao">
     <resultMap id="RankColorResultMap" type="com.bunnyxt.tdd.model.video.record.rank.RankColor">
         <result column="property" property="property" />
         <result column="a" property="a" />
@@ -13,10 +13,12 @@
         property, a, b, c, d
     </sql>
 
-    <select id="queryRankCurrentColors" resultMap="RankColorResultMap">
+    <select id="queryRankArchiveColorsByArchId" resultMap="RankColorResultMap">
         select
         <include refid="RankColorColumnList" />
         from
-        tdd_video_record_rank_${rank_name}_current_color
+        tdd_video_record_rank_${rank_name}_archive_color
+        where
+        arch_id = #{arch_id}
     </select>
 </mapper>

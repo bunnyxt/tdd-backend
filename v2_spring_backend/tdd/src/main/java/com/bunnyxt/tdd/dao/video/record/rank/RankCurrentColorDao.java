@@ -8,6 +8,4 @@ import java.util.List;
 public interface RankCurrentColorDao {
 
     List<RankColor> queryRankCurrentColors(@Param(value="rank_name") String rank_name);
-
-    List<RankColor> queryRankArchiveColorsByArchId(String rank_name, Long arch_id);
 }

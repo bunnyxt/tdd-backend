@@ -18,9 +18,4 @@ public class RankCurrentColorServiceImpl implements RankCurrentColorService {
     public List<RankColor> queryRankCurrentColors(String rank_name) {
         return rankCurrentColorDao.queryRankCurrentColors(rank_name);
     }
-
-    @Override
-    public List<RankColor> queryRankArchiveColorByArchId(String rank_name, Long arch_id) {
-        return rankCurrentColorDao.queryRankArchiveColorsByArchId(rank_name, arch_id);
-    }
 }
