@@ -1,6 +1,6 @@
 package com.bunnyxt.tdd.model.video.record.rank;
 
-public class WeeklyColor {
+public class RankColor {
 
     private String property;
     private Double a;
