@@ -1,9 +1,9 @@
 package com.bunnyxt.tdd.controller.video.record.rank;
 
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
-import com.bunnyxt.tdd.model.video.record.rank.WeeklyArchive;
-import com.bunnyxt.tdd.model.video.record.rank.WeeklyArchiveEx;
-import com.bunnyxt.tdd.service.video.record.rank.WeeklyArchiveService;
+import com.bunnyxt.tdd.model.video.record.rank.RankArchive;
+import com.bunnyxt.tdd.model.video.record.rank.RankArchiveEx;
+import com.bunnyxt.tdd.service.video.record.rank.RankArchiveService;
 import com.bunnyxt.tdd.util.TddParamCheckUtil;
 import com.bunnyxt.tdd.util.TddResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +15,21 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-public class WeeklyArchiveRestController {
+public class RankArchiveRestController {
 
     @Autowired
-    private WeeklyArchiveService weeklyArchiveService;
+    private RankArchiveService rankArchiveService;
 
-    @RequestMapping(value = "/video/record/rank/weekly/archive/{arch_id}", method = RequestMethod.GET)
-    public ResponseEntity<List<WeeklyArchiveEx>> queryWeeklyArchiveByArchId(
+    @RequestMapping(value = "/video/record/rank/{rank_name}/archive/{arch_id}", method = RequestMethod.GET)
+    public ResponseEntity<List<RankArchiveEx>> queryRankArchiveByArchId(
+            @PathVariable String rank_name,
             @PathVariable Long arch_id,
             @RequestParam(defaultValue = "rank") String order_rule,
             @RequestParam(defaultValue = "1") Integer pn,
             @RequestParam(defaultValue = "30") Integer ps
     ) throws InvalidRequestParameterException {
         // check params
+        TddParamCheckUtil.rank_name(rank_name);
         TddParamCheckUtil.arch_id(arch_id);
         List<String> allowedOrderRule = new ArrayList<String>(){{
             add("rank");
@@ -48,22 +50,24 @@ public class WeeklyArchiveRestController {
 
         // TODO add max age
         return TddResponseUtil.AssembleList(
-                weeklyArchiveService.queryWeeklyArchiveExsByArchId(arch_id, order_rule, pn, ps),
-                weeklyArchiveService.queryWeeklyArchiveExsCountByArchId(arch_id)
+                rankArchiveService.queryRankArchiveExsByArchId(rank_name, arch_id, order_rule, pn, ps),
+                rankArchiveService.queryRankArchiveExsCountByArchId(rank_name, arch_id)
         );
     }
 
-    @RequestMapping(value = "/video/record/rank/weekly/archive/BV{bvid}", method = RequestMethod.GET)
-    public ResponseEntity<List<WeeklyArchive>> queryWeeklyArchivesByBvid(
+    @RequestMapping(value = "/video/record/rank/{rank_name}/archive/BV{bvid}", method = RequestMethod.GET)
+    public ResponseEntity<List<RankArchive>> queryRankArchivesByBvid(
+            @PathVariable String rank_name,
             @PathVariable String bvid
     ) throws InvalidRequestParameterException {
         // check params
+        TddParamCheckUtil.rank_name(rank_name);
         TddParamCheckUtil.bvid(bvid);
 
         // TODO add max age
         return TddResponseUtil.AssembleList(
-                weeklyArchiveService.queryWeeklyArchivesByBvid(bvid),
-                weeklyArchiveService.queryWeeklyArchivesCountByBvid(bvid)
+                rankArchiveService.queryRankArchivesByBvid(rank_name, bvid),
+                rankArchiveService.queryRankArchivesCountByBvid(rank_name, bvid)
         );
     }
 }

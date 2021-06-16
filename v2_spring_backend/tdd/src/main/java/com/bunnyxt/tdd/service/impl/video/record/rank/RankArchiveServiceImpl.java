@@ -1,9 +1,9 @@
 package com.bunnyxt.tdd.service.impl.video.record.rank;
 
-import com.bunnyxt.tdd.dao.video.record.rank.WeeklyArchiveDao;
-import com.bunnyxt.tdd.model.video.record.rank.WeeklyArchive;
-import com.bunnyxt.tdd.model.video.record.rank.WeeklyArchiveEx;
-import com.bunnyxt.tdd.service.video.record.rank.WeeklyArchiveService;
+import com.bunnyxt.tdd.dao.video.record.rank.RankArchiveDao;
+import com.bunnyxt.tdd.model.video.record.rank.RankArchive;
+import com.bunnyxt.tdd.model.video.record.rank.RankArchiveEx;
+import com.bunnyxt.tdd.service.video.record.rank.RankArchiveService;
 import com.bunnyxt.tdd.util.PageNumModfier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class WeeklyArchiveServiceImpl implements WeeklyArchiveService {
+public class RankArchiveServiceImpl implements RankArchiveService {
 
     @Autowired
-    WeeklyArchiveDao weeklyArchiveDao;
+    RankArchiveDao rankArchiveDao;
 
     @Override
-    public List<WeeklyArchiveEx> queryWeeklyArchiveExsByArchId(Long arch_id, String order_rule, Integer pn, Integer ps) {
+    public List<RankArchiveEx> queryRankArchiveExsByArchId(String rank_name, Long arch_id, String order_rule, Integer pn, Integer ps) {
         // order_rule -> order_by & desc
         String order_by;
         Integer desc;
@@ -44,21 +44,21 @@ public class WeeklyArchiveServiceImpl implements WeeklyArchiveService {
         pn = PageNumModfier.modifyPn(pn);
         Integer offset = PageNumModfier.calcOffset(ps, pn);
 
-        return weeklyArchiveDao.queryWeeklyArchiveExsByArchId(arch_id, order_by, desc, offset, ps);
+        return rankArchiveDao.queryRankArchiveExsByArchId(rank_name, arch_id, order_by, desc, offset, ps);
     }
 
     @Override
-    public Integer queryWeeklyArchiveExsCountByArchId(Long arch_id) {
-        return weeklyArchiveDao.queryWeeklyArchiveExsCountByArchId(arch_id);
+    public Integer queryRankArchiveExsCountByArchId(String rank_name, Long arch_id) {
+        return rankArchiveDao.queryRankArchiveExsCountByArchId(rank_name, arch_id);
     }
 
     @Override
-    public List<WeeklyArchive> queryWeeklyArchivesByBvid(String bvid) {
-        return weeklyArchiveDao.queryWeeklyArchivesByBvid(bvid);
+    public List<RankArchive> queryRankArchivesByBvid(String rank_name, String bvid) {
+        return rankArchiveDao.queryRankArchivesByBvid(rank_name, bvid);
     }
 
     @Override
-    public Integer queryWeeklyArchivesCountByBvid(String bvid) {
-        return weeklyArchiveDao.queryWeeklyArchivesCountByBvid(bvid);
+    public Integer queryRankArchivesCountByBvid(String rank_name, String bvid) {
+        return rankArchiveDao.queryRankArchivesCountByBvid(rank_name, bvid);
     }
 }

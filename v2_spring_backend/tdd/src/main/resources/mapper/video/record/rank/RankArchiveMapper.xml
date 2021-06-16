@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bunnyxt.tdd.dao.video.record.rank.WeeklyArchiveDao">
-    <resultMap id="WeeklyArchiveExResultMap" type="com.bunnyxt.tdd.model.video.record.rank.WeeklyArchiveEx">
+<mapper namespace="com.bunnyxt.tdd.dao.video.record.rank.RankArchiveDao">
+    <resultMap id="RankArchiveExResultMap" type="com.bunnyxt.tdd.model.video.record.rank.RankArchiveEx">
         <result column="arch_id" property="arch_id" />
         <result column="a_bvid" property="bvid" />
         <result column="start_added" property="start_added" />
@@ -41,7 +41,7 @@
         </association>
     </resultMap>
 
-    <sql id="WeeklyArchiveExColumnList">
+    <sql id="RankArchiveExColumnList">
         arch_id, a.bvid a_bvid, start_added, arch_added,
         arch_view, arch_danmaku, arch_reply, arch_favorite, arch_coin, arch_share, arch_like,
         incr_view, incr_danmaku, incr_reply, incr_favorite, incr_coin, incr_share, incr_like,
@@ -50,11 +50,11 @@
         m.sex, m.name, m.face, m.sign
     </sql>
 
-    <select id="queryWeeklyArchiveExsByArchId" resultMap="WeeklyArchiveExResultMap">
+    <select id="queryRankArchiveExsByArchId" resultMap="RankArchiveExResultMap">
         select
-        <include refid="WeeklyArchiveExColumnList" />
+        <include refid="RankArchiveExColumnList" />
         from
-        tdd_video_record_rank_weekly_archive as a
+        tdd_video_record_rank_${rank_name}_archive as a
         left join
         tdd_video as v
         on
@@ -74,16 +74,16 @@
         #{offset}, #{ps}
     </select>
 
-    <select id="queryWeeklyArchiveExsCountByArchId" resultType="Integer">
+    <select id="queryRankArchiveExsCountByArchId" resultType="Integer">
         select
         count(1)
         from
-        tdd_video_record_rank_weekly_archive
+        tdd_video_record_rank_${rank_name}_archive
         where
         arch_id = #{arch_id}
     </select>
 
-    <resultMap id="WeeklyArchiveResultMap" type="com.bunnyxt.tdd.model.video.record.rank.WeeklyArchive">
+    <resultMap id="RankArchiveResultMap" type="com.bunnyxt.tdd.model.video.record.rank.RankArchive">
         <result column="arch_id" property="arch_id" />
         <result column="bvid" property="bvid" />
         <result column="start_added" property="start_added" />
@@ -108,27 +108,27 @@
         <result column="rank" property="rank" />
     </resultMap>
 
-    <sql id="WeeklyArchiveColumnList">
+    <sql id="RankArchiveColumnList">
         arch_id, bvid, start_added, arch_added,
         arch_view, arch_danmaku, arch_reply, arch_favorite, arch_coin, arch_share, arch_like,
         incr_view, incr_danmaku, incr_reply, incr_favorite, incr_coin, incr_share, incr_like,
         point, xiua, xiub, rank
     </sql>
 
-    <select id="queryWeeklyArchivesByBvid" resultMap="WeeklyArchiveResultMap">
+    <select id="queryRankArchivesByBvid" resultMap="RankArchiveResultMap">
         select
-        <include refid="WeeklyArchiveColumnList" />
+        <include refid="RankArchiveColumnList" />
         from
-        tdd_video_record_rank_weekly_archive
+        tdd_video_record_rank_${rank_name}_archive
         where
         bvid = #{bvid}
     </select>
 
-    <select id="queryWeeklyArchivesCountByBvid" resultType="Integer">
+    <select id="queryRankArchivesCountByBvid" resultType="Integer">
         select
         count(1)
         from
-        tdd_video_record_rank_weekly_archive
+        tdd_video_record_rank_${rank_name}_archive
         where
         arch_id = #{id}
     </select>
