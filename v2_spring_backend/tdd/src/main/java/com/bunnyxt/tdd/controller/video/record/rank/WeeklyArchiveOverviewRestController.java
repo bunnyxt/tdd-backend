@@ -1,8 +1,8 @@
 package com.bunnyxt.tdd.controller.video.record.rank;
 
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
-import com.bunnyxt.tdd.model.video.record.rank.WeeklyArchiveOverview;
-import com.bunnyxt.tdd.service.video.record.rank.WeeklyArchiveOverviewService;
+import com.bunnyxt.tdd.model.video.record.rank.RankArchiveOverview;
+import com.bunnyxt.tdd.service.video.record.rank.RankArchiveOverviewService;
 import com.bunnyxt.tdd.util.TddParamCheckUtil;
 import com.bunnyxt.tdd.util.TddResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,25 +16,32 @@ import java.util.List;
 public class WeeklyArchiveOverviewRestController {
 
     @Autowired
-    WeeklyArchiveOverviewService weeklyArchiveOverviewService;
+    RankArchiveOverviewService rankArchiveOverviewService;
 
-    @RequestMapping(value = "/video/record/rank/weekly/archive/overview", method = RequestMethod.GET)
-    public ResponseEntity<List<WeeklyArchiveOverview>> queryWeeklyArchiveOverviews() {
+    @RequestMapping(value = "/video/record/rank/{rank_name}/archive/overview", method = RequestMethod.GET)
+    public ResponseEntity<List<RankArchiveOverview>> queryRankArchiveOverviews(
+            @PathVariable String rank_name
+    ) {
+        // check params
+        TddParamCheckUtil.rank_name(rank_name);
+
         return TddResponseUtil.SetMaxAge(
-                weeklyArchiveOverviewService.queryWeeklyArchiveOverviews(),
+                rankArchiveOverviewService.queryRankArchiveOverviews(rank_name),
                 300  // 5 min
         );
     }
 
-    @RequestMapping(value = "/video/record/rank/weekly/archive/{arch_id}/overview", method = RequestMethod.GET)
-    public ResponseEntity<WeeklyArchiveOverview> queryWeeklyArchiveOverviewByArchId(
+    @RequestMapping(value = "/video/record/rank/{rank_name}/archive/{arch_id}/overview", method = RequestMethod.GET)
+    public ResponseEntity<RankArchiveOverview> queryRankArchiveOverviewByArchId(
+            @PathVariable String rank_name,
             @PathVariable Long arch_id
     ) throws InvalidRequestParameterException {
         // check params
+        TddParamCheckUtil.rank_name(rank_name);
         TddParamCheckUtil.arch_id(arch_id);
 
         return TddResponseUtil.SetMaxAge(
-                weeklyArchiveOverviewService.queryWeeklyArchiveOverviewByArchId(arch_id),
+                rankArchiveOverviewService.queryRankArchiveOverviewByArchId(rank_name, arch_id),
                 86400  // 1 day
         );
     }

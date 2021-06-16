@@ -1,6 +1,6 @@
 package com.bunnyxt.tdd.model.video.record.rank;
 
-public class WeeklyArchiveOverview {
+public class RankArchiveOverview {
 
     private Long id;
     private String name;

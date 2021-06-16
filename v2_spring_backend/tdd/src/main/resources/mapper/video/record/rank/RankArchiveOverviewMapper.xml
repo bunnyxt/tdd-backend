@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bunnyxt.tdd.dao.video.record.rank.RankArchiveOverviewDao">
+    <resultMap id="RankArchiveOverviewResultMap" type="com.bunnyxt.tdd.model.video.record.rank.RankArchiveOverview">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="start_ts" property="start_ts" />
+        <result column="end_ts" property="end_ts" />
+    </resultMap>
+
+    <sql id="RankArchiveOverviewColumnList">
+        id, name, start_ts, end_ts
+    </sql>
+
+    <select id="queryRankArchiveOverviews" resultMap="RankArchiveOverviewResultMap">
+        select
+        <include refid="RankArchiveOverviewColumnList" />
+        from
+        tdd_video_record_rank_${rank_name}_archive_overview
+    </select>
+
+    <select id="queryRankArchiveOverviewByArchId" resultMap="RankArchiveOverviewResultMap">
+        select
+        <include refid="RankArchiveOverviewColumnList" />
+        from
+        tdd_video_record_rank_${rank_name}_archive_overview
+        where
+        id = #{arch_id}
+    </select>
+</mapper>
