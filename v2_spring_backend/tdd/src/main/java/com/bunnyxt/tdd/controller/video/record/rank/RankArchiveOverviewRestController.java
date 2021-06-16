@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-public class WeeklyArchiveOverviewRestController {
+public class RankArchiveOverviewRestController {
 
     @Autowired
     RankArchiveOverviewService rankArchiveOverviewService;
