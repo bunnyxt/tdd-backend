@@ -1,0 +1,36 @@
+{
+  "name": "tdd-backend-graphql",
+  "version": "0.0.1",
+  "description": "The graphql backend of TianDian Daily.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bunnyxt/tdd-backend.git"
+  },
+  "main": "app.js",
+  "scripts": {
+    "start": "npm-run-all --parallel build:watch run:watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "build:watch": "webpack --watch",
+    "run": "node ./dist/app.js",
+    "run:watch": "nodemon ./dist/app.js"
+  },
+  "author": "bunnyxt",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server-core": "^3.6.1",
+    "apollo-server-express": "^3.6.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "graphql": "^16.2.0",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "npm-run-all": "^4.1.5",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-node-externals": "^3.0.0"
+  }
+}
