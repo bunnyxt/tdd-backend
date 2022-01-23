@@ -1,7 +1,7 @@
-const book = require('./book');
+const video = require('./video');
 
 const modules = [
-  book,
+  video,
 ];
 
 module.exports = modules;
