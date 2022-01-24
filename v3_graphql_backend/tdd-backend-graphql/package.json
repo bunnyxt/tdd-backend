@@ -21,6 +21,7 @@
     "apollo-server-core": "^3.6.1",
     "apollo-server-express": "^3.6.1",
     "cors": "^2.8.5",
+    "dotenv": "^14.2.0",
     "express": "^4.17.2",
     "graphql": "^16.2.0",
     "mysql2": "^2.3.3",

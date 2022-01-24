@@ -21,7 +21,11 @@ Step 2: Install dependencies.
 npm install
 ```
 
-Step 3: Start server.
+Step 3: Edit config.
+
+Duplicate file `.env.template` and rename the copy to `.env`. Edit `.env` file, replace default config (DB connection, etc.) with your customed info, then save and exit.
+
+Step 4: Start server.
 
 ```
 npm run start
