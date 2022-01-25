@@ -8,7 +8,31 @@ export const typeDefs = gql`
     added: Int
     aid: Int
     bvid: String
+    videos: Int
+    tid: Int
+    tname: String
+    copyright: Int
+    pic: String
     title: String
+    pubdate: Int
+    desc: String
+    tags: String
+    mid: Int
+    code: Int
+    attribute: Int
+    state: Int
+    forward: Int
+    hasstaff: Int
+    singer: String
+    solo: Int
+    original: Int
+    employed: Int
+    isvc: Int
+    engine: Int
+    freq: Int
+    activity: Int
+    recent: Int
+    laststat: Int
   }
 
   extend type Query {
