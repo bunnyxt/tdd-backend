@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express';
 
-const Video = require('../models/video');
+const Video = require('../models/Video');
 
 export const typeDefs = gql`
   type Video {
