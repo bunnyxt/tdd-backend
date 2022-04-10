@@ -9,6 +9,7 @@ public class Member {
     private String name;
     private String face;
     private String sign;
+    private Integer code;
 
 
     public Member() {
@@ -69,5 +70,13 @@ public class Member {
 
     public void setSign(String sign) {
         this.sign = sign;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
     }
 }

@@ -9,10 +9,11 @@
         <result column="name" property="name" />
         <result column="face" property="face" />
         <result column="sign" property="sign" />
+        <result column="code" property="code" />
     </resultMap>
 
     <sql id="BaseColumnList">
-        id, added, mid, sex, name, face, sign
+        id, added, mid, sex, name, face, sign, code
     </sql>
 
     <select id="queryMemberByMid" resultMap="BaseResultMap" parameterType="Integer">
