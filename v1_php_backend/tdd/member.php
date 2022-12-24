@@ -10,6 +10,11 @@ $mid = -1;
 if(isset($_GET['mid'])){
     $mid = intval($_GET['mid']);
 }
+// must provide mid
+if ($mid == -1) {
+    echo('{"status":400,"message":"Must provide mid!"}');
+    die();
+}
 
 $limit = 0;
 if(isset($_GET['limit'])){
