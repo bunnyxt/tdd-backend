@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
 @MapperScan("com.bunnyxt.tdd.dao")
-@PropertySource("application-local.properties")
+@PropertySource("/application-local.properties")
 public class Application {
 
     public static void main(String[] args) {
