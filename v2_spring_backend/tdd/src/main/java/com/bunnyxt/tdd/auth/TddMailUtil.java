@@ -1,5 +1,7 @@
 package com.bunnyxt.tdd.auth;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -8,7 +10,14 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class TddMailUtil {
+    @Value("${tdd.mail.username}")
+    static String mailFrom;// 指明邮件的发件人
 
+    @Value("${tdd.mail.password}")
+    static String password_mailFrom;// 指明邮件的发件人登陆密码
+
+    @Value("${tdd.mail.smtp.host}")
+    private static String mail_host;// 邮件的服务器域名
 
     private static MimeMessage createSimpleMail(Session session, String mailfrom, String mailTo, String mailTittle,
                                                String mailText) throws Exception {
@@ -27,12 +36,10 @@ public class TddMailUtil {
     }
 
     private static boolean sendMail(String email, String title, String text) {
-        String mailFrom = "user@example.com";// 指明邮件的发件人
-        String password_mailFrom = "yourPassw0rd";// 指明邮件的发件人登陆密码
+
         String mailTo = email;    // 指明邮件的收件人
         String mailTittle = title;// 邮件的标题
         String mailText = text;    // 邮件的文本内容
-        String mail_host = "smtp.example.com";    // 邮件的服务器域名
 
         try {
             Properties prop = new Properties();

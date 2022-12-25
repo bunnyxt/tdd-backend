@@ -2,6 +2,7 @@ package com.bunnyxt.tdd.auth;
 
 import com.alibaba.fastjson.JSON;
 import com.bunnyxt.tdd.model.TddCommonResponse;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -12,7 +13,8 @@ import java.util.Map;
 
 public class TddRecaptchaAuthUtil {
 
-    private static String SECRET = "<your-recaptcha-secret>"; // set your own recaptcha secret here;
+    @Value("${tdd.recaptcha.secret}")
+    private static String SECRET; // set your own recaptcha secret here;
 
     public static TddCommonResponse check(String recaptcha) {
         // check recaptcha

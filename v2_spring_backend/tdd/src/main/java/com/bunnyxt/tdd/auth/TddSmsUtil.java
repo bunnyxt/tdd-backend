@@ -9,17 +9,28 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Map;
 
 public class TddSmsUtil {
 
-    private static String ACCESS_KEY_ID = "<access-key-id>";
-    private static String ACCESS_KEY_SECRET = "<access-key-secret>";
+    @Value("${tdd.acs.smsBindCode}")
+    private static String smsBindCode;
+    @Value("${tdd.acs.smsRegCode}")
+    private static String smsRegCode;
+    @Value("${tdd.acs.accessKeyId}")
+    private static String ACCESS_KEY_ID;
+
+    @Value("${tdd.acs.accessKeySecret}")
+    private static String ACCESS_KEY_SECRET;
+
+    @Value("${tdd.acs.regionId}")
+    private static String REGION_ID;
 
     private static boolean sendTddCode(String phone, String code, String TemplateCode) {
         DefaultProfile profile = DefaultProfile.getProfile(
-                "cn-hangzhou", ACCESS_KEY_ID, ACCESS_KEY_SECRET);
+                REGION_ID, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
         IAcsClient client = new DefaultAcsClient(profile);
 
         CommonRequest request = new CommonRequest();
@@ -51,10 +62,10 @@ public class TddSmsUtil {
     }
 
     public static boolean sendRegCode(String phone, String code) {
-        return sendTddCode(phone, code, "SMS_xxxxxxxxx");
+        return sendTddCode(phone, code, smsRegCode);
     }
 
     public static boolean sendBindCode(String phone, String code) {
-        return sendTddCode(phone, code, "SMS_xxxxxxxxx");
+        return sendTddCode(phone, code, smsBindCode);
     }
 }
