@@ -3,11 +3,13 @@ package com.bunnyxt.tdd.auth;
 import com.alibaba.fastjson.JSON;
 import com.bunnyxt.tdd.model.TddCommonResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +21,12 @@ import java.util.Map;
 // ref: https://www.jianshu.com/p/693914564406
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    TddRecaptchaAuthUtil tddRecaptchaAuthUtil;
+
+    public CustomAuthenticationFilter(TddRecaptchaAuthUtil tddRecaptchaAuthUtil) {
+        this.tddRecaptchaAuthUtil = tddRecaptchaAuthUtil;
+    }
 
     private UsernamePasswordAuthenticationToken getAuthRequest(HttpServletRequest request, HttpServletResponse response) {
         //use jackson to deserialize json
@@ -61,7 +69,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             }
 
             // check validity
-            TddCommonResponse recaptchaResponse = TddRecaptchaAuthUtil.check(recaptcha);
+            TddCommonResponse recaptchaResponse = tddRecaptchaAuthUtil.check(recaptcha);
             if (recaptchaResponse.getStatus().equals("success")) {
                 return new UsernamePasswordAuthenticationToken(
                         authenticationBean.getUsername(), authenticationBean.getPassword());

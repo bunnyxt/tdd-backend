@@ -10,13 +10,15 @@ import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+@Component
 public class TddSmsUtil {
 
     @Value("${tdd.acs.smsBindCode}")
-    private static String smsBindCode;
+    private String smsBindCode;
     @Value("${tdd.acs.smsRegCode}")
     private static String smsRegCode;
     @Value("${tdd.acs.accessKeyId}")
@@ -65,7 +67,7 @@ public class TddSmsUtil {
         return sendTddCode(phone, code, smsRegCode);
     }
 
-    public static boolean sendBindCode(String phone, String code) {
+    public boolean sendBindCode(String phone, String code) {
         return sendTddCode(phone, code, smsBindCode);
     }
 }

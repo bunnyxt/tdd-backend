@@ -41,6 +41,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserHistoryPointDao userHistoryPointDao;
 
+    @Autowired
+    TddMailUtil tddMailUtil;
+
+    @Autowired
+    TddSmsUtil tddSmsUtil;
+
+    @Autowired
+    TddRecaptchaAuthUtil tddRecaptchaAuthUtil;
+
     @Override
     public User queryUserById(Long id) {
         return userDao.queryUserById(id);
@@ -65,7 +74,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public TddCommonResponse bindEmailRequestCode(Long userid, String email, String recaptcha) {
         // check recaptcha
-        TddCommonResponse recaptchaResponse = TddRecaptchaAuthUtil.check(recaptcha);
+        TddCommonResponse recaptchaResponse = tddRecaptchaAuthUtil.check(recaptcha);
         if (recaptchaResponse.getStatus().equals("fail")) {
             return recaptchaResponse;
         }
@@ -91,7 +100,7 @@ public class UserServiceImpl implements UserService {
         String bindkey = TddCodeKeyGenerator.generateKeyViaCode(code);
 
         // send code via email
-        if (!TddMailUtil.sendBindCode(email, code, user.getUsername())) {
+        if (!tddMailUtil.sendBindCode(email, code, user.getUsername())) {
             Map<String, Object> map = new HashMap<>();
             map.put("email", email);
             return new TddCommonResponse("fail", "fail to sent bind code to email", map);
@@ -198,7 +207,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public TddCommonResponse bindPhoneRequestCode(Long userid, String phone, String recaptcha) {
         // check recaptcha
-        TddCommonResponse recaptchaResponse = TddRecaptchaAuthUtil.check(recaptcha);
+        TddCommonResponse recaptchaResponse = tddRecaptchaAuthUtil.check(recaptcha);
         if (recaptchaResponse.getStatus().equals("fail")) {
             return recaptchaResponse;
         }
@@ -224,7 +233,7 @@ public class UserServiceImpl implements UserService {
         String bindkey = TddCodeKeyGenerator.generateKeyViaCode(code);
 
         // send code via phone
-        if (!TddSmsUtil.sendBindCode(phone, code)) {
+        if (!tddSmsUtil.sendBindCode(phone, code)) {
             Map<String, Object> map = new HashMap<>();
             map.put("phone", phone);
             return new TddCommonResponse("fail", "fail to sent bind code to phone", map);
