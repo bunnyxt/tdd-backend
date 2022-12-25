@@ -12,6 +12,11 @@ $date = -1;
 if (isset($_GET['date'])) {
     $date = intval($_GET['date']);
 }
+// must provide date
+if ($date == -1) {
+    echo('{"status":400,"message":"Must provide date!"}');
+    die();
+}
 
 $limit = 0;
 if(isset($_GET['limit'])){
