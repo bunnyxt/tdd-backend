@@ -1,10 +1,14 @@
 package com.bunnyxt.tdd.util;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.DigestUtils;
 
 import java.util.Random;
 
 public class TddCodeKeyGenerator {
+
+    @Value("${tdd.auth.salt}")
+    private static String SALT;
 
     public static String generateCode() {
         Random rand = new Random(System.currentTimeMillis());
@@ -19,7 +23,6 @@ public class TddCodeKeyGenerator {
 
     public static String generateKeyViaCode(String code) {
         Integer added = CalendarUtil.getNowTs();
-        String salt = "<your-salt-string>";
-        return DigestUtils.md5DigestAsHex((added + ":" + code + ":" + salt).getBytes());
+        return DigestUtils.md5DigestAsHex((added + ":" + code + ":" + SALT).getBytes());
     }
 }

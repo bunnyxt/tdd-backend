@@ -1,5 +1,8 @@
 package com.bunnyxt.tdd.auth;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -7,8 +10,16 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+@Component
 public class TddMailUtil {
+    @Value("${tdd.mail.username}")
+    String mailFrom;// 指明邮件的发件人
 
+    @Value("${tdd.mail.password}")
+    String password_mailFrom;// 指明邮件的发件人登陆密码
+
+    @Value("${tdd.mail.smtp.host}")
+    String mail_host;// 邮件的服务器域名
 
     private static MimeMessage createSimpleMail(Session session, String mailfrom, String mailTo, String mailTittle,
                                                String mailText) throws Exception {
@@ -26,13 +37,11 @@ public class TddMailUtil {
         return message;
     }
 
-    private static boolean sendMail(String email, String title, String text) {
-        String mailFrom = "user@example.com";// 指明邮件的发件人
-        String password_mailFrom = "yourPassw0rd";// 指明邮件的发件人登陆密码
+    private boolean sendMail(String email, String title, String text) {
+
         String mailTo = email;    // 指明邮件的收件人
         String mailTittle = title;// 邮件的标题
         String mailText = text;    // 邮件的文本内容
-        String mail_host = "smtp.example.com";    // 邮件的服务器域名
 
         try {
             Properties prop = new Properties();
@@ -64,7 +73,7 @@ public class TddMailUtil {
         return true;
     }
 
-    public static boolean sendRegCode(String email, String code) {
+    public boolean sendRegCode(String email, String code) {
         String mailTittle = "天钿Daily - 注册验证码";
         String mailText = "亲爱的用户：<br>" +
                 "您正在使用本邮箱注册「天钿Daily」用户，验证码为：" + code + "，有效期为5分钟，请勿告知他人此验证码，若非本人操作请忽视<br>" +
@@ -72,7 +81,7 @@ public class TddMailUtil {
         return sendMail(email, mailTittle, mailText);
     }
 
-    public static boolean sendBindCode(String email, String code, String username) {
+    public boolean sendBindCode(String email, String code, String username) {
         String mailTittle = "天钿Daily - 绑定邮箱验证码";
         String mailText = "亲爱的用户：<br>" +
                 "您正在将本邮箱绑定到「天钿Daily」用户" + username + "，验证码为：" + code + "，有效期为5分钟，请勿告知他人此验证码，若非本人操作请忽视<br>" +

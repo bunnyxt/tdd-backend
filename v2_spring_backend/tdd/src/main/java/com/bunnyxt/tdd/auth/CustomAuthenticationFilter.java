@@ -20,6 +20,12 @@ import java.util.Map;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    TddRecaptchaAuthUtil tddRecaptchaAuthUtil;
+
+    public CustomAuthenticationFilter(TddRecaptchaAuthUtil tddRecaptchaAuthUtil) {
+        this.tddRecaptchaAuthUtil = tddRecaptchaAuthUtil;
+    }
+
     private UsernamePasswordAuthenticationToken getAuthRequest(HttpServletRequest request, HttpServletResponse response) {
         //use jackson to deserialize json
         ObjectMapper mapper = new ObjectMapper();
@@ -61,7 +67,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             }
 
             // check validity
-            TddCommonResponse recaptchaResponse = TddRecaptchaAuthUtil.check(recaptcha);
+            TddCommonResponse recaptchaResponse = tddRecaptchaAuthUtil.check(recaptcha);
             if (recaptchaResponse.getStatus().equals("success")) {
                 return new UsernamePasswordAuthenticationToken(
                         authenticationBean.getUsername(), authenticationBean.getPassword());

@@ -36,6 +36,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Autowired
+    TddRecaptchaAuthUtil tddRecaptchaAuthUtil;
+
     @Bean
     public RoleHierarchy roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
@@ -85,7 +88,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //注册自定义的UsernamePasswordAuthenticationFilter
     @Bean
     protected CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
-        CustomAuthenticationFilter filter = new CustomAuthenticationFilter();
+        CustomAuthenticationFilter filter = new CustomAuthenticationFilter(tddRecaptchaAuthUtil);
         filter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler);
         filter.setAuthenticationFailureHandler(customAuthenticationFailureHandler);
         filter.setFilterProcessesUrl("/login");

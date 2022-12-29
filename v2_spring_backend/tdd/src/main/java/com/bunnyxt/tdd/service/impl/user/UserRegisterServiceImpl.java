@@ -44,10 +44,19 @@ public class UserRegisterServiceImpl implements UserRegisterService {
     @Autowired
     UserSignInOverviewDao userSignInOverviewDao;
 
+    @Autowired
+    TddMailUtil tddMailUtil;
+
+    @Autowired
+    TddSmsUtil tddSmsUtil;
+
+    @Autowired
+    TddRecaptchaAuthUtil tddRecaptchaAuthUtil;
+
     @Override
     public TddCommonResponse requestCode(String method, String validation, String username, String password, String recaptcha) {
         // check recaptcha
-        TddCommonResponse recaptchaResponse = TddRecaptchaAuthUtil.check(recaptcha);
+        TddCommonResponse recaptchaResponse = tddRecaptchaAuthUtil.check(recaptcha);
         if (recaptchaResponse.getStatus().equals("fail")) {
             return recaptchaResponse;
         }
@@ -91,13 +100,13 @@ public class UserRegisterServiceImpl implements UserRegisterService {
 
         // send code via email or phone
         if (method.equals("email")) {
-            if (!TddMailUtil.sendRegCode(validation, code)) {
+            if (!tddMailUtil.sendRegCode(validation, code)) {
                 Map<String, Object> map = new HashMap<>();
                 map.put("email", validation);
                 return new TddCommonResponse("fail", "fail to sent validation code", map);
             }
         } else if (method.equals("phone")) {
-            if (!TddSmsUtil.sendRegCode(validation, code)) {
+            if (!tddSmsUtil.sendRegCode(validation, code)) {
                 Map<String, Object> map = new HashMap<>();
                 map.put("phone", validation);
                 return new TddCommonResponse("fail", "fail to sent validation code", map);
