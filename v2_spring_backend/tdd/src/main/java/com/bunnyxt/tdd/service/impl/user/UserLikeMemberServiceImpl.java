@@ -17,7 +17,7 @@ public class UserLikeMemberServiceImpl implements UserLikeMemberService {
     UserLikeMemberDao userLikeMemberDao;
 
     @Override
-    public TddCommonResponse postUserLikeMember(Long userid, Integer mid) {
+    public TddCommonResponse postUserLikeMember(Long userid, Long mid) {
         Integer added = CalendarUtil.getNowTs();
 
         TddCommonResponse response;
@@ -34,7 +34,7 @@ public class UserLikeMemberServiceImpl implements UserLikeMemberService {
     }
 
     @Override
-    public TddCommonResponse deleteUserLikeMember(Long userid, Integer mid) {
+    public TddCommonResponse deleteUserLikeMember(Long userid, Long mid) {
         TddCommonResponse response;
 
         Integer delCol = userLikeMemberDao.deleteUserLikeMember(userid, mid);
@@ -50,12 +50,12 @@ public class UserLikeMemberServiceImpl implements UserLikeMemberService {
     }
 
     @Override
-    public UserLikeMember queryUserLikeMember(Long userid, Integer mid) {
+    public UserLikeMember queryUserLikeMember(Long userid, Long mid) {
         return userLikeMemberDao.queryUserLikeMember(userid, mid);
     }
 
     @Override
-    public Integer queryUserLikeMemberCount(Integer mid) {
+    public Integer queryUserLikeMemberCount(Long mid) {
         return userLikeMemberDao.queryUserLikeMemberCount(mid);
     }
 }

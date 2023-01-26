@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bunnyxt.tdd.dao.MemberMidDao">
 
-    <select id="queryMemberMidMaxId" resultType="Integer">
+    <select id="queryMemberMidMaxId" resultType="Long">
         select
         id
         from
@@ -12,7 +12,7 @@
         limit 1
     </select>
 
-    <select id="queryMemberMidById" resultType="Integer" parameterType="Integer">
+    <select id="queryMemberMidById" resultType="Long" parameterType="Long">
         select
         mid
         from
@@ -21,7 +21,7 @@
         id = #{id}
     </select>
 
-    <select id="queryMemberMidsByIds" resultType="Integer">
+    <select id="queryMemberMidsByIds" resultType="Long">
         select
         mid
         from

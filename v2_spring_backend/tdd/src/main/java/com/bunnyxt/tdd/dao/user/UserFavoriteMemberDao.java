@@ -6,16 +6,16 @@ import java.util.List;
 
 public interface UserFavoriteMemberDao {
 
-    void addUserFavoriteMember(Integer added, Long userid, Integer mid);
+    void addUserFavoriteMember(Integer added, Long userid, Long mid);
 
-    Integer deleteUserFavoriteMember(Long userid, Integer mid);
+    Integer deleteUserFavoriteMember(Long userid, Long mid);
 
-    UserFavoriteMember queryUserFavoriteMember(Long userid, Integer mid);
+    UserFavoriteMember queryUserFavoriteMember(Long userid, Long mid);
 
-    Integer queryUserFavoriteMemberCount(Integer mid);
+    Integer queryUserFavoriteMemberCount(Long mid);
 
-    List<UserFavoriteMember> queryUserFavoriteMemberUsers(Integer mid, Integer start_ts, Integer end_ts,
+    List<UserFavoriteMember> queryUserFavoriteMemberUsers(Long mid, Integer start_ts, Integer end_ts,
                                                           String order_by, Integer desc, Integer offset, Integer ps);
 
-    Integer queryUserFavoriteMemberUsersCount(Integer mid, Integer start_ts, Integer end_ts);
+    Integer queryUserFavoriteMemberUsersCount(Long mid, Integer start_ts, Integer end_ts);
 }

@@ -4,7 +4,7 @@ public class MemberFollowerRecord {
 
     private Long id;
     private Integer added;
-    private Integer mid;
+    private Long mid;
     private Integer follower;
 
 
@@ -24,11 +24,11 @@ public class MemberFollowerRecord {
         this.added = added;
     }
 
-    public Integer getMid() {
+    public Long getMid() {
         return mid;
     }
 
-    public void setMid(Integer mid) {
+    public void setMid(Long mid) {
         this.mid = mid;
     }
 

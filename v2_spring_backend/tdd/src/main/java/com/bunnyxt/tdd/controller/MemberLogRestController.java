@@ -22,7 +22,7 @@ public class MemberLogRestController {
 
     @RequestMapping(value = "/member/log", method = RequestMethod.GET)
     public ResponseEntity<List<MemberLog>> queryMemberLogs(
-            @RequestParam(defaultValue = "0") Integer mid,
+            @RequestParam(defaultValue = "0") Long mid,
             @RequestParam(defaultValue = "0") Integer start_ts,
             @RequestParam(defaultValue = "0") Integer end_ts,
             @RequestParam(defaultValue = "") String attr,

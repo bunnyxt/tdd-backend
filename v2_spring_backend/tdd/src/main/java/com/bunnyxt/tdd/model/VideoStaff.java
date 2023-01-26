@@ -5,7 +5,7 @@ public class VideoStaff {
     private Long id;
     private Integer added;
     private Integer aid;
-    private Integer mid;
+    private Long mid;
     private String title;
 
 
@@ -33,11 +33,11 @@ public class VideoStaff {
         this.aid = aid;
     }
 
-    public Integer getMid() {
+    public Long getMid() {
         return mid;
     }
 
-    public void setMid(Integer mid) {
+    public void setMid(Long mid) {
         this.mid = mid;
     }
 

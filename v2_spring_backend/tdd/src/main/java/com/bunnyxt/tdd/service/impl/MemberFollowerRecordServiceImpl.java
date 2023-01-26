@@ -16,7 +16,7 @@ public class MemberFollowerRecordServiceImpl implements MemberFollowerRecordServ
     MemberFollowerRecordDao memberFollowerRecordDao;
 
     @Override
-    public List<MemberFollowerRecord> queryMemberFollowerRecords(Integer mid, Integer last_count, Integer start_ts, Integer end_ts, Integer pn, Integer ps) {
+    public List<MemberFollowerRecord> queryMemberFollowerRecords(Long mid, Integer last_count, Integer start_ts, Integer end_ts, Integer pn, Integer ps) {
         // pn, ps -> offset, ps
         ps = PageNumModfier.modifyPs(ps, 25000);
         pn = PageNumModfier.modifyPn(pn);
@@ -26,7 +26,7 @@ public class MemberFollowerRecordServiceImpl implements MemberFollowerRecordServ
     }
 
     @Override
-    public Integer queryMemberFollowerRecordsCount(Integer mid, Integer start_ts, Integer end_ts) {
+    public Integer queryMemberFollowerRecordsCount(Long mid, Integer start_ts, Integer end_ts) {
         return memberFollowerRecordDao.queryMemberFollowerRecordsCount(mid, start_ts, end_ts);
     }
 }

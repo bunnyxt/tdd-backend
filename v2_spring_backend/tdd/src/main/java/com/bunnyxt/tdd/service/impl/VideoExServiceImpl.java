@@ -44,7 +44,7 @@ public class VideoExServiceImpl implements VideoExService {
     }
 
     @Override
-    public List<VideoEx> queryVideosByMid(Integer mid, String order_by, Integer desc, Integer pn, Integer ps) {
+    public List<VideoEx> queryVideosByMid(Long mid, String order_by, Integer desc, Integer pn, Integer ps) {
         // pn, ps -> offset, ps
         ps = PageNumModfier.modifyPs(ps, 20);
         pn = PageNumModfier.modifyPn(pn);
@@ -59,7 +59,7 @@ public class VideoExServiceImpl implements VideoExService {
     }
 
     @Override
-    public Integer queryVideosByMidCount(Integer mid) {
+    public Integer queryVideosByMidCount(Long mid) {
         return videoExDao.queryVideosByMidCount(mid);
     }
 }

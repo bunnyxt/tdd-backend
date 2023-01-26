@@ -54,7 +54,7 @@
         fr.added fr_added, fr.follower fr_follower
     </sql>
 
-    <select id="queryMemberByMid" resultMap="BaseResultMap" parameterType="Integer">
+    <select id="queryMemberByMid" resultMap="BaseResultMap" parameterType="Long">
         select
         <include refid="BaseColumnList" />
         from

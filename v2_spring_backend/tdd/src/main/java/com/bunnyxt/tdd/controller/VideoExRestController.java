@@ -83,7 +83,7 @@ public class VideoExRestController {
 
     @RequestMapping(value = "/video/random", method = RequestMethod.GET)
     public List<VideoEx> queryVideosRandom(
-            @RequestParam(defaultValue = "1") Integer count
+            @RequestParam(defaultValue = "1") Long count
     ) throws InvalidRequestParameterException {
         // check params
         if (count <= 0 || count > 20) {
@@ -91,16 +91,16 @@ public class VideoExRestController {
         }
 
         // get max id
-        Integer maxId = videoAidDao.queryVideoAidMaxId();
+        Long maxId = videoAidDao.queryVideoAidMaxId();
 
         // generate random ids
         if (count > maxId) {
             count = maxId;
         }
-        List<Integer> randomIds = new ArrayList<>();
+        List<Long> randomIds = new ArrayList<>();
         Random random = new Random();
         for (int i = 0; i < count; i++) {
-            Integer randomId = random.nextInt(maxId);
+            Long randomId = random.nextLong() % maxId + 1;
             if (!randomIds.contains(randomId)) {
                 randomIds.add(randomId);
             } else {
@@ -122,7 +122,7 @@ public class VideoExRestController {
 
     @RequestMapping(value = "/member/{mid}/video", method = RequestMethod.GET)
     public ResponseEntity<List<VideoEx>> queryVideosByMid(
-            @PathVariable Integer mid,
+            @PathVariable Long mid,
             @RequestParam(defaultValue = "pubdate") String order_by,
             @RequestParam(defaultValue = "1") Integer desc,
             @RequestParam(defaultValue = "1") Integer pn,

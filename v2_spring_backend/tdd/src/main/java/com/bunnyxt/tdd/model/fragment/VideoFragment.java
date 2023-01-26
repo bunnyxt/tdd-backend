@@ -6,7 +6,7 @@ public class VideoFragment {
     private String pic;
     private String title;
     private Integer pubdate;
-    private Integer mid;
+    private Long mid;
     private VideoRecordFragment laststat;
 
 
@@ -42,11 +42,11 @@ public class VideoFragment {
         this.pubdate = pubdate;
     }
 
-    public Integer getMid() {
+    public Long getMid() {
         return mid;
     }
 
-    public void setMid(Integer mid) {
+    public void setMid(Long mid) {
         this.mid = mid;
     }
 

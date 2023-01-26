@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface MemberMidDao {
 
-    Integer queryMemberMidMaxId();
+    Long queryMemberMidMaxId();
 
-    Integer queryMemberMidById(Integer id);
+    Long queryMemberMidById(Long id);
 
-    List<Integer> queryMemberMidsByIds(List<Integer> ids);
+    List<Long> queryMemberMidsByIds(List<Long> ids);
 }

@@ -5,11 +5,11 @@ import com.bunnyxt.tdd.model.user.UserLikeMember;
 
 public interface UserLikeMemberService {
 
-    TddCommonResponse postUserLikeMember(Long userid, Integer mid);
+    TddCommonResponse postUserLikeMember(Long userid, Long mid);
 
-    TddCommonResponse deleteUserLikeMember(Long userid, Integer mid);
+    TddCommonResponse deleteUserLikeMember(Long userid, Long mid);
 
-    UserLikeMember queryUserLikeMember(Long userid, Integer mid);
+    UserLikeMember queryUserLikeMember(Long userid, Long mid);
 
-    Integer queryUserLikeMemberCount(Integer mid);
+    Integer queryUserLikeMemberCount(Long mid);
 }

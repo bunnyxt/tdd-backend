@@ -28,7 +28,7 @@ public class MemberExRestController {
 
     @RequestMapping(value = "/member/{mid}", method = RequestMethod.GET)
     public MemberEx queryMemberByMid(
-            @PathVariable Integer mid
+            @PathVariable Long mid
     ) {
         return memberExService.queryMemberByMid(mid);
     }
@@ -89,7 +89,7 @@ public class MemberExRestController {
 
     @RequestMapping(value = "/member/random", method = RequestMethod.GET)
     public List<MemberEx> queryVideosRandom(
-            @RequestParam(defaultValue = "1") Integer count
+            @RequestParam(defaultValue = "1") Long count
     ) throws InvalidRequestParameterException {
         // check params
         if (count <= 0 || count > 20) {
@@ -97,16 +97,16 @@ public class MemberExRestController {
         }
 
         // get max id
-        Integer maxId = memberMidDao.queryMemberMidMaxId();
+        Long maxId = memberMidDao.queryMemberMidMaxId();
 
         // generate random ids
         if (count > maxId) {
             count = maxId;
         }
-        List<Integer> randomIds = new ArrayList<>();
+        List<Long> randomIds = new ArrayList<>();
         Random random = new Random();
         for (int i = 0; i < count; i++) {
-            Integer randomId = random.nextInt(maxId);
+            Long randomId = random.nextLong() % maxId + 1;
             if (!randomIds.contains(randomId)) {
                 randomIds.add(randomId);
             } else {
@@ -115,11 +115,11 @@ public class MemberExRestController {
         }
 
         // get random aids
-        List<Integer> randomMids = memberMidDao.queryMemberMidsByIds(randomIds);
+        List<Long> randomMids = memberMidDao.queryMemberMidsByIds(randomIds);
 
         // get video ex list
         List<MemberEx> memberExList = new ArrayList<>();
-        for (Integer mid : randomMids) {
+        for (Long mid : randomMids) {
             memberExList.add(memberExService.queryMemberByMid(mid));
         }
 

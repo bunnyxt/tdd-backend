@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MemberExService {
 
-    MemberEx queryMemberByMid(Integer mid);
+    MemberEx queryMemberByMid(Long mid);
 
     List<MemberEx> queryMembers(String sex, String name, String order_by, Integer desc, Integer pn, Integer ps);
 

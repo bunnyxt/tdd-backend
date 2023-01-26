@@ -20,7 +20,7 @@ public class UserFavoriteMemberServiceImpl implements UserFavoriteMemberService 
     UserFavoriteMemberDao userFavoriteMemberDao;
 
     @Override
-    public TddCommonResponse postUserFavoriteMember(Long userid, Integer mid) {
+    public TddCommonResponse postUserFavoriteMember(Long userid, Long mid) {
         Integer added = CalendarUtil.getNowTs();
 
         TddCommonResponse response;
@@ -37,7 +37,7 @@ public class UserFavoriteMemberServiceImpl implements UserFavoriteMemberService 
     }
 
     @Override
-    public TddCommonResponse deleteUserFavoriteMember(Long userid, Integer mid) {
+    public TddCommonResponse deleteUserFavoriteMember(Long userid, Long mid) {
         TddCommonResponse response;
 
         Integer delCol = userFavoriteMemberDao.deleteUserFavoriteMember(userid, mid);
@@ -53,17 +53,17 @@ public class UserFavoriteMemberServiceImpl implements UserFavoriteMemberService 
     }
 
     @Override
-    public UserFavoriteMember queryUserFavoriteMember(Long userid, Integer mid) {
+    public UserFavoriteMember queryUserFavoriteMember(Long userid, Long mid) {
         return userFavoriteMemberDao.queryUserFavoriteMember(userid, mid);
     }
 
     @Override
-    public Integer queryUserFavoriteMemberCount(Integer mid) {
+    public Integer queryUserFavoriteMemberCount(Long mid) {
         return userFavoriteMemberDao.queryUserFavoriteMemberCount(mid);
     }
 
     @Override
-    public List<UserFavoriteMember> queryUserFavoriteMemberUsers(Integer mid, Integer start_ts, Integer end_ts, String order_by, Integer desc, Integer pn, Integer ps) {
+    public List<UserFavoriteMember> queryUserFavoriteMemberUsers(Long mid, Integer start_ts, Integer end_ts, String order_by, Integer desc, Integer pn, Integer ps) {
         // pn, ps -> offset, ps
         ps = PageNumModfier.modifyPs(ps, 100);
         pn = PageNumModfier.modifyPn(pn);
@@ -73,7 +73,7 @@ public class UserFavoriteMemberServiceImpl implements UserFavoriteMemberService 
     }
 
     @Override
-    public Integer queryUserFavoriteMemberUsersCount(Integer mid, Integer start_ts, Integer end_ts) {
+    public Integer queryUserFavoriteMemberUsersCount(Long mid, Integer start_ts, Integer end_ts) {
         return userFavoriteMemberDao.queryUserFavoriteMemberUsersCount(mid, start_ts, end_ts);
     }
 }

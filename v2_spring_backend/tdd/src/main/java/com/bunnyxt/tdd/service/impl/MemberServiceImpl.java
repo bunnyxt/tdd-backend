@@ -16,7 +16,7 @@ public class MemberServiceImpl implements MemberService {
     private MemberDao memberDao;
 
     @Override
-    public Member queryMemberByMid(Integer mid) {
+    public Member queryMemberByMid(Long mid) {
         return memberDao.queryMemberByMid(mid);
     }
 

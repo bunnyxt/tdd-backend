@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface MemberTotalStatRecordService {
 
-    List<MemberTotalStatRecord> queryMemberTotalStatRecords(Integer mid, Integer last_count, Integer start_ts, Integer end_ts,
+    List<MemberTotalStatRecord> queryMemberTotalStatRecords(Long mid, Integer last_count, Integer start_ts, Integer end_ts,
                                                             Integer pn, Integer ps);
 
-    Integer queryMemberTotalStatRecordsCount(Integer mid, Integer start_ts, Integer end_ts);
+    Integer queryMemberTotalStatRecordsCount(Long mid, Integer start_ts, Integer end_ts);
 }

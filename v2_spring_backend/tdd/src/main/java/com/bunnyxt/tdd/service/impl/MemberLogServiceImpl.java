@@ -16,7 +16,7 @@ public class MemberLogServiceImpl implements MemberLogService {
     MemberLogDao memberLogDao;
 
     @Override
-    public List<MemberLog> queryMemberLogs(Integer mid, Integer start_ts, Integer end_ts, String attr, String oldval, String newval, Integer pn, Integer ps) {
+    public List<MemberLog> queryMemberLogs(Long mid, Integer start_ts, Integer end_ts, String attr, String oldval, String newval, Integer pn, Integer ps) {
         // pn, ps -> offset, ps
         ps = PageNumModfier.modifyPs(ps, 20);
         pn = PageNumModfier.modifyPn(pn);
@@ -26,7 +26,7 @@ public class MemberLogServiceImpl implements MemberLogService {
     }
 
     @Override
-    public Integer queryMemberLogsCount(Integer mid, Integer start_ts, Integer end_ts, String attr, String oldval, String newval) {
+    public Integer queryMemberLogsCount(Long mid, Integer start_ts, Integer end_ts, String attr, String oldval, String newval) {
         return memberLogDao.queryMemberLogsCount(mid, start_ts, end_ts, attr, oldval, newval);
     }
 }

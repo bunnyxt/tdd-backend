@@ -14,17 +14,17 @@ public class VideoAidServiceImpl implements VideoAidService {
     VideoAidDao videoAidDao;
 
     @Override
-    public Integer queryVideoAidMaxId() {
+    public Long queryVideoAidMaxId() {
         return videoAidDao.queryVideoAidMaxId();
     }
 
     @Override
-    public Integer queryVideoAidById(Integer id) {
+    public Integer queryVideoAidById(Long id) {
         return videoAidDao.queryVideoAidById(id);
     }
 
     @Override
-    public List<Integer> queryVideoAidsByIds(List<Integer> ids) {
+    public List<Integer> queryVideoAidsByIds(List<Long> ids) {
         return videoAidDao.queryVideoAidsByIds(ids);
     }
 }

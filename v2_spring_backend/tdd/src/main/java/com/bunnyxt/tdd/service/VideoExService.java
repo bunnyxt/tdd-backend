@@ -15,8 +15,8 @@ public interface VideoExService {
     Integer queryVideosCount(Integer vc, Integer start_ts, Integer end_ts, Integer activity, Integer recent,
                              String title, String up);
 
-    List<VideoEx> queryVideosByMid(Integer mid,
+    List<VideoEx> queryVideosByMid(Long mid,
                                    String order_by, Integer desc, Integer pn, Integer ps);
 
-    Integer queryVideosByMidCount(Integer mid);
+    Integer queryVideosByMidCount(Long mid);
 }

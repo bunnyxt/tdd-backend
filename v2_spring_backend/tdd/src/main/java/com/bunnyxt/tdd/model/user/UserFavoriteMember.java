@@ -5,7 +5,7 @@ public class UserFavoriteMember {
     private Long id;
     private Integer added;
     private Long userid;
-    private Integer mid;
+    private Long mid;
 
     public Long getId() {
         return id;
@@ -31,11 +31,11 @@ public class UserFavoriteMember {
         this.userid = userid;
     }
 
-    public Integer getMid() {
+    public Long getMid() {
         return mid;
     }
 
-    public void setMid(Integer mid) {
+    public void setMid(Long mid) {
         this.mid = mid;
     }
 }

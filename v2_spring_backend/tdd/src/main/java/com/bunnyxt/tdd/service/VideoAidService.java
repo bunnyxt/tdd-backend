@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface VideoAidService {
 
-    Integer queryVideoAidMaxId();
+    Long queryVideoAidMaxId();
 
-    Integer queryVideoAidById(Integer id);
+    Integer queryVideoAidById(Long id);
 
-    List<Integer> queryVideoAidsByIds(List<Integer> ids);
+    List<Integer> queryVideoAidsByIds(List<Long> ids);
 
 }

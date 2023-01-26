@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MemberDao {
 
-    Member queryMemberByMid(Integer mid);
+    Member queryMemberByMid(Long mid);
 
     List<Member> queryMembers(String sex, String name, Integer offset, Integer ps);
 

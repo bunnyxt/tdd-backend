@@ -4,7 +4,7 @@ public class MemberLog {
 
     private Long id;
     private Integer added;
-    private Integer mid;
+    private Long mid;
     private String attr;
     private String oldval;
     private String newval;
@@ -25,11 +25,11 @@ public class MemberLog {
         this.added = added;
     }
 
-    public Integer getMid() {
+    public Long getMid() {
         return mid;
     }
 
-    public void setMid(Integer mid) {
+    public void setMid(Long mid) {
         this.mid = mid;
     }
 

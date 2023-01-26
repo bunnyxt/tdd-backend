@@ -20,7 +20,7 @@ public class MemberExServiceImpl implements MemberExService {
     MemberExDao memberExDao;
 
     @Override
-    public MemberEx queryMemberByMid(Integer mid) {
+    public MemberEx queryMemberByMid(Long mid) {
         return memberExDao.queryMemberByMid(mid);
     }
 

@@ -22,7 +22,7 @@ public class MemberFollowerRecordRestController {
 
     @RequestMapping(value = "/member/{mid}/follower", method = RequestMethod.GET)
     public ResponseEntity<List<MemberFollowerRecord>> queryMemberFollowerRecordsByAid(
-            @PathVariable Integer mid,
+            @PathVariable Long mid,
             @RequestParam(defaultValue = "0") Integer last_count,
             @RequestParam(defaultValue = "0") Integer start_ts,
             @RequestParam(defaultValue = "0") Integer end_ts,
@@ -37,7 +37,7 @@ public class MemberFollowerRecordRestController {
 
     @RequestMapping(value = "/follower", method = RequestMethod.GET)
     public ResponseEntity<List<MemberFollowerRecord>> queryMemberFollowerRecords(
-            @RequestParam(defaultValue = "0") Integer mid,
+            @RequestParam(defaultValue = "0") Long mid,
             Integer last_count,
             @RequestParam(defaultValue = "0") Integer start_ts,
             @RequestParam(defaultValue = "0") Integer end_ts,

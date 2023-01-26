@@ -22,7 +22,7 @@ public class UserLikeMemberRestController {
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/like/member/{mid}", method = RequestMethod.POST)
     public TddCommonResponse postUserLikeMember(
-            @PathVariable Integer mid
+            @PathVariable Long mid
     ) throws InvalidRequestParameterException {
         // check params
         if (mid <= 0) {
@@ -39,7 +39,7 @@ public class UserLikeMemberRestController {
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/like/member/{mid}", method = RequestMethod.DELETE)
     public TddCommonResponse deleteUserLikeMember(
-            @PathVariable Integer mid
+            @PathVariable Long mid
     ) throws InvalidRequestParameterException {
         // check params
         if (mid <= 0) {
@@ -56,7 +56,7 @@ public class UserLikeMemberRestController {
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/like/member/{mid}", method = RequestMethod.GET)
     public UserLikeMember queryUserLikeMember(
-            @PathVariable Integer mid
+            @PathVariable Long mid
     ) throws InvalidRequestParameterException {
         // check params
         if (mid <= 0) {
@@ -72,7 +72,7 @@ public class UserLikeMemberRestController {
     // member like count
     @RequestMapping(value = "/member/{mid}/like", method = RequestMethod.GET)
     public Integer queryUserLikeMemberCount(
-            @PathVariable Integer mid
+            @PathVariable Long mid
     ) throws InvalidRequestParameterException {
         // check params
         if (mid <= 0) {

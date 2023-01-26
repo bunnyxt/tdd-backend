@@ -16,7 +16,7 @@
         a.id, a.added, a.mid, a.follower
     </sql>
 
-    <select id="queryMemberFollowerRecords" resultMap="BaseResultMap" parameterType="Integer">
+    <select id="queryMemberFollowerRecords" resultMap="BaseResultMap">
         select
         <include refid="BaseColumnListWithA" />
         from

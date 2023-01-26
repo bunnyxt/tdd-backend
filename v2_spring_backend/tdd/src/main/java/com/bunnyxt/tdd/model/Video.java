@@ -15,7 +15,7 @@ public class Video {
     private Integer pubdate;
     private String desc;
     private String tags;
-    private Integer mid;
+    private Long mid;
     private Integer code;
     private Integer attribute;
     private Integer state;
@@ -132,11 +132,11 @@ public class Video {
         this.tags = tags;
     }
 
-    public Integer getMid() {
+    public Long getMid() {
         return mid;
     }
 
-    public void setMid(Integer mid) {
+    public void setMid(Long mid) {
         this.mid = mid;
     }
 

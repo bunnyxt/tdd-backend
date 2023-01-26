@@ -22,7 +22,7 @@ public class MemberTotalStatRecordRestController {
 
     @RequestMapping(value = "/member/{mid}/totalstat", method = RequestMethod.GET)
     public ResponseEntity<List<MemberTotalStatRecord>> queryMemberTotalStatRecordsByAid(
-            @PathVariable Integer mid,
+            @PathVariable Long mid,
             @RequestParam(defaultValue = "0") Integer last_count,
             @RequestParam(defaultValue = "0") Integer start_ts,
             @RequestParam(defaultValue = "0") Integer end_ts,
@@ -34,7 +34,7 @@ public class MemberTotalStatRecordRestController {
 
     @RequestMapping(value = "/totalstat", method = RequestMethod.GET)
     public ResponseEntity<List<MemberTotalStatRecord>> queryMemberTotalStatRecords(
-            @RequestParam(defaultValue = "0") Integer mid,
+            @RequestParam(defaultValue = "0") Long mid,
             Integer last_count,
             @RequestParam(defaultValue = "0") Integer start_ts,
             @RequestParam(defaultValue = "0") Integer end_ts,

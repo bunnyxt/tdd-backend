@@ -4,7 +4,7 @@ public class MemberTotalStatRecord {
 
     private Long id;
     private Integer added;
-    private Integer mid;
+    private Long mid;
     private Integer video_count;
     private Integer view;
     private Integer danmaku;
@@ -30,11 +30,11 @@ public class MemberTotalStatRecord {
         this.added = added;
     }
 
-    public Integer getMid() {
+    public Long getMid() {
         return mid;
     }
 
-    public void setMid(Integer mid) {
+    public void setMid(Long mid) {
         this.mid = mid;
     }
 
