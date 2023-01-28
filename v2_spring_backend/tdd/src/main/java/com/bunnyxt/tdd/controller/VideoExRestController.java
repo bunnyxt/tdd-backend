@@ -99,9 +99,9 @@ public class VideoExRestController {
         }
         List<Long> randomIds = new ArrayList<>();
         Random random = new Random();
-        for (int i = 0; i < count; i++) {
+        for (long i = 0; i < count; i++) {
             Long randomId = random.nextLong() % maxId + 1;
-            if (!randomIds.contains(randomId)) {
+            if (randomId > 0 && !randomIds.contains(randomId)) {
                 randomIds.add(randomId);
             } else {
                 i--;

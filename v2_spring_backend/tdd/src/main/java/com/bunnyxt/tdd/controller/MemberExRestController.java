@@ -105,9 +105,9 @@ public class MemberExRestController {
         }
         List<Long> randomIds = new ArrayList<>();
         Random random = new Random();
-        for (int i = 0; i < count; i++) {
+        for (long i = 0; i < count; i++) {
             Long randomId = random.nextLong() % maxId + 1;
-            if (!randomIds.contains(randomId)) {
+            if (randomId > 0 && !randomIds.contains(randomId)) {
                 randomIds.add(randomId);
             } else {
                 i--;
@@ -117,7 +117,7 @@ public class MemberExRestController {
         // get random aids
         List<Long> randomMids = memberMidDao.queryMemberMidsByIds(randomIds);
 
-        // get video ex list
+        // get member ex list
         List<MemberEx> memberExList = new ArrayList<>();
         for (Long mid : randomMids) {
             memberExList.add(memberExService.queryMemberByMid(mid));
