@@ -12,14 +12,19 @@
         <result column="coin" property="coin" />
         <result column="share" property="share" />
         <result column="`like`" property="like" />
+        <result column="dislike" property="dislike" />
+        <result column="now_rank" property="now_rank" />
+        <result column="his_rank" property="his_rank" />
+        <result column="vt" property="vt" />
+        <result column="vv" property="vv" />
     </resultMap>
 
     <sql id="BaseColumnList">
-        id, added, aid, `view`, danmaku, reply, favorite, coin, share, `like`
+        id, added, aid, `view`, danmaku, reply, favorite, coin, share, `like`, dislike, now_rank, his_rank, vt, vv
     </sql>
 
     <sql id="BaseColumnListWithA">
-        a.id, a.added, a.aid, a.`view`, a.danmaku, a.reply, a.favorite, a.coin, a.share, a.`like`
+        a.id, a.added, a.aid, a.`view`, a.danmaku, a.reply, a.favorite, a.coin, a.share, a.`like`, a.dislike, a.now_rank, a.his_rank, a.vt, a.vv
     </sql>
 
     <select id="queryVideoRecords" resultMap="BaseResultMap" parameterType="Integer">

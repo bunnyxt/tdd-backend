@@ -30,6 +30,11 @@
                     <result column="r_coin" property="coin" />
                     <result column="r_share" property="share" />
                     <result column="r_like" property="like" />
+                    <result column="r_dislike" property="dislike" />
+                    <result column="r_now_rank" property="now_rank" />
+                    <result column="r_his_rank" property="his_rank" />
+                    <result column="r_vt" property="vt" />
+                    <result column="r_vv" property="vv" />
                 </association>
             </association>
             <association property="last_total_stat" javaType="com.bunnyxt.tdd.model.fragment.MemberTotalStatRecordFragment">
@@ -54,7 +59,7 @@
         u.id u_id, u.added u_added, userid, u.mid u_mid,
         m.id m_id, m.added m_added, m.mid m_mid, m.sex m_sex, m.name m_name, m.face m_face, m.sign m_sign, m.video_count m_video_count,
         v.aid v_aid, v.pic v_pic, v.title v_title, v.pubdate v_pubdate, v.mid v_mid,
-        r.added r_added, r.view r_view, r.danmaku r_danmaku, r.reply r_reply, r.favorite r_favorite, r.coin r_coin, r.share r_share, r.like r_like,
+        r.added r_added, r.view r_view, r.danmaku r_danmaku, r.reply r_reply, r.favorite r_favorite, r.coin r_coin, r.share r_share, r.like r_like, r.dislike r_dislike, r.now_rank r_now_rank, r.his_rank r_his_rank, r.vt r_vt, r.vv r_vv,
         sr.added sr_added, sr.video_count sr_video_count, sr.view sr_view, sr.danmaku sr_danmaku, sr.reply sr_reply,
         sr.favorite sr_favorite, sr.coin sr_coin, sr.share sr_share, sr.like sr_like,
         fr.added fr_added, fr.follower fr_follower
