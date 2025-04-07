@@ -72,7 +72,7 @@
         <result column="title" property="title" />
     </resultMap>
 
-    <select id="queryVideoStaffsByAid" resultMap="VideoStaffExResultMap" parameterType="Integer">
+    <select id="queryVideoStaffsByAid" resultMap="VideoStaffExResultMap" parameterType="Long">
         select
         a.mid, b.name, b.face, a.title
         from

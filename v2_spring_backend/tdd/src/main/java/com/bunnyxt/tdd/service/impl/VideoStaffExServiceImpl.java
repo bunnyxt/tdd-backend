@@ -14,7 +14,7 @@ public class VideoStaffExServiceImpl implements VideoStaffExService {
     private VideoStaffExDao videoStaffExDao;
 
     @Override
-    public List<VideoStaffEx> queryVideoStaffsByAid(Integer aid) {
+    public List<VideoStaffEx> queryVideoStaffsByAid(Long aid) {
         return videoStaffExDao.queryVideoStaffsByAid(aid);
     }
 }

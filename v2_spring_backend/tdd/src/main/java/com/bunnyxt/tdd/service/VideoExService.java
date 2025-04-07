@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface VideoExService {
 
-    VideoEx queryVideoByAid(Integer aid);
+    VideoEx queryVideoByAid(Long aid);
 
     List<VideoEx> queryVideos(Integer vc, Integer start_ts, Integer end_ts, Integer activity, Integer recent,
                               String title, String up, String order_by, Integer desc,

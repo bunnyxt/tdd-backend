@@ -18,7 +18,7 @@ public class VideoExServiceImpl implements VideoExService {
     private VideoExDao videoExDao;
 
     @Override
-    public VideoEx queryVideoByAid(Integer aid) {
+    public VideoEx queryVideoByAid(Long aid) {
         return videoExDao.queryVideoByAid(aid);
     }
 

@@ -4,11 +4,11 @@ import com.bunnyxt.tdd.model.user.UserLikeVideo;
 
 public interface UserLikeVideoDao {
 
-    void addUserLikeVideo(Integer added, Long userid, Integer aid);
+    void addUserLikeVideo(Integer added, Long userid, Long aid);
 
-    Integer deleteUserLikeVideo(Long userid, Integer aid);
+    Integer deleteUserLikeVideo(Long userid, Long aid);
 
-    UserLikeVideo queryUserLikeVideo(Long userid, Integer aid);
+    UserLikeVideo queryUserLikeVideo(Long userid, Long aid);
 
-    Integer queryUserLikeVideoCount(Integer aid);
+    Integer queryUserLikeVideoCount(Long aid);
 }

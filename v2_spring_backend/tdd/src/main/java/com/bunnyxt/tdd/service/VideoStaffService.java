@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface VideoStaffService {
 
-    List<VideoStaff> queryVideoStaffsByAid(Integer aid);
+    List<VideoStaff> queryVideoStaffsByAid(Long aid);
 
 }

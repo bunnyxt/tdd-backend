@@ -22,7 +22,7 @@ public class VideoRecordRestController {
 
     @RequestMapping(value = "/video/{aid}/record", method = RequestMethod.GET)
     public ResponseEntity<List<VideoRecord>> queryVideoRecordsByAid(
-            @PathVariable Integer aid,
+            @PathVariable Long aid,
             @RequestParam(defaultValue = "0") Integer last_count,
             @RequestParam(defaultValue = "0") Integer start_ts,
             @RequestParam(defaultValue = "0") Integer end_ts,
@@ -37,7 +37,7 @@ public class VideoRecordRestController {
 
     @RequestMapping(value = "/record", method = RequestMethod.GET)
     public ResponseEntity<List<VideoRecord>> queryVideoRecords(
-            @RequestParam(defaultValue = "0") Integer aid,
+            @RequestParam(defaultValue = "0") Long aid,
             Integer last_count,
             @RequestParam(defaultValue = "0") Integer start_ts,
             @RequestParam(defaultValue = "0") Integer end_ts,

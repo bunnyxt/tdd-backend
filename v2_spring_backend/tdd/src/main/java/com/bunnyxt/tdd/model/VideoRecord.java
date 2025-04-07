@@ -4,7 +4,7 @@ public class VideoRecord {
 
     private Long id;
     private Integer added;
-    private Integer aid;
+    private Long aid;
     private Integer view;
     private Integer danmaku;
     private Integer reply;
@@ -39,11 +39,11 @@ public class VideoRecord {
         this.added = added;
     }
 
-    public Integer getAid() {
+    public Long getAid() {
         return aid;
     }
 
-    public void setAid(Integer aid) {
+    public void setAid(Long aid) {
         this.aid = aid;
     }
 

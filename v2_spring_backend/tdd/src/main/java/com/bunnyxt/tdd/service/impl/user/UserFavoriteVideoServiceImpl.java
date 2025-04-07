@@ -21,7 +21,7 @@ public class UserFavoriteVideoServiceImpl implements UserFavoriteVideoService {
     UserFavoriteVideoDao userFavoriteVideoDao;
 
     @Override
-    public TddCommonResponse postUserFavoriteVideo(Long userid, Integer aid) {
+    public TddCommonResponse postUserFavoriteVideo(Long userid, Long aid) {
         Integer added = CalendarUtil.getNowTs();
 
         TddCommonResponse response;
@@ -38,7 +38,7 @@ public class UserFavoriteVideoServiceImpl implements UserFavoriteVideoService {
     }
 
     @Override
-    public TddCommonResponse deleteUserFavoriteVideo(Long userid, Integer aid) {
+    public TddCommonResponse deleteUserFavoriteVideo(Long userid, Long aid) {
         TddCommonResponse response;
 
         Integer delCol = userFavoriteVideoDao.deleteUserFavoriteVideo(userid, aid);
@@ -54,17 +54,17 @@ public class UserFavoriteVideoServiceImpl implements UserFavoriteVideoService {
     }
 
     @Override
-    public UserFavoriteVideo queryUserFavoriteVideo(Long userid, Integer aid) {
+    public UserFavoriteVideo queryUserFavoriteVideo(Long userid, Long aid) {
         return userFavoriteVideoDao.queryUserFavoriteVideo(userid, aid);
     }
 
     @Override
-    public Integer queryUserFavoriteVideoCount(Integer aid) {
+    public Integer queryUserFavoriteVideoCount(Long aid) {
         return userFavoriteVideoDao.queryUserFavoriteVideoCount(aid);
     }
 
     @Override
-    public List<UserFavoriteVideo> queryUserFavoriteVideoUsers(Integer aid, Integer start_ts, Integer end_ts, String order_by, Integer desc, Integer pn, Integer ps) {
+    public List<UserFavoriteVideo> queryUserFavoriteVideoUsers(Long aid, Integer start_ts, Integer end_ts, String order_by, Integer desc, Integer pn, Integer ps) {
         // pn, ps -> offset, ps
         ps = PageNumModfier.modifyPs(ps, 100);
         pn = PageNumModfier.modifyPn(pn);
@@ -74,7 +74,7 @@ public class UserFavoriteVideoServiceImpl implements UserFavoriteVideoService {
     }
 
     @Override
-    public Integer queryUserFavoriteVideoUsersCount(Integer aid, Integer start_ts, Integer end_ts) {
+    public Integer queryUserFavoriteVideoUsersCount(Long aid, Integer start_ts, Integer end_ts) {
         return userFavoriteVideoDao.queryUserFavoriteVideoUsersCount(aid, start_ts, end_ts);
     }
 }

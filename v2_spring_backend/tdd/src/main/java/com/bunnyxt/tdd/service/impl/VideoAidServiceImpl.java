@@ -19,12 +19,12 @@ public class VideoAidServiceImpl implements VideoAidService {
     }
 
     @Override
-    public Integer queryVideoAidById(Long id) {
+    public Long queryVideoAidById(Long id) {
         return videoAidDao.queryVideoAidById(id);
     }
 
     @Override
-    public List<Integer> queryVideoAidsByIds(List<Long> ids) {
+    public List<Long> queryVideoAidsByIds(List<Long> ids) {
         return videoAidDao.queryVideoAidsByIds(ids);
     }
 }

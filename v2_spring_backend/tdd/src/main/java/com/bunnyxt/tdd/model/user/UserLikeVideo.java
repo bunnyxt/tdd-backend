@@ -5,7 +5,7 @@ public class UserLikeVideo {
     private Long id;
     private Integer added;
     private Long userid;
-    private Integer aid;
+    private Long aid;
 
     public Long getId() {
         return id;
@@ -31,11 +31,11 @@ public class UserLikeVideo {
         this.userid = userid;
     }
 
-    public Integer getAid() {
+    public Long getAid() {
         return aid;
     }
 
-    public void setAid(Integer aid) {
+    public void setAid(Long aid) {
         this.aid = aid;
     }
 }

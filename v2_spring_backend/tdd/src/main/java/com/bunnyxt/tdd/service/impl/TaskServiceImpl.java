@@ -14,9 +14,8 @@ public class TaskServiceImpl implements TaskService {
     TaskDao taskDao;
 
     @Override
-    public void addVisitVideoRecord(Integer aid, Long userid) {
-        Calendar calendar = Calendar.getInstance();
-        Integer added = Integer.parseInt(String.valueOf(calendar.getTimeInMillis() / 1000));
+    public void addVisitVideoRecord(Long aid, Long userid) {
+        Integer added = (int)(System.currentTimeMillis() / 1000);
         taskDao.addVisitVideoRecord(added, aid, userid);
     }
 }

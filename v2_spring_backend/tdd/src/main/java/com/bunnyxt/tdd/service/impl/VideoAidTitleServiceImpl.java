@@ -15,7 +15,7 @@ public class VideoAidTitleServiceImpl implements VideoAidTitleService {
     VideoAidTitleDao videoAidTitleDao;
 
     @Override
-    public List<VideoAidTitle> queryVideoAidTitle(Integer aid) {
+    public List<VideoAidTitle> queryVideoAidTitle(Long aid) {
         return videoAidTitleDao.queryVideoAidTitle(aid);
     }
 }

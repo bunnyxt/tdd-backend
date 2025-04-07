@@ -13,7 +13,7 @@
         id, added, aid, mid, title
     </sql>
 
-    <select id="queryVideoStaffsByAid" resultMap="BaseResultMap" parameterType="Integer">
+    <select id="queryVideoStaffsByAid" resultMap="BaseResultMap" parameterType="Long">
         select
         <include refid="BaseColumnList" />
         from

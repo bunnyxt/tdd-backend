@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface VideoAidTitleDao {
 
-    List<VideoAidTitle> queryVideoAidTitle(Integer aid);
+    List<VideoAidTitle> queryVideoAidTitle(Long aid);
 
 }

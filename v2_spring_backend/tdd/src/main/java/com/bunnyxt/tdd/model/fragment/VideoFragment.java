@@ -2,7 +2,7 @@ package com.bunnyxt.tdd.model.fragment;
 
 public class VideoFragment {
 
-    private Integer aid;
+    private Long aid;
     private String pic;
     private String title;
     private Integer pubdate;
@@ -10,11 +10,11 @@ public class VideoFragment {
     private VideoRecordFragment laststat;
 
 
-    public Integer getAid() {
+    public Long getAid() {
         return aid;
     }
 
-    public void setAid(Integer aid) {
+    public void setAid(Long aid) {
         this.aid = aid;
     }
 

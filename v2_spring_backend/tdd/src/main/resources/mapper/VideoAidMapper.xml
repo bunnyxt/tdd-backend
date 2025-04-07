@@ -12,7 +12,7 @@
         limit 1
     </select>
 
-    <select id="queryVideoAidById" resultType="Integer" parameterType="Long">
+    <select id="queryVideoAidById" resultType="Long" parameterType="Long">
         select
         aid
         from
@@ -21,7 +21,7 @@
         id = #{id}
     </select>
 
-    <select id="queryVideoAidsByIds" resultType="Integer">
+    <select id="queryVideoAidsByIds" resultType="Long">
         select
         aid
         from tdd_video_aid

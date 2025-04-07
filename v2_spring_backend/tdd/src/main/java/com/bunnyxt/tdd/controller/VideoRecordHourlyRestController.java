@@ -27,7 +27,7 @@ public class VideoRecordHourlyRestController {
 
     @RequestMapping(value = "/video/{aid}/record/hourly", method = RequestMethod.GET)
     public ResponseEntity<List<VideoRecordHourly>> queryVideoRecordHourlysByAid(
-            @PathVariable Integer aid,
+            @PathVariable Long aid,
             @RequestParam(defaultValue = "0") Integer last_count,
             @RequestParam(defaultValue = "0") Integer start_ts,
             @RequestParam(defaultValue = "0") Integer end_ts,
@@ -52,12 +52,12 @@ public class VideoRecordHourlyRestController {
         // check params
         TddParamCheckUtil.last_count(last_count, 5000);
 
-        return queryVideoRecordHourlys(0, bvid, last_count, start_ts, end_ts, pn, ps);
+        return queryVideoRecordHourlys(0L, bvid, last_count, start_ts, end_ts, pn, ps);
     }
 
     @RequestMapping(value = "/record/hourly", method = RequestMethod.GET)
     public ResponseEntity<List<VideoRecordHourly>> queryVideoRecordHourlys(
-            @RequestParam(defaultValue = "0") Integer aid,
+            @RequestParam(defaultValue = "0") Long aid,
             @RequestParam(defaultValue = "0000000000") String bvid,
             Integer last_count,
             @RequestParam(defaultValue = "0") Integer start_ts,
@@ -88,7 +88,7 @@ public class VideoRecordHourlyRestController {
 
     @RequestMapping(value = "/video/{aid}/record/hourly/count", method = RequestMethod.GET)
     public Integer queryVideoRecordHourlysCountByAid(
-            @PathVariable Integer aid,
+            @PathVariable Long aid,
             @RequestParam(defaultValue = "0") Integer last_count,
             @RequestParam(defaultValue = "0") Integer start_ts,
             @RequestParam(defaultValue = "0") Integer end_ts
@@ -109,12 +109,12 @@ public class VideoRecordHourlyRestController {
         // check params
         TddParamCheckUtil.last_count(last_count, 5000);
 
-        return queryVideoRecordHourlysCount(0, bvid, last_count, start_ts, end_ts);
+        return queryVideoRecordHourlysCount(0L, bvid, last_count, start_ts, end_ts);
     }
 
     @RequestMapping(value = "/record/hourly/count", method = RequestMethod.GET)
     public Integer queryVideoRecordHourlysCount(
-            @RequestParam(defaultValue = "0") Integer aid,
+            @RequestParam(defaultValue = "0") Long aid,
             @RequestParam(defaultValue = "0000000000") String bvid,
             Integer last_count,
             @RequestParam(defaultValue = "0") Integer start_ts,
