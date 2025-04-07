@@ -17,7 +17,7 @@ public class UserLikeVideoServiceImpl implements UserLikeVideoService {
     UserLikeVideoDao userLikeVideoDao;
 
     @Override
-    public TddCommonResponse postUserLikeVideo(Long userid, Integer aid) {
+    public TddCommonResponse postUserLikeVideo(Long userid, Long aid) {
         Integer added = CalendarUtil.getNowTs();
 
         TddCommonResponse response;
@@ -34,7 +34,7 @@ public class UserLikeVideoServiceImpl implements UserLikeVideoService {
     }
 
     @Override
-    public TddCommonResponse deleteUserLikeVideo(Long userid, Integer aid) {
+    public TddCommonResponse deleteUserLikeVideo(Long userid, Long aid) {
         TddCommonResponse response;
 
         Integer delCol = userLikeVideoDao.deleteUserLikeVideo(userid, aid);
@@ -50,12 +50,12 @@ public class UserLikeVideoServiceImpl implements UserLikeVideoService {
     }
 
     @Override
-    public UserLikeVideo queryUserLikeVideo(Long userid, Integer aid) {
+    public UserLikeVideo queryUserLikeVideo(Long userid, Long aid) {
         return userLikeVideoDao.queryUserLikeVideo(userid, aid);
     }
 
     @Override
-    public Integer queryUserLikeVideoCount(Integer aid) {
+    public Integer queryUserLikeVideoCount(Long aid) {
         return userLikeVideoDao.queryUserLikeVideoCount(aid);
     }
 }

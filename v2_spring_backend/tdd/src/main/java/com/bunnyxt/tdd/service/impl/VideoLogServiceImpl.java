@@ -16,7 +16,7 @@ public class VideoLogServiceImpl implements VideoLogService {
     VideoLogDao videoLogDao;
 
     @Override
-    public List<VideoLog> queryVideoLogs(Integer aid, Integer start_ts, Integer end_ts, String attr, String oldval, String newval, Integer pn, Integer ps) {
+    public List<VideoLog> queryVideoLogs(Long aid, Integer start_ts, Integer end_ts, String attr, String oldval, String newval, Integer pn, Integer ps) {
         // pn, ps -> offset, ps
         ps = PageNumModfier.modifyPs(ps, 20);
         pn = PageNumModfier.modifyPn(pn);
@@ -26,7 +26,7 @@ public class VideoLogServiceImpl implements VideoLogService {
     }
 
     @Override
-    public Integer queryVideoLogsCount(Integer aid, Integer start_ts, Integer end_ts, String attr, String oldval, String newval) {
+    public Integer queryVideoLogsCount(Long aid, Integer start_ts, Integer end_ts, String attr, String oldval, String newval) {
         return videoLogDao.queryVideoLogsCount(aid, start_ts, end_ts, attr, oldval, newval);
     }
 }

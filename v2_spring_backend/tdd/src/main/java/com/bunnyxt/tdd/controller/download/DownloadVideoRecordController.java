@@ -28,7 +28,7 @@ public class DownloadVideoRecordController {
     //    @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/download/record", method = RequestMethod.GET)
     public void downloadVideoRecords(HttpServletResponse response,
-                                     @RequestParam(defaultValue = "0") Integer aid,
+                                     @RequestParam(defaultValue = "0") Long aid,
                                      @RequestParam(defaultValue = "0") Integer start_ts,
                                      @RequestParam(defaultValue = "0") Integer end_ts)
             throws InvalidRequestParameterException {

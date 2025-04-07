@@ -17,7 +17,7 @@ public class VideoAidTitleRestController {
 
     @RequestMapping(value = "/video/aidtitle", method = RequestMethod.GET)
     public List<VideoAidTitle> queryVideoAidTitle(
-            @RequestParam Integer aid
+            @RequestParam Long aid
     ) throws InvalidRequestParameterException {
         // check param
         if (aid < 1000) {

@@ -28,7 +28,7 @@ public class VideoExRestController {
 
     @RequestMapping(value = "/video/{aid}", method = RequestMethod.GET)
     public VideoEx queryVideoByAid(
-            @PathVariable Integer aid
+            @PathVariable Long aid
     ) {
         return videoExService.queryVideoByAid(aid);
     }
@@ -109,11 +109,11 @@ public class VideoExRestController {
         }
 
         // get random aids
-        List<Integer> randomAids = videoAidDao.queryVideoAidsByIds(randomIds);
+        List<Long> randomAids = videoAidDao.queryVideoAidsByIds(randomIds);
 
         // get video ex list
         List<VideoEx> videoExList = new ArrayList<>();
-        for (Integer aid : randomAids) {
+        for (Long aid : randomAids) {
             videoExList.add(videoExService.queryVideoByAid(aid));
         }
 

@@ -31,7 +31,7 @@ public class UserFavoriteVideoRestController {
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/favorite/video/{aid}", method = RequestMethod.POST)
     public TddCommonResponse postUserFavoriteVideo(
-            @PathVariable Integer aid
+            @PathVariable Long aid
     ) throws InvalidRequestParameterException {
         // check params
         if (aid <= 0) {
@@ -48,7 +48,7 @@ public class UserFavoriteVideoRestController {
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/favorite/video/{aid}", method = RequestMethod.DELETE)
     public TddCommonResponse deleteUserFavoriteVideo(
-            @PathVariable Integer aid
+            @PathVariable Long aid
     ) throws InvalidRequestParameterException {
         // check params
         if (aid <= 0) {
@@ -65,7 +65,7 @@ public class UserFavoriteVideoRestController {
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/favorite/video/{aid}", method = RequestMethod.GET)
     public UserFavoriteVideo queryUserFavoriteVideo(
-            @PathVariable Integer aid
+            @PathVariable Long aid
     ) throws InvalidRequestParameterException {
         // check params
         if (aid <= 0) {
@@ -81,7 +81,7 @@ public class UserFavoriteVideoRestController {
     // video favorite count
     @RequestMapping(value = "/video/{aid}/favorite", method = RequestMethod.GET)
     public Integer queryUserFavoriteVideoCount(
-            @PathVariable Integer aid
+            @PathVariable Long aid
     ) throws InvalidRequestParameterException {
         // check params
         if (aid <= 0) {
@@ -96,7 +96,7 @@ public class UserFavoriteVideoRestController {
     // video favorite count
     @RequestMapping(value = "/video/{aid}/favorite/user", method = RequestMethod.GET)
     public ResponseEntity<List<UserFavoriteVideo>> queryUserFavoriteVideoUsers(
-            @PathVariable Integer aid,
+            @PathVariable Long aid,
             @RequestParam(defaultValue = "0") Integer start_ts,
             @RequestParam(defaultValue = "0") Integer end_ts,
             @RequestParam(defaultValue = "added") String order_by,

@@ -68,7 +68,7 @@
         <result column="title" property="title" />
     </resultMap>
 
-    <select id="queryVideoStaffsByAid" resultMap="VideoStaffExResultMap" parameterType="Integer">
+    <select id="queryVideoStaffsByAid" resultMap="VideoStaffExResultMap" parameterType="Long">
         select
         a.mid, b.name, b.face, a.title
         from
@@ -81,7 +81,7 @@
         aid = #{aid}
     </select>
 
-    <select id="queryVideoByAid" resultMap="BaseResultMap" parameterType="Integer">
+    <select id="queryVideoByAid" resultMap="BaseResultMap" parameterType="Long">
         select
         <include refid="BaseColumnList" />
         from

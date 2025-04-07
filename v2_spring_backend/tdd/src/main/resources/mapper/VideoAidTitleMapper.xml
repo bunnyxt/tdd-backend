@@ -7,7 +7,7 @@
         <result column="title" property="title" />
     </resultMap>
 
-    <select id="queryVideoAidTitle" resultMap="BaseResultMap" parameterType="Integer">
+    <select id="queryVideoAidTitle" resultMap="BaseResultMap" parameterType="Long">
         select
         aid, title
         from

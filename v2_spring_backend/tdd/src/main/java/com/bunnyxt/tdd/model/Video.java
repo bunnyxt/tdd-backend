@@ -4,7 +4,7 @@ public class Video {
 
     private Long id;
     private Integer added;
-    private Integer aid;
+    private Long aid;
     private String  bvid;
     private Integer videos;
     private Integer tid;
@@ -52,11 +52,11 @@ public class Video {
         this.added = added;
     }
 
-    public Integer getAid() {
+    public Long getAid() {
         return aid;
     }
 
-    public void setAid(Integer aid) {
+    public void setAid(Long aid) {
         this.aid = aid;
     }
 

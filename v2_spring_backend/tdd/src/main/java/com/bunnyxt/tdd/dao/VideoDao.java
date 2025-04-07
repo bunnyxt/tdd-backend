@@ -4,8 +4,8 @@ import com.bunnyxt.tdd.model.Video;
 
 public interface VideoDao {
 
-    void updateVideoByAid(Integer aid, Video video);
+    void updateVideoByAid(Long aid, Video video);
 
-    Video queryVideoByAid(Integer aid);
+    Video queryVideoByAid(Long aid);
 
 }

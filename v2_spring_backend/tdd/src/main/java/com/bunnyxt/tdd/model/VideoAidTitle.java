@@ -2,14 +2,14 @@ package com.bunnyxt.tdd.model;
 
 public class VideoAidTitle {
 
-    private Integer aid;
+    private Long aid;
     private String title;
 
-    public Integer getAid() {
+    public Long getAid() {
         return aid;
     }
 
-    public void setAid(Integer aid) {
+    public void setAid(Long aid) {
         this.aid = aid;
     }
 

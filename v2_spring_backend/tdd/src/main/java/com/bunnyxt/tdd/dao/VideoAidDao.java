@@ -6,8 +6,8 @@ public interface VideoAidDao {
 
     Long queryVideoAidMaxId();
 
-    Integer queryVideoAidById(Long id);
+    Long queryVideoAidById(Long id);
 
-    List<Integer> queryVideoAidsByIds(List<Long> ids);
+    List<Long> queryVideoAidsByIds(List<Long> ids);
 
 }

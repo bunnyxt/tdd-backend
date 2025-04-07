@@ -4,7 +4,7 @@ public class VideoLog {
 
     private Long id;
     private Integer added;
-    private Integer aid;
+    private Long aid;
     private String attr;
     private String oldval;
     private String newval;
@@ -26,11 +26,11 @@ public class VideoLog {
         this.added = added;
     }
 
-    public Integer getAid() {
+    public Long getAid() {
         return aid;
     }
 
-    public void setAid(Integer aid) {
+    public void setAid(Long aid) {
         this.aid = aid;
     }
 
