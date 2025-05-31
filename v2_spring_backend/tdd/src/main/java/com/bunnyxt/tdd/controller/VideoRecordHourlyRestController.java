@@ -32,7 +32,7 @@ public class VideoRecordHourlyRestController {
             @RequestParam(defaultValue = "0") Integer start_ts,
             @RequestParam(defaultValue = "0") Integer end_ts,
             @RequestParam(defaultValue = "1") Integer pn,
-            @RequestParam(defaultValue = "25000") Integer ps
+            @RequestParam(defaultValue = "50000") Integer ps
     ) throws InvalidRequestParameterException {
         // check params
         TddParamCheckUtil.last_count(last_count, 5000);
@@ -47,7 +47,7 @@ public class VideoRecordHourlyRestController {
             @RequestParam(defaultValue = "0") Integer start_ts,
             @RequestParam(defaultValue = "0") Integer end_ts,
             @RequestParam(defaultValue = "1") Integer pn,
-            @RequestParam(defaultValue = "25000") Integer ps
+            @RequestParam(defaultValue = "50000") Integer ps
     ) throws InvalidRequestParameterException {
         // check params
         TddParamCheckUtil.last_count(last_count, 5000);
@@ -63,7 +63,7 @@ public class VideoRecordHourlyRestController {
             @RequestParam(defaultValue = "0") Integer start_ts,
             @RequestParam(defaultValue = "0") Integer end_ts,
             @RequestParam(defaultValue = "1") Integer pn,
-            @RequestParam(defaultValue = "25000") Integer ps
+            @RequestParam(defaultValue = "50000") Integer ps
     ) throws InvalidRequestParameterException {
         // check params
         if (bvid.equals("0000000000")) {
@@ -76,7 +76,7 @@ public class VideoRecordHourlyRestController {
             }
         }
         TddParamCheckUtil.pn(pn);
-        TddParamCheckUtil.ps(ps, 25000);
+        TddParamCheckUtil.ps(ps, 50000);
 
         return TddResponseUtil.AssembleList(
                 videoRecordHourlyService.queryVideoRecordHourlys(bvid, last_count, start_ts, end_ts, pn, ps),
