@@ -18,7 +18,7 @@ public class MemberTotalStatRecordServiceImpl implements MemberTotalStatRecordSe
     @Override
     public List<MemberTotalStatRecord> queryMemberTotalStatRecords(Long mid, Integer last_count, Integer start_ts, Integer end_ts, Integer pn, Integer ps) {
         // pn, ps -> offset, ps
-        ps = PageNumModfier.modifyPs(ps, 25000);
+        ps = PageNumModfier.modifyPs(ps, 50000);
         pn = PageNumModfier.modifyPn(pn);
         Integer offset = PageNumModfier.calcOffset(ps, pn);
 

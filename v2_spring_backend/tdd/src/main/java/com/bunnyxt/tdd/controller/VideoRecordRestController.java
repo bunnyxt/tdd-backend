@@ -27,7 +27,7 @@ public class VideoRecordRestController {
             @RequestParam(defaultValue = "0") Integer start_ts,
             @RequestParam(defaultValue = "0") Integer end_ts,
             @RequestParam(defaultValue = "1") Integer pn,
-            @RequestParam(defaultValue = "25000") Integer ps
+            @RequestParam(defaultValue = "50000") Integer ps
     ) throws InvalidRequestParameterException {
         // check params
         TddParamCheckUtil.last_count(last_count, 5000);
@@ -42,7 +42,7 @@ public class VideoRecordRestController {
             @RequestParam(defaultValue = "0") Integer start_ts,
             @RequestParam(defaultValue = "0") Integer end_ts,
             @RequestParam(defaultValue = "1") Integer pn,
-            @RequestParam(defaultValue = "25000") Integer ps
+            @RequestParam(defaultValue = "50000") Integer ps
     ) throws InvalidRequestParameterException {
         // check params
         if (aid < 0) {
@@ -50,7 +50,7 @@ public class VideoRecordRestController {
             throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
         }
         TddParamCheckUtil.pn(pn);
-        TddParamCheckUtil.ps(ps, 25000);
+        TddParamCheckUtil.ps(ps, 50000);
 
         return TddResponseUtil.AssembleList(
                 videoRecordService.queryVideoRecords(aid, last_count, start_ts, end_ts, true, pn, ps),

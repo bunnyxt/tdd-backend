@@ -21,7 +21,7 @@ public class VideoRecordServiceImpl implements VideoRecordService {
         Integer offset = null;
         if (limit) {
             // pn, ps -> offset, ps
-            ps = PageNumModfier.modifyPs(ps, 25000);
+            ps = PageNumModfier.modifyPs(ps, 50000);
             pn = PageNumModfier.modifyPn(pn);
             offset = PageNumModfier.calcOffset(ps, pn);
         } else {
