@@ -31,27 +31,19 @@ public class UserRegisterRestController {
 
         // check format
         // method
-        List<String> allowedMethod = new ArrayList<String>(){{
-            add("phone");
-            add("email");
-        }};
-        if (method == null || !allowedMethod.contains(method)) {
-            throw new InvalidRequestParameterException("method", method, "method should in " + allowedMethod.toString());
+        if (!"email".equals(method)) {
+            throw new InvalidRequestParameterException("method", method, "method should be email");
         }
         // validation
         if (validation == null) {
             throw new InvalidRequestParameterException("validation", null, "validation should not be null");
         }
         String pattern = "";
-        if (method.equals("email")) {
-            pattern = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
-        } else if (method.equals("phone")) {
-            pattern = "^1[3456789]\\d{9}$";
-        }
+        pattern = "^([A-Za-z0-9_\\-\\.])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]{2,4})$";
         if (!Pattern.matches(pattern, validation)) {
             throw new InvalidRequestParameterException("validation", validation, "invalid " + method + " format");
         }
-        if (method.equals("email") && validation.length() > 200) {
+        if (validation.length() > 200) {
             throw new InvalidRequestParameterException("validation", validation, "invalid " + method + " format, length of email is too long");
         }
         // username
