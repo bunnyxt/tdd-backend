@@ -199,12 +199,6 @@
         where id = #{id}
     </update>
 
-    <update id="updateUserEmailToNullById">
-        update tdd_user
-        set email = NULL
-        where id = #{id}
-    </update>
-
     <select id="queryUserByNickname" resultMap="BaseResultMap">
         select
         <include refid="BaseColumnList" />

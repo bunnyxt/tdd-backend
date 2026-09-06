@@ -31,8 +31,6 @@ public interface UserDao {
 
     void updateUserEmailById(Long id, String email);
 
-    void updateUserEmailToNullById(Long id);
-
     User queryUserByNickname(String nickname);
 
     void updateUserPasswordById(Long id, String password);
