@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @RestControllerAdvice(annotations = RestController.class)
@@ -23,10 +24,22 @@ public class TddRestExceptionController {
         map.put("message", "invalid request parameter");
         Map<String, Object> detail = new LinkedHashMap<>();
         detail.put("parameter", ex.getParameter());
-        detail.put("value", ex.getValue());
+        detail.put("value", isSensitiveParameter(ex.getParameter()) ? null : ex.getValue());
         detail.put("prompt", ex.getPrompt());
         map.put("detail", detail);
         return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Registration and password change hand the submitted password to
+     * InvalidRequestParameterException as the rejected value, so echoing it back in the
+     * response body puts the user's cleartext password into their own client. Filtering here
+     * rather than at the call sites keeps every existing throw site unchanged. The match is a
+     * substring so it also covers parameter names added later, such as "newPassword"; no other
+     * parameter in use contains "password", so their responses are untouched.
+     */
+    private static boolean isSensitiveParameter(String parameter) {
+        return parameter != null && parameter.toLowerCase(Locale.ROOT).contains("password");
     }
 
 }
