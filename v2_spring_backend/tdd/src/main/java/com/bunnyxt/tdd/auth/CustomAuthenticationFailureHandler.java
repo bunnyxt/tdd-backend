@@ -52,14 +52,6 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                 response.getWriter().write(",\"password\":\"" + request.getAttribute("password") + "\"}}");
             }
 
-            if (request.getAttribute("recaptcha") != null) {
-                response.getWriter().write(",\"recaptcha\":\"" + request.getAttribute("recaptcha") + "\"");
-                if (request.getAttribute("error-codes") != null) {
-                    response.getWriter().write(",\"error-codes\":\"" +
-                            ((String) request.getAttribute("error-codes")).replace("\"", "") + "\"");
-                }
-                response.getWriter().write("}}");
-            }
         }
     }
 }

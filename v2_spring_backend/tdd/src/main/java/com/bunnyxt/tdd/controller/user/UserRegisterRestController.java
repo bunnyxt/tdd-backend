@@ -27,7 +27,6 @@ public class UserRegisterRestController {
         String validation = jsonObject.getString("validation");
         String username = jsonObject.getString("username");
         String password = jsonObject.getString("password");
-        String recaptcha = jsonObject.getString("recaptcha");
 
         // check format
         // method
@@ -86,12 +85,7 @@ public class UserRegisterRestController {
         if (pwLevel < 2) {
             throw new InvalidRequestParameterException("password", password, "password too weak");
         }
-        // recaptcha
-        if (recaptcha == null) {
-            throw new InvalidRequestParameterException("recaptcha", null, "recaptcha should not be null");
-        }
-
-        return userRegisterService.requestCode(method, validation, username, password, recaptcha);
+        return userRegisterService.requestCode(method, validation, username, password);
     }
 
     @RequestMapping(value = "/register/reg", method = RequestMethod.POST)

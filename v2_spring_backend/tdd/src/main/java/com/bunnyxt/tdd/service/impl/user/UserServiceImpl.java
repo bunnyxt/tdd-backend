@@ -1,7 +1,6 @@
 package com.bunnyxt.tdd.service.impl.user;
 
 import com.bunnyxt.tdd.auth.TddMailUtil;
-import com.bunnyxt.tdd.auth.TddRecaptchaAuthUtil;
 import com.bunnyxt.tdd.dao.user.*;
 import com.bunnyxt.tdd.model.TddCommonResponse;
 import com.bunnyxt.tdd.model.user.BindEmailTask;
@@ -39,9 +38,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     TddMailUtil tddMailUtil;
 
-    @Autowired
-    TddRecaptchaAuthUtil tddRecaptchaAuthUtil;
-
     @Override
     public User queryUserById(Long id) {
         return userDao.queryUserById(id);
@@ -64,13 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public TddCommonResponse bindEmailRequestCode(Long userid, String email, String recaptcha) {
-        // check recaptcha
-        TddCommonResponse recaptchaResponse = tddRecaptchaAuthUtil.check(recaptcha);
-        if (recaptchaResponse.getStatus().equals("fail")) {
-            return recaptchaResponse;
-        }
-
+    public TddCommonResponse bindEmailRequestCode(Long userid, String email) {
         // check user bind or not
         User user = userDao.queryUserById(userid);
         if (user.getEmail() != null) {

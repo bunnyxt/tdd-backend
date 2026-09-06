@@ -14,7 +14,7 @@ public interface UserService {
 
     Integer queryUsersCount(String username, String email, String phone, Integer enabled, String role);
 
-    TddCommonResponse bindEmailRequestCode(Long userid, String email, String recaptcha);
+    TddCommonResponse bindEmailRequestCode(Long userid, String email);
 
     TddCommonResponse bindEmailValidation(Long userid, String bindkey, String code);
 
