@@ -26,9 +26,7 @@ mvn clean package
 java -jar target/tdd-backend.jar
 ```
 
-Do not put real credentials in any committed file. The CI secret-scan job
-rejects non-empty secret keys in `application.properties` and in the packaged
-JAR.
+Do not put real credentials in any committed file.
 
 Production loads an additional config directory outside the repository via
 systemd; that file is not part of this module.
