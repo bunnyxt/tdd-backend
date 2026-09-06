@@ -3,7 +3,6 @@ package com.bunnyxt.tdd.service.impl.user;
 import com.alibaba.fastjson.JSON;
 import com.bunnyxt.tdd.auth.TddMailUtil;
 import com.bunnyxt.tdd.auth.TddRecaptchaAuthUtil;
-import com.bunnyxt.tdd.auth.TddSmsUtil;
 import com.bunnyxt.tdd.dao.RoleDao;
 import com.bunnyxt.tdd.dao.user.UserDao;
 import com.bunnyxt.tdd.dao.user.UserRegisterDao;
@@ -48,9 +47,6 @@ public class UserRegisterServiceImpl implements UserRegisterService {
     TddMailUtil tddMailUtil;
 
     @Autowired
-    TddSmsUtil tddSmsUtil;
-
-    @Autowired
     TddRecaptchaAuthUtil tddRecaptchaAuthUtil;
 
     @Override
@@ -70,25 +66,16 @@ public class UserRegisterServiceImpl implements UserRegisterService {
             return new TddCommonResponse("fail", "username already used", map);
         }
 
-        // check email or phone
-        if (method.equals("email")) {
-            user = userDao.queryUserByEmail(validation);
-            if (user != null) {
-                Map<String, Object> map = new HashMap<>();
-                map.put("email", validation);
-                return new TddCommonResponse("fail", "email already used", map);
-            }
-        } else if (method.equals("phone")) {
-            user = userDao.queryUserByPhone(validation);
-            if (user != null) {
-                Map<String, Object> map = new HashMap<>();
-                map.put("phone", validation);
-                return new TddCommonResponse("fail", "phone already used", map);
-            }
-        } else {
+        if (!method.equals("email")) {
             Map<String, Object> map = new HashMap<>();
             map.put("method", method);
             return new TddCommonResponse("fail", "validation method not support", map);
+        }
+        user = userDao.queryUserByEmail(validation);
+        if (user != null) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("email", validation);
+            return new TddCommonResponse("fail", "email already used", map);
         }
 
         Integer added = CalendarUtil.getNowTs();
@@ -98,34 +85,17 @@ public class UserRegisterServiceImpl implements UserRegisterService {
         String code = TddCodeKeyGenerator.generateCode();
         String regkey = TddCodeKeyGenerator.generateKeyViaCode(code);
 
-        // send code via email or phone
-        if (method.equals("email")) {
-            if (!tddMailUtil.sendRegCode(validation, code)) {
-                Map<String, Object> map = new HashMap<>();
-                map.put("email", validation);
-                return new TddCommonResponse("fail", "fail to sent validation code", map);
-            }
-        } else if (method.equals("phone")) {
-            if (!tddSmsUtil.sendRegCode(validation, code)) {
-                Map<String, Object> map = new HashMap<>();
-                map.put("phone", validation);
-                return new TddCommonResponse("fail", "fail to sent validation code", map);
-            }
+        if (!tddMailUtil.sendRegCode(validation, code)) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("email", validation);
+            return new TddCommonResponse("fail", "fail to sent validation code", map);
         }
 
         // add to db
-        Byte methodCode = -1;
-        String phone = null;
-        String email = null;
-        if (method.equals("email")) {
-            methodCode = 0;
-            email = validation;
-        } else if (method.equals("phone")) {
-            methodCode = 1;
-            phone = validation;
-        }
+        Byte methodCode = 0;
+        String email = validation;
         password = new BCryptPasswordEncoder().encode(password);  // encrypt here
-        userRegisterDao.addUserRegisterTask(added, methodCode, phone, email, username, password, regkey, code, expired, Byte.valueOf("0"));
+        userRegisterDao.addUserRegisterTask(added, methodCode, null, email, username, password, regkey, code, expired, Byte.valueOf("0"));
 
         Map<String, Object> map = new HashMap<>();
         map.put("regkey", regkey);
@@ -169,20 +139,13 @@ public class UserRegisterServiceImpl implements UserRegisterService {
             return new TddCommonResponse("fail", "username already used", map);
         }
 
-        // check email or phone
+        // Existing phone registration tasks remain as history, but can no longer create users.
         if (task.getMethod() == 0) {
             user = userDao.queryUserByEmail(task.getEmail());
             if (user != null) {
                 Map<String, Object> map = new HashMap<>();
                 map.put("email", task.getEmail());
                 return new TddCommonResponse("fail", "email already used", map);
-            }
-        } else if (task.getMethod() == 1) {
-            user = userDao.queryUserByPhone(task.getPhone());
-            if (user != null) {
-                Map<String, Object> map = new HashMap<>();
-                map.put("phone", task.getPhone());
-                return new TddCommonResponse("fail", "phone already used", map);
             }
         } else {
             Map<String, Object> map = new HashMap<>();
@@ -191,7 +154,7 @@ public class UserRegisterServiceImpl implements UserRegisterService {
         }
 
         // insert user
-        userDao.addUser(nowTs, task.getUsername(), task.getPassword(), task.getEmail(), task.getPhone());
+        userDao.addUser(nowTs, task.getUsername(), task.getPassword(), task.getEmail(), null);
 
         // get new user
         user = userDao.queryUserByUsername(task.getUsername());

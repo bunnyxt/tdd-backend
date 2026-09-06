@@ -33,10 +33,6 @@ public interface UserDao {
 
     void updateUserEmailToNullById(Long id);
 
-    void updateUserPhoneById(Long id, String phone);
-
-    void updateUserPhoneToNullById(Long id);
-
     User queryUserByNickname(String nickname);
 
     void updateUserPasswordById(Long id, String password);

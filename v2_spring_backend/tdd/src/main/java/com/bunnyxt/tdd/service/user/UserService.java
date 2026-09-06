@@ -20,12 +20,6 @@ public interface UserService {
 
     TddCommonResponse bindEmailUnbind(Long userid);
 
-    TddCommonResponse bindPhoneRequestCode(Long userid, String phone, String recaptcha);
-
-    TddCommonResponse bindPhoneValidation(Long userid, String bindkey, String code);
-
-    TddCommonResponse bindPhoneUnbind(Long userid);
-
     TddCommonResponse setNickname(User user, String nickname);
 
     TddCommonResponse changePassword(User user, String password);
