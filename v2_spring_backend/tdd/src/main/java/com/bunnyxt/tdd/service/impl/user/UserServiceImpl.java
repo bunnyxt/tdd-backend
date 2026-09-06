@@ -172,31 +172,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public TddCommonResponse bindEmailUnbind(Long userid) {
-        // check user bind or not
-        User user = userDao.queryUserById(userid);
-        String email = user.getEmail();
-        if (email == null) {
-            return new TddCommonResponse("fail", "user have not bind email yet");
-        }
-
-        // check whether bind phone, since user must bind either phone or email
-        String phone = user.getPhone();
-        if (phone == null) {
-            return new TddCommonResponse("fail", "cannot unbind last only validation");
-        }
-
-        // update user email
-        userDao.updateUserEmailToNullById(userid);
-
-        // add user log
-        Integer added = CalendarUtil.getNowTs();
-        userLogDao.addUserLog(added, userid, "unbind email", email);
-
-        return new TddCommonResponse("success", "unbind email done");
-    }
-
-    @Override
     public TddCommonResponse setNickname(User user, String nickname) {
         // check whether new nickname same with before
         if (nickname.equals(user.getNickname())) {

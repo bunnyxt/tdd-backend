@@ -92,16 +92,6 @@ public class UserRestController {
         return userService.bindEmailValidation(userid, bindkey, code);
     }
 
-    @PreAuthorize("hasRole('user')")
-    @RequestMapping(value = "/user/bind/email", method = RequestMethod.DELETE)
-    public TddCommonResponse bindEmailUnbind()
-            throws InvalidRequestParameterException {
-        // get userid
-        Long userid = TddAuthUtil.GetCurrentUser().getId();
-
-        return userService.bindEmailUnbind(userid);
-    }
-
     // set nickname
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/set/nickname", method = RequestMethod.POST)

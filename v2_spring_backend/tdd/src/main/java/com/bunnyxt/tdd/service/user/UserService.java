@@ -18,8 +18,6 @@ public interface UserService {
 
     TddCommonResponse bindEmailValidation(Long userid, String bindkey, String code);
 
-    TddCommonResponse bindEmailUnbind(Long userid);
-
     TddCommonResponse setNickname(User user, String nickname);
 
     TddCommonResponse changePassword(User user, String password);
