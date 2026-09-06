@@ -6,7 +6,6 @@ public class AuthenticationBean {
 
     private String username;
     private String password;
-    private String recaptcha;
 
     public String getUsername() {
         return username;
@@ -24,11 +23,4 @@ public class AuthenticationBean {
         this.password = password;
     }
 
-    public String getRecaptcha() {
-        return recaptcha;
-    }
-
-    public void setRecaptcha(String recaptcha) {
-        this.recaptcha = recaptcha;
-    }
 }

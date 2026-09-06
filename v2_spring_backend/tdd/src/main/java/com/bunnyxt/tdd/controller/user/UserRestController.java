@@ -49,8 +49,7 @@ public class UserRestController {
             @RequestBody JSONObject jsonObject
     ) throws InvalidRequestParameterException {
         // get params
-        String email = jsonObject.get("email").toString();
-        String recaptcha = jsonObject.getString("recaptcha");
+        String email = jsonObject.getString("email");
 
         // check params
         if (email == null) {
@@ -63,14 +62,10 @@ public class UserRestController {
         if (email.length() > 200) {
             throw new InvalidRequestParameterException("email", email, "invalid email format, length of email is too long");
         }
-        if (recaptcha == null) {
-            throw new InvalidRequestParameterException("recaptcha", null, "recaptcha should not be null");
-        }
-
         // get userid
         Long userid = TddAuthUtil.GetCurrentUser().getId();
 
-        return userService.bindEmailRequestCode(userid, email, recaptcha);
+        return userService.bindEmailRequestCode(userid, email);
     }
 
     @PreAuthorize("hasRole('user')")

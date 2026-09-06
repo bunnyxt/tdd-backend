@@ -2,7 +2,6 @@ package com.bunnyxt.tdd.service.impl.user;
 
 import com.alibaba.fastjson.JSON;
 import com.bunnyxt.tdd.auth.TddMailUtil;
-import com.bunnyxt.tdd.auth.TddRecaptchaAuthUtil;
 import com.bunnyxt.tdd.dao.RoleDao;
 import com.bunnyxt.tdd.dao.user.UserDao;
 import com.bunnyxt.tdd.dao.user.UserRegisterDao;
@@ -46,17 +45,8 @@ public class UserRegisterServiceImpl implements UserRegisterService {
     @Autowired
     TddMailUtil tddMailUtil;
 
-    @Autowired
-    TddRecaptchaAuthUtil tddRecaptchaAuthUtil;
-
     @Override
-    public TddCommonResponse requestCode(String method, String validation, String username, String password, String recaptcha) {
-        // check recaptcha
-        TddCommonResponse recaptchaResponse = tddRecaptchaAuthUtil.check(recaptcha);
-        if (recaptchaResponse.getStatus().equals("fail")) {
-            return recaptchaResponse;
-        }
-
+    public TddCommonResponse requestCode(String method, String validation, String username, String password) {
         // check username
         User user;
         user = userDao.queryUserByUsername(username);
