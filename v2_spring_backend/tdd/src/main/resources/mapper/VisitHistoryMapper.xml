@@ -85,12 +85,6 @@
         aid = #{aid}
     </select>
 
-    <insert id="addVisitHistoryVideo">
-        insert into
-        tdd_visit_history_video(added, bvid, userid)
-        values(#{added}, #{bvid}, #{userid})
-    </insert>
-
     <select id="getVisitHistoryVideoByUserid" resultMap="VisitHistoryVideoExResultMap">
         select
         <include refid="VisitHistoryVideoExColumnList" />
