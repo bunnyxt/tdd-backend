@@ -3,7 +3,6 @@ package com.bunnyxt.tdd.controller;
 import com.bunnyxt.tdd.auth.TddAuthUtil;
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
 import com.bunnyxt.tdd.model.VisitHistoryVideoEx;
-import com.bunnyxt.tdd.model.user.User;
 import com.bunnyxt.tdd.service.VisitHistoryService;
 import com.bunnyxt.tdd.util.TddParamCheckUtil;
 import com.bunnyxt.tdd.util.TddResponseUtil;
@@ -22,18 +21,6 @@ public class VisitHistoryRestController {
     VisitHistoryService visitHistoryService;
 
     // video ===========================================================================================================
-
-    @RequestMapping(value = "/visit/history/video/BV{bvid}", method = RequestMethod.POST)
-    public void addVisitHistoryVideo(
-            @PathVariable String bvid
-    ) {
-        User currentUser = TddAuthUtil.GetCurrentUser();
-        Long userid = 3L;
-        if (currentUser != null) {
-            userid = currentUser.getId();
-        }
-        visitHistoryService.addVisitHistoryVideo(userid, bvid);
-    }
 
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/visit/history/video/me", method = RequestMethod.GET)
