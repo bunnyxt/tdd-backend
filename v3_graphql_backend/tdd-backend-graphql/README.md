@@ -1,8 +1,19 @@
 # tdd-backend-graphql
 
+> **Deprecated — do not deploy or extend this service.**
+>
+> This was an experimental GraphQL backend and is not running in production.
+> It is not a supported public API and is not the foundation for the
+> replacement backend. The source and lockfile are retained only for historical
+> reference. Do not update individual dependencies to keep this experiment
+> alive; any future backend must be designed and implemented separately.
+
 ## Introduction
 
-The graphql backend of TianDian Daily.
+This directory contains the historical GraphQL experiment for TianDian Daily.
+
+The remaining setup notes below describe its former local development flow;
+they are not deployment instructions.
 
 ## Get Started
 
