@@ -1,14 +1,15 @@
 package com.bunnyxt.tdd.controller.user;
 
-import com.alibaba.fastjson.JSONObject;
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
 import com.bunnyxt.tdd.model.TddCommonResponse;
 import com.bunnyxt.tdd.service.user.UserRegisterService;
+import com.bunnyxt.tdd.util.TddRequestBodyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 @CrossOrigin
@@ -20,13 +21,13 @@ public class UserRegisterRestController {
 
     @RequestMapping(value = "/register/code", method = RequestMethod.POST)
     public TddCommonResponse requestCode(
-            @RequestBody JSONObject jsonObject
+            @RequestBody Map<String, Object> body
     ) throws InvalidRequestParameterException {
         // get params
-        String method = jsonObject.getString("method");
-        String validation = jsonObject.getString("validation");
-        String username = jsonObject.getString("username");
-        String password = jsonObject.getString("password");
+        String method = TddRequestBodyUtil.getString(body, "method");
+        String validation = TddRequestBodyUtil.getString(body, "validation");
+        String username = TddRequestBodyUtil.getString(body, "username");
+        String password = TddRequestBodyUtil.getString(body, "password");
 
         // check format
         // method
@@ -90,11 +91,11 @@ public class UserRegisterRestController {
 
     @RequestMapping(value = "/register/reg", method = RequestMethod.POST)
     public TddCommonResponse goRegister(
-            @RequestBody JSONObject jsonObject
+            @RequestBody Map<String, Object> body
     ) throws InvalidRequestParameterException {
         // get params
-        String regkey = jsonObject.get("regkey").toString();
-        String code = jsonObject.get("code").toString();
+        String regkey = body.get("regkey").toString();
+        String code = body.get("code").toString();
 
         // check params
         if (regkey == null) {

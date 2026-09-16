@@ -1,10 +1,11 @@
 package com.bunnyxt.tdd.auth;
 
 import com.bunnyxt.tdd.model.user.User;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import com.alibaba.fastjson.JSONArray;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,11 @@ import java.util.Set;
 
 @Component("customAuthenticationSuccessHandler")
 public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+
+    // NON_NULL keeps the roles array identical to what fastjson used to write,
+    // which left null fields out
+    private static final ObjectMapper MAPPER =
+            new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
@@ -47,7 +53,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
                 "\"phone\":\"" + ((User)authentication.getPrincipal()).getPhone() + "\"," +
                 "\"point\":\"" + ((User)authentication.getPrincipal()).getPoint() + "\"," +
                 "\"exp\":\"" + ((User)authentication.getPrincipal()).getExp() + "\"," +
-                "\"roles\":" + JSONArray.toJSONString(((User)authentication.getPrincipal()).getRoles()) + "" +
+                "\"roles\":" + MAPPER.writeValueAsString(((User)authentication.getPrincipal()).getRoles()) + "" +
                 "}}");
     }
 }
