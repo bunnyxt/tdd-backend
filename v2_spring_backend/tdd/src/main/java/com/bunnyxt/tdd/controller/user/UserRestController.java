@@ -1,12 +1,12 @@
 package com.bunnyxt.tdd.controller.user;
 
-import com.alibaba.fastjson.JSONObject;
 import com.bunnyxt.tdd.auth.TddAuthUtil;
 import com.bunnyxt.tdd.error.InvalidRequestParameterException;
 import com.bunnyxt.tdd.model.TddCommonResponse;
 import com.bunnyxt.tdd.model.user.User;
 import com.bunnyxt.tdd.service.user.UserService;
 import com.bunnyxt.tdd.util.TddParamCheckUtil;
+import com.bunnyxt.tdd.util.TddRequestBodyUtil;
 import com.bunnyxt.tdd.util.TddResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 @CrossOrigin
@@ -46,10 +47,10 @@ public class UserRestController {
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/bind/email/code", method = RequestMethod.POST)
     public TddCommonResponse bindEmailRequestCode(
-            @RequestBody JSONObject jsonObject
+            @RequestBody Map<String, Object> body
     ) throws InvalidRequestParameterException {
         // get params
-        String email = jsonObject.getString("email");
+        String email = TddRequestBodyUtil.getString(body, "email");
 
         // check params
         if (email == null) {
@@ -71,11 +72,11 @@ public class UserRestController {
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/bind/email/validation", method = RequestMethod.POST)
     public TddCommonResponse bindEmailValidation(
-            @RequestBody JSONObject jsonObject
+            @RequestBody Map<String, Object> body
     ) throws InvalidRequestParameterException {
         // get params
-        String bindkey = jsonObject.get("bindkey").toString();
-        String code = jsonObject.get("code").toString();
+        String bindkey = body.get("bindkey").toString();
+        String code = body.get("code").toString();
 
         // check params
         TddParamCheckUtil.bindkey(bindkey);
@@ -91,10 +92,10 @@ public class UserRestController {
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/set/nickname", method = RequestMethod.POST)
     public TddCommonResponse setNickname(
-            @RequestBody JSONObject jsonObject
+            @RequestBody Map<String, Object> body
     ) throws InvalidRequestParameterException {
         // get params
-        String nickname = jsonObject.getString("nickname");
+        String nickname = TddRequestBodyUtil.getString(body, "nickname");
 
         // check params
         if (nickname == null) {
@@ -118,10 +119,10 @@ public class UserRestController {
     @PreAuthorize("hasRole('user')")
     @RequestMapping(value = "/user/change/password", method = RequestMethod.POST)
     public TddCommonResponse changePassword(
-            @RequestBody JSONObject jsonObject
+            @RequestBody Map<String, Object> body
     ) throws InvalidRequestParameterException {
         // get params
-        String password = jsonObject.getString("password");
+        String password = TddRequestBodyUtil.getString(body, "password");
 
         // check params
         if (password == null) {
