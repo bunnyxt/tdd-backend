@@ -74,6 +74,9 @@ public class VideoExRestController {
         }
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 20);
+        // deep pages make every request scan past a large offset plus a COUNT;
+        // capping it keeps one crawler from holding the whole connection pool
+        TddParamCheckUtil.offset(pn, ps, 10000);
 
         return TddResponseUtil.AssembleList(
                 videoExService.queryVideos(vc, start_ts, end_ts, activity, recent, title, up, order_by, desc, pn, ps),
