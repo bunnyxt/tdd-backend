@@ -59,6 +59,13 @@ public class TddParamCheckUtil {
         }
     }
 
+    public static void offset(Integer pn, Integer ps, Integer maxOffset) {
+        long offset = (long) ps * (pn - 1);
+        if (offset > maxOffset) {
+            throw new InvalidRequestParameterException("pn", pn, "(pn - 1) * ps should not exceed " + maxOffset);
+        }
+    }
+
     private static void _not_null(String value, String name) {
         if (value == null) {
             throw new InvalidRequestParameterException(name, null, name + " should not be null");

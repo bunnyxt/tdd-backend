@@ -80,6 +80,7 @@ public class MemberExRestController {
         TddParamCheckUtil.desc(desc);
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 20);
+        TddParamCheckUtil.offset(pn, ps, 10000);
 
         return TddResponseUtil.AssembleList(
                 memberExService.queryMembers(sex, name, order_by, desc, pn, ps),

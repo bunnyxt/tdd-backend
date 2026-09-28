@@ -74,6 +74,7 @@ public class VideoExRestController {
         }
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 20);
+        TddParamCheckUtil.offset(pn, ps, 10000);
 
         return TddResponseUtil.AssembleList(
                 videoExService.queryVideos(vc, start_ts, end_ts, activity, recent, title, up, order_by, desc, pn, ps),
