@@ -60,7 +60,6 @@ public class TddParamCheckUtil {
     }
 
     public static void offset(Integer pn, Integer ps, Integer maxOffset) {
-        // call after pn() and ps(); computed as long so a huge pn cannot overflow
         long offset = (long) ps * (pn - 1);
         if (offset > maxOffset) {
             throw new InvalidRequestParameterException("pn", pn, "(pn - 1) * ps should not exceed " + maxOffset);
