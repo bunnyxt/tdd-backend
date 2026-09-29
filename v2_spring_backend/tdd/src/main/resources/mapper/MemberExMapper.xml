@@ -103,10 +103,6 @@
         count(1)
         from
         tdd_member m
-        left join tdd_video v on m.last_video = v.id
-        left join tdd_video_record r on v.laststat = r.id
-        left join tdd_member_total_stat_record sr on m.last_total_stat = sr.id
-        left join tdd_member_follower_record fr on m.last_follower = fr.id
         <where>
             <if test="sex != null and sex.length() > 0">
                 and m.sex = #{sex}
