@@ -7,13 +7,15 @@
         <result column="title" property="title" />
     </resultMap>
 
-    <select id="queryVideoAidTitle" resultMap="BaseResultMap" parameterType="Long">
+    <select id="queryVideoAidTitle" resultMap="BaseResultMap">
         select
         aid, title
         from
         tdd_video
         where
-        aid like CONCAT(#{aid}, '%')
+        <foreach collection="ranges" item="range" separator=" or ">
+            aid between #{range.from} and #{range.to}
+        </foreach>
         order by
         aid
         limit 20
