@@ -195,17 +195,14 @@
         on
         v.laststat = r.id
         where
-        v.aid in (
+        v.mid = #{mid}
+        or v.aid in (
         select
-        distinct(v.aid)
+        aid
         from
-        tdd_video v
-        left join
-        tdd_video_staff s
-        on
-        v.aid = s.aid
+        tdd_video_staff
         where
-        v.mid = #{mid} || s.mid = #{mid}
+        mid = #{mid}
         )
         order by
         ${order_by}
@@ -218,15 +215,19 @@
 
     <select id="queryVideosByMidCount" resultType="Integer">
         select
-        count(distinct(v.aid))
+        count(*)
         from
         tdd_video v
-        left join
-        tdd_video_staff s
-        on
-        v.aid = s.aid
         where
-        v.mid = #{mid} || s.mid = #{mid}
+        v.mid = #{mid}
+        or v.aid in (
+        select
+        aid
+        from
+        tdd_video_staff
+        where
+        mid = #{mid}
+        )
     </select>
 
 </mapper>
