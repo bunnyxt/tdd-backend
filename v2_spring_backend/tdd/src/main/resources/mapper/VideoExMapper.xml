@@ -148,14 +148,12 @@
         count(1)
         from
         tdd_video as v
-        left join
-        tdd_member as m
-        on
-        v.mid = m.mid
-        left join
-        tdd_video_record as r
-        on
-        v.laststat = r.id
+        <if test="up != null and up.length() > 0">
+            left join
+            tdd_member as m
+            on
+            v.mid = m.mid
+        </if>
         <where>
             <if test="vc == 1">
                 and (v.isvc = 1 or v.isvc = 2)
