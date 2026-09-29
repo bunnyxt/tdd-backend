@@ -16,6 +16,22 @@ public class TddParamCheckUtil {
         }
     }
 
+    private static void _positive(Long value, String name) {
+        if (value <= 0) {
+            throw new InvalidRequestParameterException(name, value, name + " is required and should be greater than 0");
+        }
+    }
+
+    public static void aid(Long aid) {
+        // required, 0 (unset) would scan the whole table
+        _positive(aid, "aid");
+    }
+
+    public static void mid(Long mid) {
+        // required, 0 (unset) would scan the whole table
+        _positive(mid, "mid");
+    }
+
     public static void userid(Long userid){
         // default: 0, no limit
         _zero_plus(userid, "userid");

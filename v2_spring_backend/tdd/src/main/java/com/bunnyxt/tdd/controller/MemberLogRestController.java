@@ -32,9 +32,7 @@ public class MemberLogRestController {
             @RequestParam(defaultValue = "20") Integer ps
     ) throws InvalidRequestParameterException {
         // check params
-        if (mid < 0) {
-            throw new InvalidRequestParameterException("mid", mid, "mid should be greater than 0");
-        }
+        TddParamCheckUtil.mid(mid);
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 20);
 

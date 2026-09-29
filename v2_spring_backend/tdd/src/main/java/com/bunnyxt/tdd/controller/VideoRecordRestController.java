@@ -45,10 +45,7 @@ public class VideoRecordRestController {
             @RequestParam(defaultValue = "50000") Integer ps
     ) throws InvalidRequestParameterException {
         // check params
-        if (aid < 0) {
-            // 0 -> not set
-            throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
-        }
+        TddParamCheckUtil.aid(aid);
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 50000);
 
