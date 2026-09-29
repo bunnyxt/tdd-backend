@@ -32,9 +32,7 @@ public class VideoLogRestController {
             @RequestParam(defaultValue = "20") Integer ps
     ) throws InvalidRequestParameterException {
         // check params
-        if (aid < 0) {
-            throw new InvalidRequestParameterException("aid", aid, "aid should be greater than 0");
-        }
+        TddParamCheckUtil.aid(aid);
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 20);
 

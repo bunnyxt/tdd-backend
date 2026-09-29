@@ -42,9 +42,7 @@ public class MemberTotalStatRecordRestController {
             @RequestParam(defaultValue = "50000") Integer ps
     ) throws InvalidRequestParameterException {
         // check params
-        if (mid < 0) {
-            throw new InvalidRequestParameterException("mid", mid, "mid should be greater than 0");
-        }
+        TddParamCheckUtil.mid(mid);
         TddParamCheckUtil.pn(pn);
         TddParamCheckUtil.ps(ps, 50000);
 
