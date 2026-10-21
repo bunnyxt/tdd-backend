@@ -11,7 +11,7 @@ import java.util.*;
 
 /**
  * The old endpoints always emit wildcard CORS, including requests without Origin.
- * Hide Origin only on these seven routes so the existing credentialed security/MVC
+ * Hide Origin only on these seven routes so the existing credentialed MVC
  * CORS processors cannot reject or rewrite their responses or consume OPTIONS.
  */
 @Component

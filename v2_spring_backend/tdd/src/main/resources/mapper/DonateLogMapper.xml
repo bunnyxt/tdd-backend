@@ -5,13 +5,12 @@
         <result column="id" property="id" />
         <result column="added" property="added" />
         <result column="`name`" property="name" />
-        <result column="userid" property="userid" />
         <result column="amount" property="amount" />
         <result column="timespan" property="timespan" />
     </resultMap>
 
     <sql id="BaseColumnList">
-        id, added, `name`, userid, amount, timespan
+        id, added, `name`, amount, timespan
     </sql>
 
     <select id="queryDonateLogs" resultType="com.bunnyxt.tdd.model.DonateLog">

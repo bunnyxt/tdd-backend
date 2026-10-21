@@ -5,7 +5,6 @@ public class DonateLog {
     private Long id;
     private Integer added;
     private String name;
-    private Long userid;
     private Double amount;
     private Integer timespan;
 
@@ -31,14 +30,6 @@ public class DonateLog {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getUserid() {
-        return userid;
-    }
-
-    public void setUserid(Long userid) {
-        this.userid = userid;
     }
 
     public Double getAmount() {
