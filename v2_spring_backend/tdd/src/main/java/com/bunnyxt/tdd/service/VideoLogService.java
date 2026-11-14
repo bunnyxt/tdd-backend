@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface VideoLogService {
 
-    List<VideoLog> queryVideoLogs(Long aid, Integer start_ts, Integer end_ts,
+    List<VideoLog> queryVideoLogs(Long aid, Long start_ts, Long end_ts,
                                   String attr, String oldval, String newval,
                                   Integer pn, Integer ps);
 
-    Integer queryVideoLogsCount(Long aid, Integer start_ts, Integer end_ts,
+    Long queryVideoLogsCount(Long aid, Long start_ts, Long end_ts,
                                 String attr, String oldval, String newval);
 }

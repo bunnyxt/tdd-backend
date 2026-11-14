@@ -37,12 +37,12 @@ public class TddParamCheckUtil {
         _zero_plus(userid, "userid");
     }
 
-    public static void start_ts(Integer start_ts){
+    public static void start_ts(Long start_ts){
         // default: 0, no limit
         _zero_plus(start_ts, "start_ts");
     }
 
-    public static void end_ts(Integer end_ts){
+    public static void end_ts(Long end_ts){
         // default: 0, no limit
         _zero_plus(end_ts, "end_ts");
     }

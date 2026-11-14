@@ -21,7 +21,6 @@
         <result column="state" property="state" />
         <result column="forward" property="forward" />
         <result column="hasstaff" property="hasstaff" />
-        <result column="singer" property="singer" />
         <result column="solo" property="solo" />
         <result column="original" property="original" />
         <result column="employed" property="employed" />
@@ -45,20 +44,15 @@
             <result column="coin" property="coin" />
             <result column="share" property="share" />
             <result column="like" property="like" />
-            <result column="dislike" property="dislike" />
-            <result column="now_rank" property="now_rank" />
-            <result column="his_rank" property="his_rank" />
-            <result column="vt" property="vt" />
-            <result column="vv" property="vv" />
         </association>
         <collection column="aid" property="staff" ofType="com.bunnyxt.tdd.model.VideoStaffEx" select="queryVideoStaffsByAid" />
     </resultMap>
 
     <sql id="BaseColumnList">
-        v.id, v.added, v.bvid, v.aid, v.videos, v.tid, v.tname, v.copyright, v.pic, v.title, v.pubdate, v.`desc` description, v.tags, v.mid,
-        v.code,v.`attribute` v_attribute, v.state, v.forward, v.hasstaff, v.singer, v.solo, v.original, v.employed, v.isvc, v.engine, v.freq, v.activity, v.recent,
+        v.id, extract(epoch from v.added)::bigint as added, v.bvid, v.aid, v.videos, v.tid, v.tname, v.copyright, v.pic, v.title, v.pubdate, v."desc" description, v.tags, v.mid,
+        v.code,v."attribute" v_attribute, v.state, v.forward, v.hasstaff, v.solo, v.original, v.employed, v.isvc, v.engine, v.freq, v.activity, v.recent,
         m.sex, m.name, m.face, m.sign,
-        r.added r_added, r.view, r.danmaku, r.reply, r.favorite, r.coin, r.share, r.like, r.dislike, r.now_rank, r.his_rank, r.vt, r.vv
+        extract(epoch from r.added)::bigint r_added, r."view", r.danmaku, r.reply, r.favorite, r.coin, r.share, r."like"
     </sql>
 
     <resultMap id="VideoStaffExResultMap" type="com.bunnyxt.tdd.model.VideoStaffEx">
@@ -91,9 +85,9 @@
         on
         v.mid = m.mid
         left join
-        tdd_video_record as r
+        tdd_video_record_latest as r
         on
-        v.laststat = r.id
+        v.aid = r.aid
         where
         v.aid = #{aid}
     </select>
@@ -108,9 +102,9 @@
         on
         v.mid = m.mid
         left join
-        tdd_video_record as r
+        tdd_video_record_latest as r
         on
-        v.laststat = r.id
+        v.aid = r.aid
         <where>
             <if test="vc == 1">
                 and (v.isvc = 1 or v.isvc = 2)
@@ -128,22 +122,33 @@
                 and v.recent = #{recent}
             </if>
             <if test="title != null and title.length() > 0">
-                and INSTR(lower(v.title), lower(#{title}))
+                and position(lower(#{title}) in lower(v.title)) > 0
             </if>
             <if test="up != null and up.length() > 0">
-                and INSTR(lower(m.name), lower(#{up}))
+                and position(lower(#{up}) in lower(m.name)) > 0
             </if>
         </where>
         order by
-        ${order_by}
-        <if test="desc == 1">
-            desc
-        </if>
+        <choose>
+            <when test="order_by == 'pubdate'">v.pubdate</when>
+            <when test="order_by == 'view'">r."view"</when>
+            <when test="order_by == 'danmaku'">r."danmaku"</when>
+            <when test="order_by == 'reply'">r."reply"</when>
+            <when test="order_by == 'favorite'">r."favorite"</when>
+            <when test="order_by == 'coin'">r."coin"</when>
+            <when test="order_by == 'share'">r."share"</when>
+            <when test="order_by == 'like'">r."like"</when>
+            <otherwise>v.pubdate</otherwise>
+        </choose>
+        <choose>
+            <when test="desc == 1">desc nulls last</when>
+            <otherwise>asc nulls first</otherwise>
+        </choose>
         limit
-        #{offset}, #{ps}
+        #{ps} offset #{offset}
     </select>
 
-    <select id="queryVideosCount" resultType="Integer">
+    <select id="queryVideosCount" resultType="Long">
         select
         count(1)
         from
@@ -171,10 +176,10 @@
                 and v.recent = #{recent}
             </if>
             <if test="title != null and title.length() > 0">
-                and INSTR(lower(v.title), lower(#{title}))
+                and position(lower(#{title}) in lower(v.title)) > 0
             </if>
             <if test="up != null and up.length() > 0">
-                and INSTR(lower(m.name), lower(#{up}))
+                and position(lower(#{up}) in lower(m.name)) > 0
             </if>
         </where>
     </select>
@@ -189,9 +194,9 @@
         on
         v.mid = m.mid
         left join
-        tdd_video_record as r
+        tdd_video_record_latest as r
         on
-        v.laststat = r.id
+        v.aid = r.aid
         where
         v.mid = #{mid}
         or v.aid in (
@@ -203,15 +208,26 @@
         mid = #{mid}
         )
         order by
-        ${order_by}
-        <if test="desc == 1">
-            desc
-        </if>
+        <choose>
+            <when test="order_by == 'pubdate'">v.pubdate</when>
+            <when test="order_by == 'view'">r."view"</when>
+            <when test="order_by == 'danmaku'">r."danmaku"</when>
+            <when test="order_by == 'reply'">r."reply"</when>
+            <when test="order_by == 'favorite'">r."favorite"</when>
+            <when test="order_by == 'coin'">r."coin"</when>
+            <when test="order_by == 'share'">r."share"</when>
+            <when test="order_by == 'like'">r."like"</when>
+            <otherwise>v.pubdate</otherwise>
+        </choose>
+        <choose>
+            <when test="desc == 1">desc nulls last</when>
+            <otherwise>asc nulls first</otherwise>
+        </choose>
         limit
-        #{offset}, #{ps}
+        #{ps} offset #{offset}
     </select>
 
-    <select id="queryVideosByMidCount" resultType="Integer">
+    <select id="queryVideosByMidCount" resultType="Long">
         select
         count(*)
         from

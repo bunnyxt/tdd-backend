@@ -3,12 +3,11 @@ package com.bunnyxt.tdd.model;
 public class VideoLog {
 
     private Long id;
-    private Integer added;
+    private Long added;
     private Long aid;
     private String attr;
     private String oldval;
     private String newval;
-
 
     public Long getId() {
         return id;
@@ -18,11 +17,11 @@ public class VideoLog {
         this.id = id;
     }
 
-    public Integer getAdded() {
+    public Long getAdded() {
         return added;
     }
 
-    public void setAdded(Integer added) {
+    public void setAdded(Long added) {
         this.added = added;
     }
 

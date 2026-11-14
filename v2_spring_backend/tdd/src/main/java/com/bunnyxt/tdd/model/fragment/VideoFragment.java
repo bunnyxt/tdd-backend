@@ -5,10 +5,9 @@ public class VideoFragment {
     private Long aid;
     private String pic;
     private String title;
-    private Integer pubdate;
+    private Long pubdate;
     private Long mid;
     private VideoRecordFragment laststat;
-
 
     public Long getAid() {
         return aid;
@@ -34,11 +33,11 @@ public class VideoFragment {
         this.title = title;
     }
 
-    public Integer getPubdate() {
+    public Long getPubdate() {
         return pubdate;
     }
 
-    public void setPubdate(Integer pubdate) {
+    public void setPubdate(Long pubdate) {
         this.pubdate = pubdate;
     }
 

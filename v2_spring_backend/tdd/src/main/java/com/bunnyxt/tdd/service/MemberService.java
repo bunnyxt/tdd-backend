@@ -10,6 +10,6 @@ public interface MemberService {
 
     List<Member> queryMembers(String sex, String name, Integer pn, Integer ps);
 
-    Integer queryMembersCount(String sex, String name);
+    Long queryMembersCount(String sex, String name);
 
 }

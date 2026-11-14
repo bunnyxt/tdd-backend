@@ -8,7 +8,7 @@ import java.util.List;
 
 public class TddResponseUtil {
 
-    public static <T> ResponseEntity<List<T>> AssembleList(List<T> list, Integer totalCount){
+    public static <T> ResponseEntity<List<T>> AssembleList(List<T> list, Long totalCount){
         HttpHeaders headers = new HttpHeaders();
         headers.add("x-total-count", String.valueOf(totalCount));
         headers.add("Access-Control-Allow-Headers", "x-total-count");

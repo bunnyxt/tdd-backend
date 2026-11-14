@@ -2,7 +2,7 @@ package com.bunnyxt.tdd.model.fragment;
 
 public class VideoRecordFragment {
 
-    private Integer added;
+    private Long added;
     private Integer view;
     private Integer danmaku;
     private Integer reply;
@@ -11,22 +11,11 @@ public class VideoRecordFragment {
     private Integer share;
     private Integer like;
 
-    private Integer dislike;
-
-    private Integer now_rank;
-
-    private Integer his_rank;
-
-    private Long vt;
-
-    private Long vv;
-
-
-    public Integer getAdded() {
+    public Long getAdded() {
         return added;
     }
 
-    public void setAdded(Integer added) {
+    public void setAdded(Long added) {
         this.added = added;
     }
 
@@ -84,46 +73,6 @@ public class VideoRecordFragment {
 
     public void setLike(Integer like) {
         this.like = like;
-    }
-
-    public Integer getDislike() {
-        return dislike;
-    }
-
-    public void setDislike(Integer dislike) {
-        this.dislike = dislike;
-    }
-
-    public Integer getNow_rank() {
-        return now_rank;
-    }
-
-    public void setNow_rank(Integer now_rank) {
-        this.now_rank = now_rank;
-    }
-
-    public Integer getHis_rank() {
-        return his_rank;
-    }
-
-    public void setHis_rank(Integer his_rank) {
-        this.his_rank = his_rank;
-    }
-
-    public Long getVt() {
-        return vt;
-    }
-
-    public void setVt(Long vt) {
-        this.vt = vt;
-    }
-
-    public Long getVv() {
-        return vv;
-    }
-
-    public void setVv(Long vv) {
-        this.vv = vv;
     }
 
 }

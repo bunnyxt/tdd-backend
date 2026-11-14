@@ -2,15 +2,14 @@ package com.bunnyxt.tdd.model.fragment;
 
 public class MemberFollowerRecordFragment {
 
-    private Integer added;
+    private Long added;
     private Integer follower;
 
-
-    public Integer getAdded() {
+    public Long getAdded() {
         return added;
     }
 
-    public void setAdded(Integer added) {
+    public void setAdded(Long added) {
         this.added = added;
     }
 

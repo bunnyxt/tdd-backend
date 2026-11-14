@@ -3,16 +3,16 @@ package com.bunnyxt.tdd.model;
 public class MemberTotalStatRecord {
 
     private Long id;
-    private Integer added;
+    private Long added;
     private Long mid;
     private Integer video_count;
-    private Integer view;
-    private Integer danmaku;
-    private Integer reply;
-    private Integer favorite;
-    private Integer coin;
-    private Integer share;
-    private Integer like;
+    private Long view;
+    private Long danmaku;
+    private Long reply;
+    private Long favorite;
+    private Long coin;
+    private Long share;
+    private Long like;
 
     public Long getId() {
         return id;
@@ -22,11 +22,11 @@ public class MemberTotalStatRecord {
         this.id = id;
     }
 
-    public Integer getAdded() {
+    public Long getAdded() {
         return added;
     }
 
-    public void setAdded(Integer added) {
+    public void setAdded(Long added) {
         this.added = added;
     }
 
@@ -46,59 +46,59 @@ public class MemberTotalStatRecord {
         this.video_count = video_count;
     }
 
-    public Integer getView() {
+    public Long getView() {
         return view;
     }
 
-    public void setView(Integer view) {
+    public void setView(Long view) {
         this.view = view;
     }
 
-    public Integer getDanmaku() {
+    public Long getDanmaku() {
         return danmaku;
     }
 
-    public void setDanmaku(Integer danmaku) {
+    public void setDanmaku(Long danmaku) {
         this.danmaku = danmaku;
     }
 
-    public Integer getReply() {
+    public Long getReply() {
         return reply;
     }
 
-    public void setReply(Integer reply) {
+    public void setReply(Long reply) {
         this.reply = reply;
     }
 
-    public Integer getFavorite() {
+    public Long getFavorite() {
         return favorite;
     }
 
-    public void setFavorite(Integer favorite) {
+    public void setFavorite(Long favorite) {
         this.favorite = favorite;
     }
 
-    public Integer getCoin() {
+    public Long getCoin() {
         return coin;
     }
 
-    public void setCoin(Integer coin) {
+    public void setCoin(Long coin) {
         this.coin = coin;
     }
 
-    public Integer getShare() {
+    public Long getShare() {
         return share;
     }
 
-    public void setShare(Integer share) {
+    public void setShare(Long share) {
         this.share = share;
     }
 
-    public Integer getLike() {
+    public Long getLike() {
         return like;
     }
 
-    public void setLike(Integer like) {
+    public void setLike(Long like) {
         this.like = like;
     }
 }

@@ -23,8 +23,8 @@ public class VideoLogRestController {
     @RequestMapping(value = "/video/log", method = RequestMethod.GET)
     public ResponseEntity<List<VideoLog>> queryVideoLogs(
             @RequestParam(defaultValue = "0") Long aid,
-            @RequestParam(defaultValue = "0") Integer start_ts,
-            @RequestParam(defaultValue = "0") Integer end_ts,
+            @RequestParam(defaultValue = "0") Long start_ts,
+            @RequestParam(defaultValue = "0") Long end_ts,
             @RequestParam(defaultValue = "") String attr,
             @RequestParam(defaultValue = "") String oldval,
             @RequestParam(defaultValue = "") String newval,

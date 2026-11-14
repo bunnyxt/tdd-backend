@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 @CrossOrigin
 @RestController
@@ -55,7 +57,6 @@ public class MemberExRestController {
         }
         List<String> allowedOrderBy = new ArrayList<String>(){{
             add("mid");
-            add("video_count");
             add("v_pubdate");
 //            add("r_view");
 //            add("r_danmaku");
@@ -89,6 +90,7 @@ public class MemberExRestController {
     }
 
     @RequestMapping(value = "/member/random", method = RequestMethod.GET)
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public List<MemberEx> queryVideosRandom(
             @RequestParam(defaultValue = "1") Long count
     ) throws InvalidRequestParameterException {
@@ -99,6 +101,7 @@ public class MemberExRestController {
 
         // get max id
         Long maxId = memberMidDao.queryMemberMidMaxId();
+        if (maxId == null || maxId <= 0) return new ArrayList<>();
 
         // generate random ids
         if (count > maxId) {

@@ -16,16 +16,16 @@ public class VideoRecordServiceImpl implements VideoRecordService {
     private VideoRecordDao videoRecordDao;
 
     @Override
-    public List<VideoRecord> queryVideoRecords(Long aid, Integer last_count, Integer start_ts, Integer end_ts,
+    public List<VideoRecord> queryVideoRecords(Long aid, Integer last_count, Long start_ts, Long end_ts,
                                                Boolean limit, Integer pn, Integer ps) {
-        Integer offset = null;
+        Long offset = null;
         if (limit) {
             // pn, ps -> offset, ps
             ps = PageNumModfier.modifyPs(ps, 50000);
             pn = PageNumModfier.modifyPn(pn);
             offset = PageNumModfier.calcOffset(ps, pn);
         } else {
-            offset = 0;
+            offset = 0L;
             ps = 0;
         }
 
@@ -33,7 +33,7 @@ public class VideoRecordServiceImpl implements VideoRecordService {
     }
 
     @Override
-    public Integer queryVideoRecordsCount(Long aid, Integer start_ts, Integer end_ts) {
+    public Long queryVideoRecordsCount(Long aid, Long start_ts, Long end_ts) {
         return videoRecordDao.queryVideoRecordsCount(aid, start_ts, end_ts);
     }
 }

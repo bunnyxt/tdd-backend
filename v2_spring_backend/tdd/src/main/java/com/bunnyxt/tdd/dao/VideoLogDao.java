@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface VideoLogDao {
 
-    List<VideoLog> queryVideoLogs(Long aid, Integer start_ts, Integer end_ts,
+    List<VideoLog> queryVideoLogs(Long aid, Long start_ts, Long end_ts,
                                   String attr, String oldval, String newval,
-                                  Integer offset, Integer ps);
+                                  Long offset, Integer ps);
 
-    Integer queryVideoLogsCount(Long aid, Integer start_ts, Integer end_ts,
+    Long queryVideoLogsCount(Long aid, Long start_ts, Long end_ts,
                                 String attr, String oldval, String newval);
 
 }

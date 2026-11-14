@@ -9,16 +9,16 @@ public interface VideoExDao {
 
     VideoEx queryVideoByAid(Long aid);
 
-    List<VideoEx> queryVideos(Integer vc, Integer start_ts, Integer end_ts, Integer activity, Integer recent,
+    List<VideoEx> queryVideos(Integer vc, Long start_ts, Long end_ts, Integer activity, Integer recent,
                               String title, String up, String order_by, Integer desc,
-                              Integer offset, Integer ps);
+                              Long offset, Integer ps);
 
-    Integer queryVideosCount(Integer vc, Integer start_ts, Integer end_ts, Integer activity, Integer recent,
+    Long queryVideosCount(Integer vc, Long start_ts, Long end_ts, Integer activity, Integer recent,
                              String title, String up);
 
     List<VideoEx> queryVideosByMid(Long mid,
-                                   String order_by, Integer desc, Integer offset, Integer ps);
+                                   String order_by, Integer desc, Long offset, Integer ps);
 
-    Integer queryVideosByMidCount(Long mid);
+    Long queryVideosByMidCount(Long mid);
 
 }

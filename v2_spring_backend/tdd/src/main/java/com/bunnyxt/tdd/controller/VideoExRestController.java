@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 @CrossOrigin
 @RestController
@@ -36,8 +38,8 @@ public class VideoExRestController {
     @RequestMapping(value = "/video", method = RequestMethod.GET)
     public ResponseEntity<List<VideoEx>> queryVideos(
             @RequestParam(defaultValue = "0") Integer vc,
-            @RequestParam(defaultValue = "0") Integer start_ts,
-            @RequestParam(defaultValue = "0") Integer end_ts,
+            @RequestParam(defaultValue = "0") Long start_ts,
+            @RequestParam(defaultValue = "0") Long end_ts,
             @RequestParam(defaultValue = "-1") Integer activity,
             @RequestParam(defaultValue = "-1") Integer recent,
             @RequestParam(defaultValue = "") String title,
@@ -83,6 +85,7 @@ public class VideoExRestController {
     }
 
     @RequestMapping(value = "/video/random", method = RequestMethod.GET)
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public List<VideoEx> queryVideosRandom(
             @RequestParam(defaultValue = "1") Long count
     ) throws InvalidRequestParameterException {
@@ -93,6 +96,7 @@ public class VideoExRestController {
 
         // get max id
         Long maxId = videoAidDao.queryVideoAidMaxId();
+        if (maxId == null || maxId <= 0) return new ArrayList<>();
 
         // generate random ids
         if (count > maxId) {

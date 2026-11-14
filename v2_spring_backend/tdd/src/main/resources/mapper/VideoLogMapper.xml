@@ -11,7 +11,7 @@
     </resultMap>
 
     <sql id="BaseColumnList">
-        id, added, aid, attr, oldval, newval
+        id, extract(epoch from added)::bigint as added, aid, attr, oldval, newval
     </sql>
 
     <select id="queryVideoLogs" resultMap="BaseResultMap">
@@ -24,26 +24,30 @@
                 and aid = #{aid}
             </if>
             <if test="start_ts > 0">
-                and added >= #{start_ts}
+                <choose>
+                    <when test="start_ts > @com.bunnyxt.tdd.util.EpochSeconds@MAX_FINITE_SECOND">and false</when>
+                    <otherwise>and added >= #{start_ts,typeHandler=com.bunnyxt.tdd.typehandler.EpochSecondTypeHandler}</otherwise>
+                </choose>
             </if>
-            <if test="end_ts > 0">
-                and added &lt;= #{end_ts}
+            <if test="end_ts > 0 and end_ts &lt;= @com.bunnyxt.tdd.util.EpochSeconds@MAX_FINITE_SECOND">
+                and added &lt;= #{end_ts,typeHandler=com.bunnyxt.tdd.typehandler.EpochSecondTypeHandler}
             </if>
             <if test="attr != null and attr.length() > 0">
                 and attr = #{attr}
             </if>
             <if test="oldval != null and oldval.length() > 0">
-                and INSTR(lower(oldval), lower(#{oldval}))
+                and position(lower(#{oldval}) in lower(oldval)) > 0
             </if>
             <if test="newval != null and newval.length() > 0">
-                and INSTR(lower(newval), lower(#{newval}))
+                and position(lower(#{newval}) in lower(newval)) > 0
             </if>
         </where>
+        order by tdd_video_log.added desc, id desc
         limit
-        #{offset}, #{ps}
+        #{ps} offset #{offset}
     </select>
 
-    <select id="queryVideoLogsCount" resultType="Integer">
+    <select id="queryVideoLogsCount" resultType="Long">
         select
         count(1)
         from
@@ -53,19 +57,22 @@
                 and aid = #{aid}
             </if>
             <if test="start_ts > 0">
-                and added >= #{start_ts}
+                <choose>
+                    <when test="start_ts > @com.bunnyxt.tdd.util.EpochSeconds@MAX_FINITE_SECOND">and false</when>
+                    <otherwise>and added >= #{start_ts,typeHandler=com.bunnyxt.tdd.typehandler.EpochSecondTypeHandler}</otherwise>
+                </choose>
             </if>
-            <if test="end_ts > 0">
-                and added &lt;= #{end_ts}
+            <if test="end_ts > 0 and end_ts &lt;= @com.bunnyxt.tdd.util.EpochSeconds@MAX_FINITE_SECOND">
+                and added &lt;= #{end_ts,typeHandler=com.bunnyxt.tdd.typehandler.EpochSecondTypeHandler}
             </if>
             <if test="attr != null and attr.length() > 0">
                 and attr = #{attr}
             </if>
             <if test="oldval != null and oldval.length() > 0">
-                and INSTR(lower(oldval), lower(#{oldval}))
+                and position(lower(#{oldval}) in lower(oldval)) > 0
             </if>
             <if test="newval != null and newval.length() > 0">
-                and INSTR(lower(newval), lower(#{newval}))
+                and position(lower(#{newval}) in lower(newval)) > 0
             </if>
         </where>
     </select>

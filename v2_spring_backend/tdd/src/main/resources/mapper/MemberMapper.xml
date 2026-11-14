@@ -13,7 +13,7 @@
     </resultMap>
 
     <sql id="BaseColumnList">
-        id, added, mid, sex, name, face, sign, code
+        id, extract(epoch from added)::bigint as added, mid, sex, name, face, sign, code
     </sql>
 
     <select id="queryMemberByMid" resultMap="BaseResultMap" parameterType="Long">
@@ -35,14 +35,14 @@
                 and sex = #{sex}
             </if>
             <if test="name != null and name.length() > 0">
-                and INSTR(lower(name), lower(#{name}))
+                and position(lower(#{name}) in lower(name)) > 0
             </if>
         </where>
         limit
-        #{offset}, #{ps}
+        #{ps} offset #{offset}
     </select>
 
-    <select id="queryMembersCount" resultType="Integer">
+    <select id="queryMembersCount" resultType="Long">
         select
         count(1)
         from
@@ -52,7 +52,7 @@
                 and sex = #{sex}
             </if>
             <if test="name != null and name.length() > 0">
-                and INSTR(lower(name), lower(#{name}))
+                and position(lower(#{name}) in lower(name)) > 0
             </if>
         </where>
     </select>

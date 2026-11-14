@@ -9,49 +9,30 @@
     </resultMap>
 
     <sql id="BaseColumnList">
-        id, added, mid, follower
-    </sql>
-
-    <sql id="BaseColumnListWithA">
-        a.id, a.added, a.mid, a.follower
+        id, extract(epoch from added)::bigint as added, mid, follower
     </sql>
 
     <select id="queryMemberFollowerRecords" resultMap="BaseResultMap">
-        select
-        <include refid="BaseColumnListWithA" />
-        from
-        tdd_member_follower_record a
-        join (
-        select
-        id
-        from
-        tdd_member_follower_record
-        <where>
-            <if test="mid > 0">
-                and mid = #{mid}
-            </if>
-            <if test="start_ts > 0">
-                and added >= #{start_ts}
-            </if>
-            <if test="end_ts > 0">
-                and added &lt;= #{end_ts}
-            </if>
-        </where>
+        select <include refid="BaseColumnList" />
+        from tdd_member_follower_record
+        where mid = #{mid}
+        <if test="start_ts > 0">
+            <choose>
+                <when test="start_ts > @com.bunnyxt.tdd.util.EpochSeconds@MAX_FINITE_SECOND">and false</when>
+                <otherwise>and added >= #{start_ts,typeHandler=com.bunnyxt.tdd.typehandler.EpochSecondTypeHandler}</otherwise>
+            </choose>
+        </if>
+        <if test="end_ts > 0 and end_ts &lt;= @com.bunnyxt.tdd.util.EpochSeconds@MAX_FINITE_SECOND">
+            and added &lt;= #{end_ts,typeHandler=com.bunnyxt.tdd.typehandler.EpochSecondTypeHandler}
+        </if>
+        order by tdd_member_follower_record.added desc
         <choose>
-            <when test="mid > 0 and last_count > 0">
-                order by id desc limit #{last_count}
-            </when>
-            <otherwise>
-                limit
-                #{offset}, #{ps}
-            </otherwise>
+            <when test="last_count != null and last_count > 0">limit #{last_count}</when>
+            <otherwise>limit #{ps} offset #{offset}</otherwise>
         </choose>
-        ) b
-        on
-        a.id = b.id
     </select>
 
-    <select id="queryMemberFollowerRecordsCount" resultType="Integer">
+    <select id="queryMemberFollowerRecordsCount" resultType="Long">
         select
         count(1)
         from
@@ -61,10 +42,13 @@
                 and mid = #{mid}
             </if>
             <if test="start_ts > 0">
-                and added >= #{start_ts}
+                <choose>
+                    <when test="start_ts > @com.bunnyxt.tdd.util.EpochSeconds@MAX_FINITE_SECOND">and false</when>
+                    <otherwise>and added >= #{start_ts,typeHandler=com.bunnyxt.tdd.typehandler.EpochSecondTypeHandler}</otherwise>
+                </choose>
             </if>
-            <if test="end_ts > 0">
-                and added &lt;= #{end_ts}
+            <if test="end_ts > 0 and end_ts &lt;= @com.bunnyxt.tdd.util.EpochSeconds@MAX_FINITE_SECOND">
+                and added &lt;= #{end_ts,typeHandler=com.bunnyxt.tdd.typehandler.EpochSecondTypeHandler}
             </if>
         </where>
     </select>
