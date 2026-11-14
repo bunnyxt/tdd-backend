@@ -88,6 +88,7 @@
             <when test="order_by == 'mid'">m.mid</when>
             <when test="order_by == 'v_pubdate'">v.pubdate</when>
             <when test="order_by == 'fr_follower'">fr.follower</when>
+            <when test="order_by == 'sr_video_count'">sr.video_count</when>
             <when test="order_by == 'sr_view'">sr."view"</when>
             <when test="order_by == 'sr_danmaku'">sr."danmaku"</when>
             <when test="order_by == 'sr_reply'">sr."reply"</when>

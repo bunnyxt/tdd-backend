@@ -65,6 +65,7 @@ public class MemberExRestController {
 //            add("r_coin");
 //            add("r_share");
 //            add("r_like");
+            add("sr_video_count");
             add("sr_view");
             add("sr_danmaku");
             add("sr_reply");
