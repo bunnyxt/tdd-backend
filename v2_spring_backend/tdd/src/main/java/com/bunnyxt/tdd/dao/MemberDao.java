@@ -8,8 +8,8 @@ public interface MemberDao {
 
     Member queryMemberByMid(Long mid);
 
-    List<Member> queryMembers(String sex, String name, Integer offset, Integer ps);
+    List<Member> queryMembers(String sex, String name, Long offset, Integer ps);
 
-    Integer queryMembersCount(String sex, String name);
+    Long queryMembersCount(String sex, String name);
 
 }

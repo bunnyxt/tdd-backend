@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface MemberLogDao {
 
-    List<MemberLog> queryMemberLogs(Long mid, Integer start_ts, Integer end_ts,
+    List<MemberLog> queryMemberLogs(Long mid, Long start_ts, Long end_ts,
                                     String attr, String oldval, String newval,
-                                    Integer offset, Integer ps);
+                                    Long offset, Integer ps);
 
-    Integer queryMemberLogsCount(Long mid, Integer start_ts, Integer end_ts,
+    Long queryMemberLogsCount(Long mid, Long start_ts, Long end_ts,
                                  String attr, String oldval, String newval);
 }

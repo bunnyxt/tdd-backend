@@ -20,9 +20,9 @@ public class PageNumModfier {
         return pn;
     }
 
-    public static Integer calcOffset(Integer ps, Integer pn) {
+    public static Long calcOffset(Integer ps, Integer pn) {
         // calc offset
-        return ps * (pn - 1);
+        return (long) ps * (pn - 1);
     }
 
 }

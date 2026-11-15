@@ -13,7 +13,7 @@
         from
         tdd_video
         where
-        bvid like CONCAT(#{bvid}, '%')
+        bvid like replace(replace(replace(#{bvid}, '!', '!!'), '%', '!%'), '_', '!_') || '%' escape '!'
         order by
         bvid
         limit 20

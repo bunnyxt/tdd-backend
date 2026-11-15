@@ -5,66 +5,42 @@
         <result column="id" property="id" />
         <result column="added" property="added" />
         <result column="aid" property="aid" />
-        <result column="`view`" property="view" />
+        <result column="view" property="view" />
         <result column="danmaku" property="danmaku" />
         <result column="reply" property="reply" />
         <result column="favorite" property="favorite" />
         <result column="coin" property="coin" />
         <result column="share" property="share" />
-        <result column="`like`" property="like" />
-        <result column="dislike" property="dislike" />
-        <result column="now_rank" property="now_rank" />
-        <result column="his_rank" property="his_rank" />
-        <result column="vt" property="vt" />
-        <result column="vv" property="vv" />
+        <result column="like" property="like" />
     </resultMap>
 
     <sql id="BaseColumnList">
-        id, added, aid, `view`, danmaku, reply, favorite, coin, share, `like`, dislike, now_rank, his_rank, vt, vv
+        id, extract(epoch from added)::bigint as added, aid, "view", danmaku, reply, favorite, coin, share, "like"
     </sql>
 
-    <sql id="BaseColumnListWithA">
-        a.id, a.added, a.aid, a.`view`, a.danmaku, a.reply, a.favorite, a.coin, a.share, a.`like`, a.dislike, a.now_rank, a.his_rank, a.vt, a.vv
-    </sql>
-
-    <select id="queryVideoRecords" resultMap="BaseResultMap" parameterType="Integer">
-        select
-        <include refid="BaseColumnListWithA" />
-        from
-        tdd_video_record a
-        join (
-            select
-            id
-            from
-            tdd_video_record
-            <where>
-                <if test="aid > 0">
-                    and aid = #{aid}
-                </if>
-                <if test="start_ts > 0">
-                    and added >= #{start_ts}
-                </if>
-                <if test="end_ts > 0">
-                    and added &lt;= #{end_ts}
-                </if>
-            </where>
-            <if test="limit == true">
-                <choose>
-                    <when test="aid > 0 and last_count > 0">
-                        order by id desc limit #{last_count}
-                    </when>
-                    <otherwise>
-                        limit
-                        #{offset}, #{ps}
-                    </otherwise>
-                </choose>
-            </if>
-        ) b
-        on
-        a.id = b.id
+    <select id="queryVideoRecords" resultMap="BaseResultMap">
+        select <include refid="BaseColumnList" />
+        from tdd_video_record
+        where aid = #{aid}
+        <if test="start_ts > 0">
+            <choose>
+                <when test="start_ts > @com.bunnyxt.tdd.util.EpochSeconds@MAX_FINITE_SECOND">and false</when>
+                <otherwise>and added >= #{start_ts,typeHandler=com.bunnyxt.tdd.typehandler.EpochSecondTypeHandler}</otherwise>
+            </choose>
+        </if>
+        <if test="end_ts > 0 and end_ts &lt;= @com.bunnyxt.tdd.util.EpochSeconds@MAX_FINITE_SECOND">
+            and added &lt;= #{end_ts,typeHandler=com.bunnyxt.tdd.typehandler.EpochSecondTypeHandler}
+        </if>
+        order by tdd_video_record.added desc
+        <if test="limit == true">
+            <choose>
+                <when test="last_count != null and last_count > 0">limit #{last_count}</when>
+                <otherwise>limit #{ps} offset #{offset}</otherwise>
+            </choose>
+        </if>
     </select>
 
-    <select id="queryVideoRecordsCount" resultType="Integer">
+    <select id="queryVideoRecordsCount" resultType="Long">
         select
         count(1)
         from
@@ -74,10 +50,13 @@
                 and aid = #{aid}
             </if>
             <if test="start_ts > 0">
-                and added >= #{start_ts}
+                <choose>
+                    <when test="start_ts > @com.bunnyxt.tdd.util.EpochSeconds@MAX_FINITE_SECOND">and false</when>
+                    <otherwise>and added >= #{start_ts,typeHandler=com.bunnyxt.tdd.typehandler.EpochSecondTypeHandler}</otherwise>
+                </choose>
             </if>
-            <if test="end_ts > 0">
-                and added &lt;= #{end_ts}
+            <if test="end_ts > 0 and end_ts &lt;= @com.bunnyxt.tdd.util.EpochSeconds@MAX_FINITE_SECOND">
+                and added &lt;= #{end_ts,typeHandler=com.bunnyxt.tdd.typehandler.EpochSecondTypeHandler}
             </if>
         </where>
     </select>

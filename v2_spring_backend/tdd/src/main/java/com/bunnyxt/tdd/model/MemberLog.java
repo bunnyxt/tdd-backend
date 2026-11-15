@@ -3,7 +3,7 @@ package com.bunnyxt.tdd.model;
 public class MemberLog {
 
     private Long id;
-    private Integer added;
+    private Long added;
     private Long mid;
     private String attr;
     private String oldval;
@@ -17,11 +17,11 @@ public class MemberLog {
         this.id = id;
     }
 
-    public Integer getAdded() {
+    public Long getAdded() {
         return added;
     }
 
-    public void setAdded(Integer added) {
+    public void setAdded(Long added) {
         this.added = added;
     }
 

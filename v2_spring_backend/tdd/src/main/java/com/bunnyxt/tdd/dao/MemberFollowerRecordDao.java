@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface MemberFollowerRecordDao {
 
-    List<MemberFollowerRecord> queryMemberFollowerRecords(Long mid, Integer last_count, Integer start_ts, Integer end_ts,
-                                                          Integer offset, Integer ps);
+    List<MemberFollowerRecord> queryMemberFollowerRecords(Long mid, Integer last_count, Long start_ts, Long end_ts,
+                                                          Long offset, Integer ps);
 
-    Integer queryMemberFollowerRecordsCount(Long mid, Integer start_ts, Integer end_ts);
+    Long queryMemberFollowerRecordsCount(Long mid, Long start_ts, Long end_ts);
 }

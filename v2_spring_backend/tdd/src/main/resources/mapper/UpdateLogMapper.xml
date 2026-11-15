@@ -3,12 +3,12 @@
 <mapper namespace="com.bunnyxt.tdd.dao.UpdateLogDao">
     <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.UpdateLog">
         <result column="added" property="added" />
-        <result column="`type`" property="type" />
+        <result column="type" property="type" />
         <result column="content" property="content" />
     </resultMap>
 
     <sql id="BaseColumnList">
-        added, `type`, content
+        extract(epoch from added)::bigint as added, "type", content
     </sql>
 
     <select id="queryUpdateLogs" resultType="com.bunnyxt.tdd.model.UpdateLog">

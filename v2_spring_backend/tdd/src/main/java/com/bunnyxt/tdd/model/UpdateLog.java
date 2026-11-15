@@ -2,15 +2,15 @@ package com.bunnyxt.tdd.model;
 
 public class UpdateLog {
 
-    private Integer added;
+    private Long added;
     private Integer type;
     private String content;
 
-    public Integer getAdded() {
+    public Long getAdded() {
         return added;
     }
 
-    public void setAdded(Integer added) {
+    public void setAdded(Long added) {
         this.added = added;
     }
 

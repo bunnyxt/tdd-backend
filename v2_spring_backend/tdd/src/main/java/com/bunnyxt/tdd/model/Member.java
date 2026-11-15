@@ -3,14 +3,13 @@ package com.bunnyxt.tdd.model;
 public class Member {
 
     private Long id;
-    private Integer added;
+    private Long added;
     private Long mid;
     private String sex;
     private String name;
     private String face;
     private String sign;
     private Integer code;
-
 
     public Member() {
 
@@ -24,11 +23,11 @@ public class Member {
         this.id = id;
     }
 
-    public Integer getAdded() {
+    public Long getAdded() {
         return added;
     }
 
-    public void setAdded(Integer added) {
+    public void setAdded(Long added) {
         this.added = added;
     }
 

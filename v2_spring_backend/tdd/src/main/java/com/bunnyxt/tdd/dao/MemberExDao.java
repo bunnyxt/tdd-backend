@@ -9,7 +9,7 @@ public interface MemberExDao {
     MemberEx queryMemberByMid(Long mid);
 
     List<MemberEx> queryMembers(String sex, String name,
-                                String order_by, Integer desc, Integer offset, Integer ps);
+                                String order_by, Integer desc, Long offset, Integer ps);
 
-    Integer queryMembersCount(String sex, String name);
+    Long queryMembersCount(String sex, String name);
 }

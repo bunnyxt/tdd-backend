@@ -10,7 +10,6 @@
         <result column="face" property="face" />
         <result column="sign" property="sign" />
         <result column="code" property="code" />
-        <result column="video_count" property="video_count" />
         <association property="last_video" javaType="com.bunnyxt.tdd.model.fragment.VideoFragment">
             <result column="v_aid" property="aid" />
             <result column="v_pic" property="pic" />
@@ -26,11 +25,6 @@
                 <result column="r_coin" property="coin" />
                 <result column="r_share" property="share" />
                 <result column="r_like" property="like" />
-                <result column="r_dislike" property="dislike" />
-                <result column="r_now_rank" property="now_rank" />
-                <result column="r_his_rank" property="his_rank" />
-                <result column="r_vt" property="vt" />
-                <result column="r_vv" property="vv" />
             </association>
         </association>
         <association property="last_total_stat" javaType="com.bunnyxt.tdd.model.fragment.MemberTotalStatRecordFragment">
@@ -51,12 +45,12 @@
     </resultMap>
 
     <sql id="BaseColumnList">
-        m.id, m.added, m.mid, m.sex, m.name, m.face, m.sign, m.code, m.video_count,
+        m.id, extract(epoch from m.added)::bigint as added, m.mid, m.sex, m.name, m.face, m.sign, m.code,
         v.aid v_aid, v.pic v_pic, v.title v_title, v.pubdate v_pubdate, v.mid v_mid,
-        r.added r_added, r.view r_view, r.danmaku r_danmaku, r.reply r_reply, r.favorite r_favorite, r.coin r_coin, r.share r_share, r.like r_like, r.dislike r_dislike, r.now_rank r_now_rank, r.his_rank r_his_rank, r.vt r_vt, r.vv r_vv,
-        sr.added sr_added, sr.video_count sr_video_count, sr.view sr_view, sr.danmaku sr_danmaku,
-            sr.reply sr_reply, sr.favorite sr_favorite, sr.coin sr_coin, sr.share sr_share, sr.like sr_like,
-        fr.added fr_added, fr.follower fr_follower
+        extract(epoch from r.added)::bigint r_added, r."view" r_view, r.danmaku r_danmaku, r.reply r_reply, r.favorite r_favorite, r.coin r_coin, r.share r_share, r."like" r_like,
+        extract(epoch from sr.added)::bigint sr_added, sr.video_count sr_video_count, sr."view" sr_view, sr.danmaku sr_danmaku,
+            sr.reply sr_reply, sr.favorite sr_favorite, sr.coin sr_coin, sr.share sr_share, sr."like" sr_like,
+        extract(epoch from fr.added)::bigint fr_added, fr.follower fr_follower
     </sql>
 
     <select id="queryMemberByMid" resultMap="BaseResultMap" parameterType="Long">
@@ -64,10 +58,10 @@
         <include refid="BaseColumnList" />
         from
         tdd_member m
-        left join tdd_video v on m.last_video = v.id
-        left join tdd_video_record r on v.laststat = r.id
-        left join tdd_member_total_stat_record sr on m.last_total_stat = sr.id
-        left join tdd_member_follower_record fr on m.last_follower = fr.id
+        left join tdd_video v on m.last_video_aid = v.aid
+        left join tdd_video_record_latest r on v.aid = r.aid
+        left join tdd_member_total_stat_record_latest sr on m.mid = sr.mid
+        left join tdd_member_follower_record_latest fr on m.mid = fr.mid
         where
         m.mid = #{mid}
     </select>
@@ -77,28 +71,42 @@
         <include refid="BaseColumnList" />
         from
         tdd_member m
-        left join tdd_video v on m.last_video = v.id
-        left join tdd_video_record r on v.laststat = r.id
-        left join tdd_member_total_stat_record sr on m.last_total_stat = sr.id
-        left join tdd_member_follower_record fr on m.last_follower = fr.id
+        left join tdd_video v on m.last_video_aid = v.aid
+        left join tdd_video_record_latest r on v.aid = r.aid
+        left join tdd_member_total_stat_record_latest sr on m.mid = sr.mid
+        left join tdd_member_follower_record_latest fr on m.mid = fr.mid
         <where>
             <if test="sex != null and sex.length() > 0">
                 and m.sex = #{sex}
             </if>
             <if test="name != null and name.length() > 0">
-                and INSTR(lower(m.name), lower(#{name}))
+                and position(lower(#{name}) in lower(m.name)) > 0
             </if>
         </where>
         order by
-        ${order_by}
-        <if test="desc == 1">
-            desc
-        </if>
+        <choose>
+            <when test="order_by == 'mid'">m.mid</when>
+            <when test="order_by == 'v_pubdate'">v.pubdate</when>
+            <when test="order_by == 'fr_follower'">fr.follower</when>
+            <when test="order_by == 'sr_video_count'">sr.video_count</when>
+            <when test="order_by == 'sr_view'">sr."view"</when>
+            <when test="order_by == 'sr_danmaku'">sr."danmaku"</when>
+            <when test="order_by == 'sr_reply'">sr."reply"</when>
+            <when test="order_by == 'sr_favorite'">sr."favorite"</when>
+            <when test="order_by == 'sr_coin'">sr."coin"</when>
+            <when test="order_by == 'sr_share'">sr."share"</when>
+            <when test="order_by == 'sr_like'">sr."like"</when>
+            <otherwise>sr."view"</otherwise>
+        </choose>
+        <choose>
+            <when test="desc == 1">desc nulls last</when>
+            <otherwise>asc nulls first</otherwise>
+        </choose>
         limit
-        #{offset}, #{ps}
+        #{ps} offset #{offset}
     </select>
 
-    <select id="queryMembersCount" resultType="Integer">
+    <select id="queryMembersCount" resultType="Long">
         select
         count(1)
         from
@@ -108,7 +116,7 @@
                 and m.sex = #{sex}
             </if>
             <if test="name != null and name.length() > 0">
-                and INSTR(lower(m.name), lower(#{name}))
+                and position(lower(#{name}) in lower(m.name)) > 0
             </if>
         </where>
     </select>

@@ -3,7 +3,7 @@ package com.bunnyxt.tdd.model;
 public class Video {
 
     private Long id;
-    private Integer added;
+    private Long added;
     private Long aid;
     private String  bvid;
     private Integer videos;
@@ -12,16 +12,15 @@ public class Video {
     private Integer copyright;
     private String pic;
     private String title;
-    private Integer pubdate;
+    private Long pubdate;
     private String desc;
     private String tags;
     private Long mid;
     private Integer code;
-    private Integer attribute;
+    private Long attribute;
     private Integer state;
-    private Integer forward;
+    private Long forward;
     private Byte hasstaff;
-    private String singer;
     private Byte solo;
     private Byte original;
     private Integer employed;
@@ -30,7 +29,6 @@ public class Video {
     private Byte freq;
     private Byte activity;
     private Byte recent;
-
 
     public Video() {
 
@@ -44,11 +42,11 @@ public class Video {
         this.id = id;
     }
 
-    public Integer getAdded() {
+    public Long getAdded() {
         return added;
     }
 
-    public void setAdded(Integer added) {
+    public void setAdded(Long added) {
         this.added = added;
     }
 
@@ -108,11 +106,11 @@ public class Video {
         this.title = title;
     }
 
-    public Integer getPubdate() {
+    public Long getPubdate() {
         return pubdate;
     }
 
-    public void setPubdate(Integer pubdate) {
+    public void setPubdate(Long pubdate) {
         this.pubdate = pubdate;
     }
 
@@ -154,14 +152,6 @@ public class Video {
 
     public void setHasstaff(Byte hasstaff) {
         this.hasstaff = hasstaff;
-    }
-
-    public String getSinger() {
-        return singer;
-    }
-
-    public void setSinger(String singer) {
-        this.singer = singer;
     }
 
     public Byte getSolo() {
@@ -236,11 +226,11 @@ public class Video {
         this.bvid = bvid;
     }
 
-    public Integer getAttribute() {
+    public Long getAttribute() {
         return attribute;
     }
 
-    public void setAttribute(Integer attribute) {
+    public void setAttribute(Long attribute) {
         this.attribute = attribute;
     }
 
@@ -252,11 +242,11 @@ public class Video {
         this.state = state;
     }
 
-    public Integer getForward() {
+    public Long getForward() {
         return forward;
     }
 
-    public void setForward(Integer forward) {
+    public void setForward(Long forward) {
         this.forward = forward;
     }
 }

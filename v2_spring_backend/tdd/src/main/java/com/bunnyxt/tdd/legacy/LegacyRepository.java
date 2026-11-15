@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
+import com.bunnyxt.tdd.util.EpochSeconds;
+import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.*;
 
@@ -65,7 +67,7 @@ public class LegacyRepository {
     public List<Map<String, Object>> daily(long date, long limit) {
         List<Object> args = new ArrayList<>();
         String sql = "SELECT id,date,correct,vidnum,newvids,millvids,viewincr,viewincrincr,comment FROM tdd_sprint_daily WHERE 1=1";
-        if (date != -1) { sql += " AND date=?"; args.add(date); }
+        if (date != -1) { sql += " AND date=?"; args.add(Long.toString(date)); }
         List<Map<String, Object>> rows = query(limit(sql + " ORDER BY id DESC", args, limit), args,
                 "id date correct vidnum viewincr viewincrincr", "newvids millvids comment", true);
         for (Map<String, Object> row : rows) {
@@ -84,7 +86,7 @@ public class LegacyRepository {
 
     public List<Map<String, Object>> dailyRecords(long date, long limit) {
         List<Object> args = new ArrayList<>();
-        args.add(date);
+        args.add(Long.toString(date));
         String sql = "SELECT id,date,aid,view,viewincr,pday,lday FROM tdd_sprint_daily_record WHERE date=? ORDER BY id DESC";
         return query(limit(sql, args, limit), args, "id aid view viewincr pday lday", "date", true);
     }
@@ -106,11 +108,12 @@ public class LegacyRepository {
     }
 
     public List<Map<String, Object>> records(long aid, long start, long end, long limit) {
+        if (start > EpochSeconds.MAX_FINITE_SECOND) return new ArrayList<>();
         List<Object> args = new ArrayList<>();
-        String sql = "SELECT id,added,view FROM tdd_sprint_video_record WHERE 1=1";
+        String sql = "SELECT id,extract(epoch from added)::bigint AS added,view FROM tdd_sprint_video_record WHERE 1=1";
         if (aid != -1) { sql += " AND aid=?"; args.add(aid); }
-        if (start > 0) { sql += " AND added>=?"; args.add(start); }
-        if (end > 0) { sql += " AND added<?"; args.add(end); }
+        if (start > 0) { sql += " AND added>=?"; args.add(EpochSeconds.utcDateTime(start)); }
+        if (end > 0 && end <= EpochSeconds.MAX_FINITE_SECOND) { sql += " AND added<?"; args.add(EpochSeconds.utcDateTime(end)); }
         return query(limit(sql + " ORDER BY id DESC", args, limit), args, "id added view", "", true);
     }
 
@@ -120,13 +123,15 @@ public class LegacyRepository {
     }
 
     /** Reverse the selected DESC/LIMIT set in SQL, then consume without buffering in JDBC. */
+    @Transactional(readOnly = true, rollbackFor = IOException.class)
     public void streamRecords(long aid, long start, long end, long limit, RecordConsumer consumer)
             throws IOException {
+        if (start > EpochSeconds.MAX_FINITE_SECOND) return;
         List<Object> args = new ArrayList<>();
         args.add(aid);
-        String base = "SELECT id,added,view FROM tdd_sprint_video_record WHERE aid=?";
-        if (start > 0) { base += " AND added>=?"; args.add(start); }
-        if (end > 0) { base += " AND added<?"; args.add(end); }
+        String base = "SELECT id,extract(epoch from added)::bigint AS added,view FROM tdd_sprint_video_record WHERE aid=?";
+        if (start > 0) { base += " AND added>=?"; args.add(EpochSeconds.utcDateTime(start)); }
+        if (end > 0 && end <= EpochSeconds.MAX_FINITE_SECOND) { base += " AND added<?"; args.add(EpochSeconds.utcDateTime(end)); }
         final String sql = limit > 0
                 ? "SELECT id,added,view FROM (" + limit(base + " ORDER BY id DESC", args, limit)
                     + ") selected_records ORDER BY id ASC"
@@ -138,9 +143,11 @@ public class LegacyRepository {
                 try (PreparedStatement statement = connection.prepareStatement(sql,
                         ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)) {
                     statement.setQueryTimeout(300);
-                    // Connector/J's forward-only streaming mode. H2 is used only by tests.
-                    if (connection.getMetaData().getDatabaseProductName().equals("MySQL"))
-                        statement.setFetchSize(Integer.MIN_VALUE);
+                    // pgJDBC uses a bounded cursor only within a transaction and with
+                    // a positive fetch size. The transaction ends before file delivery.
+                    if (connection.getAutoCommit())
+                        throw new IllegalStateException("History streaming requires a transaction");
+                    statement.setFetchSize(1024);
                     for (int i = 0; i < args.size(); i++) statement.setObject(i + 1, args.get(i));
                     try (ResultSet rows = statement.executeQuery()) {
                         while (rows.next()) {

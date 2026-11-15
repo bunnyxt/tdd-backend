@@ -1,15 +1,22 @@
 package com.bunnyxt.tdd.legacy;
 
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 
 @Component
 public class LegacyBiliClient {
-    // Fixed destination; user input is never interpreted as a URL.
+    private final String viewUrl;
+
+    public LegacyBiliClient(@Value("${tdd.bilibili.view-url:https://api.bilibili.com/x/web-interface/view}") String viewUrl) {
+        this.viewUrl = viewUrl;
+    }
+
+    // The destination is deployment configuration; request input is never a URL.
     public String view(String key, String value) throws IOException {
-        URL url = new URL("https://api.bilibili.com/x/web-interface/view?" + key + "=" +
+        URL url = new URL(viewUrl + "?" + key + "=" +
                 URLEncoder.encode(value, "UTF-8"));
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setConnectTimeout(10000);

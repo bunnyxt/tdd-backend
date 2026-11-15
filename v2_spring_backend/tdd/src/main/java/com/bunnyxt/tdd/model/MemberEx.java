@@ -6,18 +6,9 @@ import com.bunnyxt.tdd.model.fragment.VideoFragment;
 
 public class MemberEx extends Member {
 
-    private Integer video_count;
     private VideoFragment last_video;
     private MemberTotalStatRecordFragment last_total_stat;
     private MemberFollowerRecordFragment last_follower;
-
-    public Integer getVideo_count() {
-        return video_count;
-    }
-
-    public void setVideo_count(Integer video_count) {
-        this.video_count = video_count;
-    }
 
     public VideoFragment getLast_video() {
         return last_video;

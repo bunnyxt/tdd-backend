@@ -10,5 +10,5 @@ public interface MemberExService {
 
     List<MemberEx> queryMembers(String sex, String name, String order_by, Integer desc, Integer pn, Integer ps);
 
-    Integer queryMembersCount(String sex, String name);
+    Long queryMembersCount(String sex, String name);
 }

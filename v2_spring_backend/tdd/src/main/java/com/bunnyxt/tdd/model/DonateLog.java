@@ -1,11 +1,13 @@
 package com.bunnyxt.tdd.model;
 
+import java.math.BigDecimal;
+
 public class DonateLog {
 
     private Long id;
-    private Integer added;
+    private Long added;
     private String name;
-    private Double amount;
+    private BigDecimal amount;
     private Integer timespan;
 
     public Long getId() {
@@ -16,11 +18,11 @@ public class DonateLog {
         this.id = id;
     }
 
-    public Integer getAdded() {
+    public Long getAdded() {
         return added;
     }
 
-    public void setAdded(Integer added) {
+    public void setAdded(Long added) {
         this.added = added;
     }
 
@@ -32,11 +34,11 @@ public class DonateLog {
         this.name = name;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

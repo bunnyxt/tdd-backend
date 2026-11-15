@@ -24,8 +24,8 @@ public class MemberFollowerRecordRestController {
     public ResponseEntity<List<MemberFollowerRecord>> queryMemberFollowerRecordsByAid(
             @PathVariable Long mid,
             @RequestParam(defaultValue = "0") Integer last_count,
-            @RequestParam(defaultValue = "0") Integer start_ts,
-            @RequestParam(defaultValue = "0") Integer end_ts,
+            @RequestParam(defaultValue = "0") Long start_ts,
+            @RequestParam(defaultValue = "0") Long end_ts,
             @RequestParam(defaultValue = "1") Integer pn,
             @RequestParam(defaultValue = "50000") Integer ps
     ) throws InvalidRequestParameterException {
@@ -39,8 +39,8 @@ public class MemberFollowerRecordRestController {
     public ResponseEntity<List<MemberFollowerRecord>> queryMemberFollowerRecords(
             @RequestParam(defaultValue = "0") Long mid,
             Integer last_count,
-            @RequestParam(defaultValue = "0") Integer start_ts,
-            @RequestParam(defaultValue = "0") Integer end_ts,
+            @RequestParam(defaultValue = "0") Long start_ts,
+            @RequestParam(defaultValue = "0") Long end_ts,
             @RequestParam(defaultValue = "1") Integer pn,
             @RequestParam(defaultValue = "50000") Integer ps
     ) throws InvalidRequestParameterException {

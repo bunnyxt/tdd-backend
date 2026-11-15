@@ -4,13 +4,13 @@
     <resultMap id="BaseResultMap" type="com.bunnyxt.tdd.model.DonateLog">
         <result column="id" property="id" />
         <result column="added" property="added" />
-        <result column="`name`" property="name" />
+        <result column="name" property="name" />
         <result column="amount" property="amount" />
         <result column="timespan" property="timespan" />
     </resultMap>
 
     <sql id="BaseColumnList">
-        id, added, `name`, amount, timespan
+        id, extract(epoch from added)::bigint as added, "name", amount, timespan
     </sql>
 
     <select id="queryDonateLogs" resultType="com.bunnyxt.tdd.model.DonateLog">

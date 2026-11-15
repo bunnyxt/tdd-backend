@@ -25,13 +25,13 @@ public class MemberServiceImpl implements MemberService {
         // pn, ps -> offset, ps
         ps = PageNumModfier.modifyPs(ps, 20);
         pn = PageNumModfier.modifyPn(pn);
-        Integer offset = PageNumModfier.calcOffset(ps, pn);
+        Long offset = PageNumModfier.calcOffset(ps, pn);
 
         return memberDao.queryMembers(sex, name, offset, ps);
     }
 
     @Override
-    public Integer queryMembersCount(String sex, String name) {
+    public Long queryMembersCount(String sex, String name) {
         return memberDao.queryMembersCount(sex, name);
     }
 }

@@ -24,8 +24,8 @@ public class VideoRecordRestController {
     public ResponseEntity<List<VideoRecord>> queryVideoRecordsByAid(
             @PathVariable Long aid,
             @RequestParam(defaultValue = "0") Integer last_count,
-            @RequestParam(defaultValue = "0") Integer start_ts,
-            @RequestParam(defaultValue = "0") Integer end_ts,
+            @RequestParam(defaultValue = "0") Long start_ts,
+            @RequestParam(defaultValue = "0") Long end_ts,
             @RequestParam(defaultValue = "1") Integer pn,
             @RequestParam(defaultValue = "50000") Integer ps
     ) throws InvalidRequestParameterException {
@@ -39,8 +39,8 @@ public class VideoRecordRestController {
     public ResponseEntity<List<VideoRecord>> queryVideoRecords(
             @RequestParam(defaultValue = "0") Long aid,
             Integer last_count,
-            @RequestParam(defaultValue = "0") Integer start_ts,
-            @RequestParam(defaultValue = "0") Integer end_ts,
+            @RequestParam(defaultValue = "0") Long start_ts,
+            @RequestParam(defaultValue = "0") Long end_ts,
             @RequestParam(defaultValue = "1") Integer pn,
             @RequestParam(defaultValue = "50000") Integer ps
     ) throws InvalidRequestParameterException {

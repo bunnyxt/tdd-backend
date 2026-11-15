@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface MemberTotalStatRecordDao {
 
-    List<MemberTotalStatRecord> queryMemberTotalStatRecords(Long mid, Integer last_count, Integer start_ts, Integer end_ts,
-                                                            Integer offset, Integer ps);
+    List<MemberTotalStatRecord> queryMemberTotalStatRecords(Long mid, Integer last_count, Long start_ts, Long end_ts,
+                                                            Long offset, Integer ps);
 
-    Integer queryMemberTotalStatRecordsCount(Long mid, Integer start_ts, Integer end_ts);
+    Long queryMemberTotalStatRecordsCount(Long mid, Long start_ts, Long end_ts);
 }

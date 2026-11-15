@@ -23,23 +23,18 @@ public class VideoExServiceImpl implements VideoExService {
     }
 
     @Override
-    public List<VideoEx> queryVideos(Integer vc, Integer start_ts, Integer end_ts, Integer activity, Integer recent,
+    public List<VideoEx> queryVideos(Integer vc, Long start_ts, Long end_ts, Integer activity, Integer recent,
                                      String title, String up, String order_by, Integer desc, Integer pn, Integer ps) {
         // pn, ps -> offset, ps
         ps = PageNumModfier.modifyPs(ps, 20);
         pn = PageNumModfier.modifyPn(pn);
-        Integer offset = PageNumModfier.calcOffset(ps, pn);
-
-        // modify order_by
-        if (order_by.equals("like")) {
-            order_by = "r.like"; // cannot be like since like is a possible keyword there
-        }
+        Long offset = PageNumModfier.calcOffset(ps, pn);
 
         return videoExDao.queryVideos(vc, start_ts, end_ts, activity, recent, title, up, order_by, desc, offset, ps);
     }
 
     @Override
-    public Integer queryVideosCount(Integer vc, Integer start_ts, Integer end_ts, Integer activity, Integer recent, String title, String up) {
+    public Long queryVideosCount(Integer vc, Long start_ts, Long end_ts, Integer activity, Integer recent, String title, String up) {
         return videoExDao.queryVideosCount(vc, start_ts, end_ts, activity, recent, title, up);
     }
 
@@ -48,18 +43,13 @@ public class VideoExServiceImpl implements VideoExService {
         // pn, ps -> offset, ps
         ps = PageNumModfier.modifyPs(ps, 20);
         pn = PageNumModfier.modifyPn(pn);
-        Integer offset = PageNumModfier.calcOffset(ps, pn);
-
-        // modify order_by
-        if (order_by.equals("like")) {
-            order_by = "r.like"; // cannot be like since like is a possible keyword there
-        }
+        Long offset = PageNumModfier.calcOffset(ps, pn);
 
         return videoExDao.queryVideosByMid(mid, order_by, desc, offset, ps);
     }
 
     @Override
-    public Integer queryVideosByMidCount(Long mid) {
+    public Long queryVideosByMidCount(Long mid) {
         return videoExDao.queryVideosByMidCount(mid);
     }
 }

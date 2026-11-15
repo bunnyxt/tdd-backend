@@ -16,17 +16,17 @@ public class MemberFollowerRecordServiceImpl implements MemberFollowerRecordServ
     MemberFollowerRecordDao memberFollowerRecordDao;
 
     @Override
-    public List<MemberFollowerRecord> queryMemberFollowerRecords(Long mid, Integer last_count, Integer start_ts, Integer end_ts, Integer pn, Integer ps) {
+    public List<MemberFollowerRecord> queryMemberFollowerRecords(Long mid, Integer last_count, Long start_ts, Long end_ts, Integer pn, Integer ps) {
         // pn, ps -> offset, ps
         ps = PageNumModfier.modifyPs(ps, 50000);
         pn = PageNumModfier.modifyPn(pn);
-        Integer offset = PageNumModfier.calcOffset(ps, pn);
+        Long offset = PageNumModfier.calcOffset(ps, pn);
 
         return memberFollowerRecordDao.queryMemberFollowerRecords(mid, last_count, start_ts, end_ts, offset, ps);
     }
 
     @Override
-    public Integer queryMemberFollowerRecordsCount(Long mid, Integer start_ts, Integer end_ts) {
+    public Long queryMemberFollowerRecordsCount(Long mid, Long start_ts, Long end_ts) {
         return memberFollowerRecordDao.queryMemberFollowerRecordsCount(mid, start_ts, end_ts);
     }
 }
