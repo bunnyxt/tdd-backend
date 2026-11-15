@@ -92,60 +92,158 @@
         v.aid = #{aid}
     </select>
 
-    <select id="queryVideos" resultMap="BaseResultMap">
-        select
-        <include refid="BaseColumnList" />
-        from
-        tdd_video as v
-        left join
-        tdd_member as m
-        on
-        v.mid = m.mid
-        left join
-        tdd_video_record_latest as r
-        on
-        v.aid = r.aid
+    <sql id="QueryVideosFilters">
+        <if test="vc == 1">
+            and (v.isvc = 1 or v.isvc = 2)
+        </if>
+        <if test="start_ts > 0">
+            and v.pubdate >= #{start_ts}
+        </if>
+        <if test="end_ts > 0">
+            and v.pubdate &lt;= #{end_ts}
+        </if>
+        <if test="activity >= 0 and activity &lt;= 2">
+            and v.activity = #{activity}
+        </if>
+        <if test="recent >= 0 and recent &lt;= 2">
+            and v.recent = #{recent}
+        </if>
+        <if test="title != null and title.length() > 0">
+            and position(lower(#{title}) in lower(v.title)) > 0
+        </if>
+        <if test="up != null and up.length() > 0">
+            and position(lower(#{up}) in lower(m.name)) > 0
+        </if>
+    </sql>
+
+    <sql id="QueryVideosViewOrder">
+        <choose>
+            <when test="desc == 1">r."view" desc nulls last, v.aid desc</when>
+            <otherwise>r."view" asc nulls first, v.aid asc</otherwise>
+        </choose>
+    </sql>
+
+    <sql id="QueryVideosAidOrder">
+        v.aid
+        <choose>
+            <when test="desc == 1">desc</when>
+            <otherwise>asc</otherwise>
+        </choose>
+    </sql>
+
+    <sql id="QueryVideosObservedCandidates">
+        select v.aid, r."view" as sort_value
+        <if test="desc == 1">
+            , row_number() over (order by <include refid="QueryVideosViewOrder" />) as prefix_position
+        </if>
+        from tdd_video_record_latest as r
+        join tdd_video as v on v.aid = r.aid
         <where>
-            <if test="vc == 1">
-                and (v.isvc = 1 or v.isvc = 2)
-            </if>
-            <if test="start_ts > 0">
-                and v.pubdate >= #{start_ts}
-            </if>
-            <if test="end_ts > 0">
-                and v.pubdate &lt;= #{end_ts}
-            </if>
-            <if test="activity >= 0 and activity &lt;= 2">
-                and v.activity = #{activity}
-            </if>
-            <if test="recent >= 0 and recent &lt;= 2">
-                and v.recent = #{recent}
-            </if>
-            <if test="title != null and title.length() > 0">
-                and position(lower(#{title}) in lower(v.title)) > 0
-            </if>
-            <if test="up != null and up.length() > 0">
-                and position(lower(#{up}) in lower(m.name)) > 0
-            </if>
+            <include refid="QueryVideosFilters" />
         </where>
-        order by
+        order by <include refid="QueryVideosViewOrder" />
+    </sql>
+
+    <sql id="QueryVideosMissingCandidates">
+        select v.aid, null::bigint as sort_value
+        <if test="desc != 1">
+            , row_number() over (order by <include refid="QueryVideosAidOrder" />) as prefix_position
+        </if>
+        from tdd_video as v
+        <where>
+            <include refid="QueryVideosFilters" />
+            and not exists (select 1 from tdd_video_record_latest as r0 where r0.aid = v.aid)
+        </where>
+        order by <include refid="QueryVideosAidOrder" />
+    </sql>
+
+    <select id="queryVideos" resultMap="BaseResultMap">
         <choose>
-            <when test="order_by == 'pubdate'">v.pubdate</when>
-            <when test="order_by == 'view'">r."view"</when>
-            <when test="order_by == 'danmaku'">r."danmaku"</when>
-            <when test="order_by == 'reply'">r."reply"</when>
-            <when test="order_by == 'favorite'">r."favorite"</when>
-            <when test="order_by == 'coin'">r."coin"</when>
-            <when test="order_by == 'share'">r."share"</when>
-            <when test="order_by == 'like'">r."like"</when>
-            <otherwise>v.pubdate</otherwise>
+            <when test="order_by == 'view' and not (start_ts > 0 or end_ts > 0 or (activity >= 0 and activity &lt;= 2) or (recent >= 0 and recent &lt;= 2) or (title != null and title.length() > 0) or (up != null and up.length() > 0))">
+                <!-- Latest view is non-null; only a missing latest row belongs to the null group. -->
+                with first_group as materialized (
+                    <choose>
+                        <when test="desc == 1"><include refid="QueryVideosObservedCandidates" /></when>
+                        <otherwise><include refid="QueryVideosMissingCandidates" /></otherwise>
+                    </choose>
+                    limit (#{ps}::bigint + #{offset}::bigint)
+                ),
+                first_count as materialized (select count(*) as n from first_group),
+                page as materialized (
+                    select aid, sort_value from (
+                        select aid, sort_value from first_group
+                        where prefix_position > #{offset}::bigint
+                        union all
+                        (
+                            <choose>
+                                <when test="desc == 1"><include refid="QueryVideosMissingCandidates" /></when>
+                                <otherwise><include refid="QueryVideosObservedCandidates" /></otherwise>
+                            </choose>
+                            limit (select greatest(#{ps}::bigint - greatest(n - #{offset}::bigint, 0), 0) from first_count)
+                            offset (select greatest(#{offset}::bigint - n, 0) from first_count)
+                        )
+                    ) as candidates
+                    order by
+                    <choose>
+                        <when test="desc == 1">sort_value desc nulls last, aid desc</when>
+                        <otherwise>sort_value asc nulls first, aid asc</otherwise>
+                    </choose>
+                    limit #{ps}::bigint
+                )
+                select <include refid="BaseColumnList" />
+                from page as p
+                join tdd_video as v on v.aid = p.aid
+                left join tdd_member as m on m.mid = v.mid
+                left join tdd_video_record_latest as r on r.aid = v.aid
+                order by
+                <choose>
+                    <when test="desc == 1">p.sort_value desc nulls last, p.aid desc</when>
+                    <otherwise>p.sort_value asc nulls first, p.aid asc</otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                select
+                <include refid="BaseColumnList" />
+                from
+                tdd_video as v
+                left join
+                tdd_member as m
+                on
+                v.mid = m.mid
+                left join
+                tdd_video_record_latest as r
+                on
+                v.aid = r.aid
+                <where>
+                    <include refid="QueryVideosFilters" />
+                </where>
+                order by
+                <choose>
+                    <when test="order_by == 'pubdate'">v.pubdate</when>
+                    <when test="order_by == 'view'">r."view"</when>
+                    <when test="order_by == 'danmaku'">r."danmaku"</when>
+                    <when test="order_by == 'reply'">r."reply"</when>
+                    <when test="order_by == 'favorite'">r."favorite"</when>
+                    <when test="order_by == 'coin'">r."coin"</when>
+                    <when test="order_by == 'share'">r."share"</when>
+                    <when test="order_by == 'like'">r."like"</when>
+                    <otherwise>v.pubdate</otherwise>
+                </choose>
+                <choose>
+                    <when test="desc == 1">desc nulls last</when>
+                    <otherwise>asc nulls first</otherwise>
+                </choose>
+                <if test="order_by == 'view'">
+                    , v.aid
+                    <choose>
+                        <when test="desc == 1">desc</when>
+                        <otherwise>asc</otherwise>
+                    </choose>
+                </if>
+                limit
+                #{ps} offset #{offset}
+            </otherwise>
         </choose>
-        <choose>
-            <when test="desc == 1">desc nulls last</when>
-            <otherwise>asc nulls first</otherwise>
-        </choose>
-        limit
-        #{ps} offset #{offset}
     </select>
 
     <select id="queryVideosCount" resultType="Long">
